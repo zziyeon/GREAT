@@ -12,11 +12,9 @@
 }
 
 /* 마진 */
-header, section, footer{
+/* header, section, footer{
     display: flex;
-    justify-content: center;
-
-}
+} */
 
 figure {
     background-color: aqua;
