@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+/* 화면 사이즈 */
+#wrapper {
+    width:  1800px;
+    
+}
+
+/* header 영역 */
+header{
+    display: flex;
+    height: 135px;
+}
+
+header .top-menu {
+
+}
+
+header .logo {
+
+}
+
+header .bottom-menu {
+    
+}
