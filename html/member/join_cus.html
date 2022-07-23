@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객 회원가입 | GREATE</title>
+    <link rel="stylesheet" href="/css/common/common.css">
+    <link rel="stylesheet" href="/css/member/join_cus.css">
+
+    <style>
+        .active {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- header -->
+        <header class="header container">
+          <nav class="top-menu content">
+            <a href="/html/member/join_cus.html" class="top-menu__join">회원가입</a>
+            <a href="/html/member/login.html" class="top-menu__login">로그인</a>
+            <a href="" class="top-menu__cs">고객센터</a>
+          </nav>
+          <div class="logo content"><a href="/html/no_mem_member.html">GR<span>EAT</span></a></div>
+          <nav class="bottom-menu content">
+            <div class="category">
+              <ul>
+                <li class ="food-category">업종별 카테고리
+                  <ul>
+                    <li><a href="">한식</a></li>
+                    <li><a href="">중식</a></li>
+                    <li><a href="">일식</a></li>
+                    <li><a href="">양식</a></li>
+                    <li><a href="">아시안식</a></li>
+                    <li><a href="">분식</a></li>
+                    <li><a href="">도시락</a></li>
+                    <li><a href="">카페/디저트</a></li>
+                  </ul>
+                </li>
+                <li class = "region-category">지역별 카테고리
+                  <ul>
+                    <li><a href="">서울</a></li>
+                    <li><a href="">인천</a></li>
+                    <li><a href="">대전</a></li>
+                    <li><a href="">광주</a></li>
+                    <li><a href="">대구</a></li>
+                    <li><a href="">울산</a></li>
+                    <li><a href="">부산</a></li>
+                    <li><a href="">제주</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="search">
+              <input type="text" class="search__search-box" placeholder="  검색어를 입력하세요.">
+              <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+            </div>
+          </nav>
+        </header>
+        <!-- //header -->
+
+        <!-- main -->
+        <main class="main container">
+            <h2>회원가입</h2>
+            <button class="cusBtn"><a href="/html/member/join_cus.html"> 고객 회원</a></button>
+            <button class="ownBtn"><a href="/html/member/join_own.html"> 점주 회원</a></button>
+
+            <table class="join_tb">
+                <tr>
+                    <!-- 첫번째 줄 시작-->
+                    <td><label for="l_id">아이디</label></td>
+                    <td><input type="text" id="l_id" placeholder="영문, 숫자 조합 8~15자"></td>
+                    <td><button id="id_ch">중복확인</button></td>
+                </tr>
+                <tr>
+                    <!-- 두 번째 줄 시작-->
+                    <td><label for="pwd">비밀번호</label></td>
+                    <td>
+                        <input type="password" id="pwd">
+                    </td>
+                </tr>
+                <tr>
+                    <!-- 세 번째 줄 시작-->
+                    <td><label for="pwdCh">비밀번호 확인</label></td>
+                    <td><input type="password" id="pwdCh"></td>
+                    <td><button id="pwd_ch">중복확인</button></td>
+                </tr>
+                <tr>
+                    <!-- 네 번째 줄 시작-->
+                    <td><label for="name">이름</label></td>
+                    <td><input type="text" id="name"></td>
+                </tr>
+                <tr>
+                    <!-- 다섯 번째 줄 시작-->
+                    <td><label for="nick">닉네임</label></td>
+                    <td><input type="text" id="nick"></td>
+                    <td><button id="nickChBtn">중복확인</button></td>
+                </tr>
+                <tr>
+                    <!-- 여섯 번째 줄 시작-->
+                    <td><label for="email">이메일</label></td>
+                    <td><input id="email" type="email" placeholder="gildong@example.com"></td>
+                    <td><button>인증번호</button></td>
+                </tr>
+                <tr>
+                    <!-- 일곱 번째 줄 시작-->
+                    <td><label for="code">인증번호</label></td>
+                    <td><input type="text" id="code" placeholder="인증번호를 입력해주세요"></td>
+                </tr>
+                <tr>
+                    <!-- 여덟 번째 줄 시작-->
+                    <td><label for="address">주소</label></td>
+                    <td><input type="text" id="address" placeholder="상세 주소를 입력해주세요"></td>
+                    <td><button>주소검색</button></td>
+                </tr>
+
+                <tr>
+                    <td>이용약관 동의</td>
+                    <td><input type="checkbox">이용 약관 동의</td>
+                    <td><a href="#">약관보기</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="checkbox">개인정보 수집</td>
+                    <td><a href="#">약관보기</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="checkbox">개인정보 이용 동의</td>
+                    <td><a href="#">약관보기</a></td>
+                </tr>
+            </table>
+            <button type="submit">가입하기</button>
+        </main>
+        <!-- //.main -->
+        
+        <!-- footer -->
+        <footer class="footer container"><p class="content"></p></footer>
+        <!-- //footer -->
+
+    </div>
+    <!-- //wrapper -->
+</body>
+
+</html>

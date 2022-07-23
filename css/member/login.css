@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/* *{
+    outline: 1px solid red;
+} */
+
+h2 {
+    text-align: center;
+}
+
+.main > .login-tb tr >.login-tb__id, .login-tb__pwd{
+    font-size: 30px;
+}

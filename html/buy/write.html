@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작성</title>
+    <link rel="stylesheet" href="/css/common/common.css">
+    <link rel="stylesheet" href="/css/buy/write.css">
+    <script defer src="/js/buy/write.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- header -->
+        <header class="header container">
+            <nav class="top-menu content">
+                <!-- <a href="#" class="top-menu__member">회원</a> -->
+                <li class="top-menu__member">회원 님
+                    <ul>
+                        <li><a href="/html/buy/write.html">판매글 작성</a></li>
+                        <li><a href="#">판매 내역</a></li>
+                        <li><a href="#">판매 정보</a></li>
+                        <li><a href="#">판매 목록</a></li>
+                        <li><a href="#">내 프로필</a></li>
+                        <li><a href="#">개인정보</a></li>
+                        <li><a href="/html/no_mem_main.html">로그아웃</a></li>
+                    </ul>
+                </li>
+
+                <a href="" class="top-menu__cs">고객센터</a>
+            </nav>
+            <div class="logo content"><a href="/html/mem_main .html">GR<span>EAT</span></a></div>
+            <nav class="bottom-menu content">
+                <div class="category">
+                    <ul>
+                        <li class="food-category">업종별 카테고리
+                            <ul>
+                                <li><a href="">한식</a></li>
+                                <li><a href="">중식</a></li>
+                                <li><a href="">일식</a></li>
+                                <li><a href="">양식</a></li>
+                                <li><a href="">아시안식</a></li>
+                                <li><a href="">분식</a></li>
+                                <li><a href="">도시락</a></li>
+                                <li><a href="">카페/디저트</a></li>
+                            </ul>
+                        </li>
+                        <li class="region-category">지역별 카테고리
+                            <ul>
+                                <li><a href="">서울</a></li>
+                                <li><a href="">인천</a></li>
+                                <li><a href="">대전</a></li>
+                                <li><a href="">광주</a></li>
+                                <li><a href="">대구</a></li>
+                                <li><a href="">울산</a></li>
+                                <li><a href="">부산</a></li>
+                                <li><a href="">제주</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="search">
+                    <input type="text" class="search__search-box" placeholder="  검색어를 입력하세요.">
+                    <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+                </div>
+            </nav>
+        </header>
+        <!-- //header -->
+
+        <!-- main -->
+        <main class="main container">
+            <h2>판매글 작성</h2>
+            <table class="write_tb">
+                <tr>
+                    <td><label for="title">글제목</label></td>
+                    <td colspan="3"><input class="title" type="text" id="title"></td>
+                </tr>
+                <tr>
+                    <td><label for="prdName">제품명</label></td>
+                    <td><input type="text" id="prdName"></td>
+                    <td><label for="deadline">마감시간</label></td>
+                    <td><input type="time" id="currentTime"></td>
+                </tr>
+                <tr>
+                    <td><label for="salType">업종 </label></td>
+                    <td><select name="type of business" id="tob">
+                        <option value="tob" selected disabled>업종선택</option>
+                        <option value="한식">한식</option>
+                        <option value="중식">중식</option>
+                        <option value="일식">일식</option>
+                        <option value="양식">양식</option>
+                        <option value="아시안식">아시안식</option>
+                        <option value="분식">분식</option>
+                        <option value="도시락">도시락</option>
+                        <option value="카페/디저트">카페/디저트</option>
+                    </select></td>
+                    <td><label for="amount">수량</label></td>
+                    <td><input type="number" min="0"></td>
+                </tr>
+                <tr>
+                    <td><label for="originalPrice">정상가</label></td>
+                    <td><input type="text"></td>
+                    <td><label for="salePice">할인가</label></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td><label for="">결제 가능 방식</label></td>
+                    <td><select name="" id="">
+                        <option value="선결제후결제">선결제 & 후결제</option>
+                        <option value="선결제">선결제</option>
+                        <option value="후결제">후결제</option>
+                    </select></td>
+                    <td><label for="">첨부파일</label></td>
+                    <td><input type="file"></td>
+                </tr>
+                <tr>
+                    <td><label for="">상세설명</label></td>
+                    <td colspan="3"><textarea name="" id="" cols="30" rows="10"></textarea></td>
+                </tr>
+            </table>
+            <div class="write-btn">
+                <button id="tempSave">임시 저장</button>
+                <button id="save" type="submit">작성 완료</button>
+            </div>
+        </main>
+        <!-- //main -->
+
+        <!-- footer -->
+        <footer class="footer container">
+            <p class="content"></p>
+        </footer>
+        <!-- footer -->
+    </div>
+</body>
+
+</html>
