@@ -1,1 +1,0 @@
-// document.getElementById('currentTime').value = date.toLocaleTimeString('ko-kr');

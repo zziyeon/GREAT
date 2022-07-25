@@ -27,28 +27,11 @@
   display:flex;
   justify-content: end;
   margin-top : 10px;
-  list-style: none;
-  font-size: 12px;
-}
-.wrapper > .header > .top-menu > .top-menu__member {
-  width: 80px;
-  text-align: center;
-}
-
-.wrapper > .header > .top-menu > .top-menu__member > ul {
-  width: 80px;
-  display: none;
-  position : absolute;  
-  background-color: white;            
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-.wrapper > .header > .top-menu > .top-menu__member:hover > ul {
-  display: block;
 }
 
 .wrapper > .header > .top-menu a {
   margin-left : 10px;
+  font-size: 12px;
 }
 
 .wrapper > .header > .top-menu a:hover {
