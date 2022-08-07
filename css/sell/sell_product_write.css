@@ -8,17 +8,14 @@ h2 {
     text-align: center;
     line-height: 3;
 }
-/* .main {
-    outline: 1px solid black;
-    width: 610px;
-    height: 500px;
-    margin: 0px 400px;
-    padding: 50px 30px 20px 30px;
-}
-.main .content__title > input {
-    width: 483px;
-} */
 
+th {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+}
 label {
     display: inline-block;
     width: 110px;
@@ -45,6 +42,7 @@ textarea {
     resize: none;
 }
 
+/* 버튼(취소, 임시저장, 저장) */
 .write-btn {
     display: flex;
     justify-content: flex-end;
@@ -67,7 +65,7 @@ button:hover {
     border: 1px;
 }
 
-.write-btn #tempSave {
+.write-btn #tempSave, #cancel_Btn {
     background-color: #e0e0e0;
 }
 
