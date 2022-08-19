@@ -148,18 +148,7 @@
   margin: auto;
   padding: 1rem 0px 1.5rem;
   width: 1100px;
-}
-
-.main>.title {
-  text-align: center;
-  font-size: 500px;
-  font-weight: bold;
-  margin: 20px 0px;
-  width: 100%;
-}
-
-.main>.title >span {
-  font-size: 28px;
+  /*hi*/
 }
 
 /* footer */
