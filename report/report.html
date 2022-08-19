@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../common/common.css">
+    <link rel="stylesheet" href="./css/reprot.css">
+    <script
+      src="https://kit.fontawesome.com/038578f405.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>신고창</title>
+  </head>
+  <body>
+    <div class="report-wrapper">
+      <div class="report-header">
+        <h2 class="report__title">신고하기</h2>
+      </div>
+      <div class="report-main">
+        <!-- <div class="report__info">신고정보</div> -->
+        <div class="report__reason">
+          <select class="report__reason-select" name="" id="">
+            <option value="">신고 사유를 선택해주세요</option>
+            <option value="">신고 사유1</option>
+            <option value="">신고 사유2</option>
+            <option value="">신고 사유3</option>
+            <option value="">신고 사유4</option>
+            <option value="">신고 사유5</option>
+          </select>
+        </div>
+        <div class="report__description-box">
+          <textarea
+            class="report__description"
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="신고 사유를 200자 이내로 작성해주세요."
+          ></textarea>
+        </div>
+      </div>
+      <div class="report-footer">
+        <button class="report__complete-btn">신고하기</button>
+        <button class="report__cancel-btn">취소하기</button>
+      </div>
+    </div>
+  </body>
+</html>

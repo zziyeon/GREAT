@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../common/common.css">
+  <link rel="stylesheet" href="./css/board-write.css">
+  <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
+  <title>GREAT 게시글 작성</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <header class="header container">
+      <nav class="top-menu content">
+        <a href="" class="top-menu__join">회원가입</a>
+        <a href="" class="top-menu__login">로그인</a>
+        <a href="" class="top-menu__cs">고객센터</a>
+      </nav>
+      <div class="logo content"><a href="">GR<span>EAT</span></a></div>
+      <nav class="bottom-menu content">
+        <div class="category">
+          <ul>
+            <li class="food-category">업종별 카테고리
+              <ul>
+                <li><a href="">한식</a></li>
+                <li><a href="">중식</a></li>
+                <li><a href="">일식</a></li>
+                <li><a href="">양식</a></li>
+                <li><a href="">아시안식</a></li>
+                <li><a href="">분식</a></li>
+                <li><a href="">도시락</a></li>
+                <li><a href="">카페/디저트</a></li>
+              </ul>
+            </li>
+            <li class="region-category">지역별 카테고리
+              <ul>
+                <li><a href="">서울</a></li>
+                <li><a href="">인천</a></li>
+                <li><a href="">대전</a></li>
+                <li><a href="">광주</a></li>
+                <li><a href="">대구</a></li>
+                <li><a href="">울산</a></li>
+                <li><a href="">부산</a></li>
+                <li><a href="">제주</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="search">
+          <input type="text" class="search__search-box" placeholder="  검색어를 입력하세요.">
+          <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+        </div>
+      </nav>
+    </header>
+    <main class="main container">
+      <div class="board-write content">
+        <div class="board-write__title width--900px">
+          <h2>글쓰기</h2>
+        </div>
+        <div class="board-write__article-head width--900px">
+          <div class="board-write__article-bullet">
+            <select name="" id="">
+              <option value="">말머리 선택</option>
+              <option value="">문의</option>
+              <option value="">서울</option>
+              <option value="">인천</option>
+              <option value="">대전</option>
+              <option value="">광주</option>
+              <option value="">대구</option>
+              <option value="">울산</option>
+              <option value="">부산</option>
+              <option value="">제주</option>
+            </select>
+          </div>
+          <div class="board-write__article-title">
+            <input type="text" name="" id="" placeholder="제목을 입력하세요." autofocus>
+          </div>
+        </div>
+        <div class="board-write__tool width--900px">
+          <div  class="board-write__tool-box">
+            <ul>
+              <li>
+                <select name="" id="">
+                  <option value="">11</option>
+                  <option value="">13</option>
+                  <option value="">15</option>
+                  <option value="">17</option>
+                  <option value="">19</option>
+                  <option value="">21</option>
+                </select>
+              </li>
+              <li>
+                <button><i class="fa-solid fa-bold"></i></button>
+              </li>
+              <li>
+                <button><i class="fa-solid fa-italic"></i></button>
+              </li>
+              <li>
+                <button><i class="fa-solid fa-underline"></i></button>
+              </li>
+              <li>
+                <div class="file">
+                  <button>
+                    <span><i class="fa-solid fa-image"></i></span>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <div class="file">
+                  <button>
+                    <span><i class="fa-brands fa-youtube"></i></span>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="board-write__article-main width--900px">
+          <textarea class="board-write__article-content" name="" id="" cols="30" rows="10" placeholder="내용을 작성하세요." autofocus></textarea>
+        </div>
+        <div class="board-write__complete width--900px">
+          <button class="board-write__cancel-btn">취소</button>
+          <button class="board-write__complete-btn">등록</button>
+        </div>
+      </div>
+
+    </main>
+    <footer class="footer container">
+      <p class="content"></p>
+    </footer>
+  </div>
+</body>
+
+</html>

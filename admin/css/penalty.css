@@ -1,0 +1,123 @@
+@charset "utf-8";
+
+/* * {
+  outline: 1px solid green;
+} */
+
+button:hover {
+  cursor: pointer;
+}
+
+textarea:focus {
+  outline: none
+}
+
+input:focus{
+  outline: none;
+}
+
+/* input[type=date]::-webkit-datetime-edit-text {
+  -webkit-appearance: none;
+  display: none;
+}
+input[type=date]::-webkit-datetime-edit-month-field{
+  -webkit-appearance: none;
+  display: none;
+}
+input[type=date]::-webkit-datetime-edit-day-field {
+  -webkit-appearance: none;
+  display: none;
+}
+input[type=date]::-webkit-datetime-edit-year-field {
+  -webkit-appearance: none;
+  display: none;
+} */
+
+
+/* penalty-wrapper */
+.penalty-wrapper {
+  border: 1px solid black;
+  width: 450px;
+  height: 475px;
+  padding: 25px;
+  margin: 25px;
+  /*팝업창 만들고 삭제할 속성*/
+}
+
+/* penalty-header */
+.penalty__title {
+  margin: 0 0 35px 0;
+
+}
+
+.penalty__period {
+  border: 1px solid var(--main-color-gre);
+  /* color: var(--main-text-gre); */
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  height: 30px;
+}
+
+.penalty__period label{
+  margin-left: 5px;
+}
+
+.penalty__period input[type="date"] {
+ /* width: 20px; */
+  box-sizing: border-box;
+  border:none;
+  margin-right: 5px;
+}
+
+/* penalty-main */
+.penalty__reason .penalty__reason-select {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  border: 1px solid var(--main-color-gre);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  color: var(--main-text-gre);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.penalty__reason .penalty__reason-select option {
+  font-size: 16px;
+}
+
+.penalty__description-box .penalty__description {
+  width: 450px;
+  height: 200px;
+  resize: none;
+  box-sizing: border-box;
+  border: 1px solid var(--main-color-gre);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* penalty-footer */
+.penalty-footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.penalty__complete-btn,
+.penalty__cancel-btn {
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.penalty__complete-btn {
+  background-color: var(--main-color-yel);
+}
+
+.penalty__cancel-btn {
+  background-color: var(--mainBtn-color-gre);
+}
