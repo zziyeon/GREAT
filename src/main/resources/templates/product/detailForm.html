@@ -25,7 +25,7 @@
                             </div>
                             <div class="p_store-info">
                                 <a href="">
-                                    <span name="memStoreName" th:text="${form.memStoreName}"></span>
+                                    <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
                                     <i class="fa-solid fa-angle-right"></i>
                                 </a>
                             </div>
@@ -100,14 +100,14 @@
                         <img src="" alt="">
                     </div>
                     <div class="content" >
-                        <p name="detail_info"  th:text="${form.detailInfo}">달콤한 달기와 </p>
+                        <p name="detail_info" th:text="${form.detailInfo}">달콤한 달기와 </p>
                     </div>
                 </div>
                 <!-- 가게 위치 지도 -->
                 <div class="store_location" id="ss">
                     <span > 해당 가게 위치</span>
                     <hr>
-                    <span >싸다구 디저트들</span>
+                    <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
                     <!-- 가게 위치 지도로 표시-->
                     <div id="map"> </div>
                     <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
@@ -317,21 +317,20 @@
     //<!-- 목록 -->
     document.querySelector('.btn_list').addEventListener('click', e=>{
         console.log('수정');
-        location.href = [[@{|/great/zonning|}]];
+        location.href = [[@{|/zonning|}]];
     });
     //<!-- 수정 -->
     document.querySelector('.btn_modify').addEventListener('click', e=>{
         console.log('수정');
-        location.href = [[@{|/great/products/${form.pNumber}/edit|}]];
+        location.href = [[@{|/products/${form.pNumber}/edit|}]];
     });
     //<!-- 삭제 -->
     document.querySelector('.btn_del').addEventListener('click', e=>{
         if(!confirm('삭제하시겟습니까?')) return;
         console.log('삭제');
-        location.href = [[@{|/great/products/${form.pNumber}/del|}]];
+        location.href = [[@{|/products/${form.pNumber}/del|}]];
     });
 </script>
 </body>
 <script type="text/javascript" th:src="@{/js/product/store_location.js}"></script>
-
 </html>
