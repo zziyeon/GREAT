@@ -6,19 +6,19 @@ import java.util.List;
 
 public interface ProductSVC {
 
-    //상품등록
+    //상품 등록
     Product save(Product product);
 
-    //상품조회
+    //상품 조회
     Product findByProductNum(Long pNum);
 
-    //상품변경
+    //상품 변경
     int update(Long pNum, Product product);
 
-    //상품목록
+    //상품 목록
     List<Product> findAll();
 
-    //상품삭제
+    //상품 삭제
     int deleteByProductNum(Long pNum);
 
     //상품 관리
