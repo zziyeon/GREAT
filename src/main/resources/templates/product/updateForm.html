@@ -16,7 +16,7 @@
                 <table class="write_tb">
                     <tr>
                         <th ><label for="pTitle">글제목</label></th>
-                        <td colspan="3"><input class="title" type="text" th:field="*{pTitle}"  placeholder="제목을 입력하세요(30자 이내)"></td>
+                        <td colspan="3"><input class="title" type="text" th:field="*{pTitle}" placeholder="제목을 입력하세요(30자 이내)"></td>
                     </tr>
                     <tr>
                         <th><label for="pName">상품명</label></th>
@@ -26,8 +26,8 @@
                     </tr>
                     <tr>
                         <th><label for="pCategory">업종 </label></th>
-                        <td><select name="type of business" id="tob" th:field="*{pCategory}">
-                            <option value="tob" th:selected="selected" th:disabled="disabled">업종선택</option>
+                        <td><select name="type of business" id="tob" th:field="*{pCategory}" value="pCategory">
+                            <option value="tob" >==업종선택==</option>
                             <option value="한식">한식</option>
                             <option value="중식">중식</option>
                             <option value="일식">일식</option>
@@ -35,7 +35,7 @@
                             <option value="아시안식">아시안식</option>
                             <option value="분식">분식</option>
                             <option value="도시락">도시락</option>
-                            <option value="카페/디저트">카페/디저트</option>
+                            <option th:selected="${pCategory}=='카페/디저트'">카페/디저트</option>
                         </select></td>
                         <th><label for="remainCount">잔여 수량</label></th>
                         <td><input type="number" th:field="*{remainCount}" min="0"></td>
@@ -65,7 +65,7 @@
                     </tr>
                     <tr>
                         <th><label for="detailInfo">상세설명</label></th>
-                        <td colspan="3"><textarea name="detail_info" th:text="${detailInfo}" rows="10" autofocusw></textarea></td>
+                        <td colspan="3"><textarea name="detailInfo" th:field="*{detailInfo}" rows="10" autofocusw></textarea></td>
                     </tr>
 
                     <!-- <tr>
@@ -84,7 +84,6 @@
     <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 </form>
-
 <script th:inline="javascript">
 <!---->
 </script>
