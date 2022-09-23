@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="common_Head">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="마감 할인 상품 소개">
+        <meta name="keywords" content="food, sale">
+        <meta name="author" content="KH 3팀">
+<!--        <title>$Title$</title>-->
+        <link rel="stylesheet" th:href="@{/css/common/common.css}">
+        <link rel="icon" th:href="@{/css/common/icon.svg}">
+        <script src="https://kit.fontawesome.com/132ba309f6.js" crossorigin="anonymous"></script>
+    </th:block>
+</head>
+<body>
+<div class="wrapper">
+    <!--비회원-->
+    <header class="header container" th:fragment="header_nonmember">
+        <nav class="top-menu content">
+            <a href="" class="top-menu__join">회원가입</a>
+            <a href="" class="top-menu__login">로그인</a>
+            <a href="" class="top-menu__cs">고객센터</a>
+        </nav>
+        <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
+        <div th:replace="~{layout/common_ui::topBtn}"></div>
+    </header>
+
+    <!--고객회원-->
+    <header class="header container" th:fragment="header_customer">
+        <nav class="top-menu content">
+            <li class="top-menu__member"><a href="#">회원</a>님
+                <ul>
+                    <li><a href="#">좋아요</a></li>
+                    <li><a href="#">즐겨찾기</a></li>
+                    <li><a href="#">구매 내역</a></li>
+                    <li><i ></i></li>
+                    <li><a href="/메인/비회원.html">로그아웃</a></li>
+                </ul>
+            </li>
+            <a href="" class="top-menu__cs">고객센터</a>
+        </nav>
+        <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
+        <div th:replace="~{layout/common_ui::topBtn}"></div>
+    </header>
+
+    <!-- 점주회원 -->
+    <header class="header container" th:fragment="header_owner">
+        <nav class="top-menu content">
+            <li class="top-menu__member"><a href="#">점주</a>님
+                <ul>
+                    <li><a th:href="@{/great/products/add}">판매글 작성</a></li>
+                    <li><a th:href="@{/great/products/{ownerNumber}/manage}">상품 관리</a></li>
+                    <li><a href="/판매/판매내역.html">펀매 내역</a></li>
+                    <li><a href="#">내 프로필</a></li>
+                    <li><a href="/메인/비회원.html"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a></li>
+                </ul>
+            </li>
+            <a href="" class="top-menu__cs">고객센터</a>
+        </nav>
+        <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
+        <div th:replace="~{layout/common_ui::topBtn}"></div>
+    </header>
+
+    <!-- 공통 헤더 -->
+    <th:block th:fragment="common_header">
+        <div class="logo content"><a th:href="@{/great}">GR<span>EAT</span></a></div>
+        <nav class="bottom-menu content">
+            <div class="category">
+                <ul>
+                    <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
+                        <ul>
+                            <li><a th:href="@{/great/zonning}">남구</a></li>
+                            <li><a href="">중구</a></li>
+                            <li><a href="">북구</a></li>
+                            <li><a href="">동구</a></li>
+                            <li><a href="">울주군</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="search">
+                <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
+                <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+            </div>
+        </nav>
+    </th:block>
+
+    <!-- top버튼 -->
+    <div class="topbtn" th:fragment="topBtn">
+        <a href="#top"><i class="fa-solid fa-angles-up"></i></a>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer container" th:fragment="footer">
+        <p class="content">
+            footer부분
+        </p>
+    </footer>
+</div>
+</body>
+</html>

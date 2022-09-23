@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+    <title>판매글 보기 | GREAT</title>
+    <link rel="stylesheet" th:href="@{/css/product/product_view.css}">
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
+</head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout/common_ui::header_owner}"></header>
+    <form id="form" action="" method="post" th:object="${form}">
+        <main class="main container">
+            <article id="product-atf" class="product">
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://cdn.pixabay.com/photo/2016/10/27/22/12/cakes-1776661__340.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="p_store">
+                            <div class="store-profile">
+                                <img class="store-profile_img" src="/image/케이크.PNG" alt="">
+                            </div>
+                            <div class="p_store-info">
+                                <a href="">
+                                    <span name="memStoreName" th:text="${form.memStoreName}"></span>
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p_top">
+                            <div class="pTitle">
+                                <h3 name="p_title" th:text="${form.pTitle}"></h3>
+                            </div>
+                        </div>
+                        <div class="p_middle">
+                            <span id="discount_rate" name="discountRate" th:text="${form.discountRate}"></span>%
+                            <span name="salePrice" th:text="${form.salePrice}"></span>
+                            원
+                        </div>
+                        <div class="p_middle_bottom">
+                            <span class="nomal-price" name="normalPrice" th:text="${form.normalPrice}"></span>원
+                        </div>
+                        <div class="info">
+                            <dl>
+                                <dt>제품명</dt>
+                                <dd name="pName" th:text="${form.pName}"></dd>
+                            </dl>
+                            <dl>
+                                <dt> 잔여 수량</dt>
+                                <dd><span name="remainCount" th:text="${form.remainCount}"></span>개</dd>
+                            </dl>
+                            <dl>
+                                <dt>마감시간</dt>
+                                <dd name="deadlineTime" th:text="${form.deadlineTime}"></dd>
+<!--                                <dd name="deadline_time"  th:text="${#dates.format(form.deadline_time, 'yyyy-MM-dd HH:mm')}"></dd>-->
+                            </dl>
+                            <dl>
+                                <dt>결제 가능 방식</dt>
+                                <dd name="paymentOption" th:text="${form.paymentOption}"></dd>
+<!--                                <dd>온라인 결제, 현장 결제</dd>-->
+                            </dl>
+                        </div>
+                        <div class="product-btn">
+                            <button type="button" class="product-btn--like"><i class="fa-regular fa-heart"></i></button>
+                            <button type="button" class="product-btn--buy"> 구매하기</button>
+                            <button type="button" class="product-btn--like"><i class="fa-regular fa-bell"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- nav -->
+            <div class="tab-nab">
+                <div class="nav_tab">
+                    <a href="#s">
+                        <span>상품소개</span>
+                    </a>
+                </div>
+                <div class="nav_tab">
+                    <a href="#ss">
+                        <span>위치</span>
+                    </a>
+                </div>
+                <div class="nav_tab">
+                    <a href="">
+                        <span>댓글</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 정보 -->
+            <div class="goods_wrap">
+                <div class="goods_info" id="s">
+                    <h4>상품정보</h4>
+                    <hr>
+                    <div>
+                        <img src="" alt="">
+                    </div>
+                    <div class="content" >
+                        <p name="detail_info"  th:text="${form.detailInfo}">달콤한 달기와 </p>
+                    </div>
+                </div>
+                <!-- 가게 위치 지도 -->
+                <div class="store_location" id="ss">
+                    <span > 해당 가게 위치</span>
+                    <hr>
+                    <span >싸다구 디저트들</span>
+                    <!-- 가게 위치 지도로 표시-->
+                    <div id="map"> </div>
+                    <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
+                    <div class="custom_zoomcontrol radius_border">
+                        <span onclick="zoomIn()">
+                            <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
+                                 alt="확대">
+                        </span>
+                        <span onclick="zoomOut()"><img
+                                src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
+                                alt="축소"></span>
+                    </div>
+                    <!-- 가게 위치로 돌아가는 버튼 -->
+                    <button class="storeBtn" onclick="panTo()">가게위치</button>
+                </div>
+                <div id="reply">
+
+                </div>
+                <!-- 버튼 -->
+                <div class="product_page_btn">
+                    <button type="button" class="btn_list btn">목록</button>
+                    <div>
+                        <button type="button" class="btn_modify btn">수정</button>
+                        <button type="button" class="btn_del btn">삭제</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 댓글부분 -->
+            <!-- <div class="comment width--900px">
+
+
+                <div class="comment__title">
+                    <span><i class="fa-regular fa-comments"></i></span>
+                    <span>댓글</span>
+                    <span class="font-size--13px">5</span>
+                </div>
+
+                <div class="comment__list">
+                    <ul>
+                        <li class="writer">
+                            <div class="comment-box">
+                                <div class="comment-box__profile">
+                                    <a href=""><img src="../img/profile.jpg" alt=""></a>
+                                </div>
+                                <div class="comment-box__contents">
+                                    <div class="comment-box__top">
+                                        <a href="" class="comment-box__nickname font-size--13px  ">닉네임</a>
+                                        <div class="comment-box__info">
+                                            <a class="comment-box__modify font-size--12px" href="">수정</a>
+                                            <a class="comment-box__delete font-size--12px" href="">삭제</a>
+                                        </div>
+                                    </div>
+                                    <div class="comment-box__middle">
+                                        <p class="comment-box__text font-size--13px ">Lorem ipsum dolor, sit amet
+                                            consectetur adipisicing elit. Maiores, excepturi!</p>
+                                    </div>
+                                    <div class="comment-box__bottom">
+                                        <span class="comment-box__date font-size--12px">2022.08.02 14:25</span>
+                                        <a class="comment-box__reply font-size--12px" href="">답글</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="viewer">
+                            <div class="comment-box">
+                                <div class="comment-box__profile">
+                                    <a href=""><img src="../img/profile.jpg" alt=""></a>
+                                </div>
+                                <div class="comment-box__contents">
+                                    <div class="comment-box__top">
+                                        <a href="" class="comment-box__nickname font-size--13px  ">닉네임</a>
+                                        <div class="comment-box__info">
+                                            <a class="comment-box__report font-size--12px" href="">신고</a>
+                                        </div>
+                                    </div>
+                                    <div class="comment-box__middle">
+                                        <p class="comment-box__text font-size--13px ">Lorem ipsum dolor, sit amet
+                                            consectetur adipisicing elit. Maiores, excepturi!</p>
+                                    </div>
+                                    <div class="comment-box__bottom">
+                                        <span class="comment-box__date font-size--12px">2022.08.02 14:25</span>
+                                        <a class="comment-box__reply font-size--12px" href="">답글</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="comment__write">
+                            <div class="reply-box reply-write">
+                                <div class="reply-box__top">
+                                    <span class="reply-box__nickname font-size--13px">닉네임</span>
+                                </div>
+                                <div class="reply-box__middle">
+                                    <textarea class="reply-box__text" name="" id="" cols="30" rows="10"
+                                        placeholder="댓글을 입력하세요." autofocus></textarea>
+                                </div>
+                                <div class="reply-box__bottom">
+                                    <button class="reply-box__register-btn font-size--12px" href="">등록</button>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="viewer">
+                            <div class="comment-box">
+                                <div class="comment-box__profile">
+                                    <a href=""><img src="../img/profile.jpg" alt=""></a>
+                                </div>
+                                <div class="comment-box__contents">
+                                    <div class="comment-box__top">
+                                        <a href="" class="comment-box__nickname font-size--13px  ">닉네임</a>
+                                        <div class="comment-box__info">
+                                            <a class="comment-box__report font-size--12px" href="">신고</a>
+                                        </div>
+                                    </div>
+                                    <div class="comment-box__middle">
+                                        <p class="comment-box__text font-size--13px ">Lorem ipsum dolor, sit amet
+                                            consectetur adipisicing elit. Maiores, excepturi!</p>
+                                    </div>
+                                    <div class="comment-box__bottom">
+                                        <span class="comment-box__date font-size--12px">2022.08.02 14:25</span>
+                                        <a class="comment-box__reply font-size--12px" href="">답글</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="reply-viewer">
+                            <div class="comment-box">
+                                <div class="comment-box__profile">
+                                    <a href=""><img src="../img/profile.jpg" alt=""></a>
+                                </div>
+                                <div class="comment-box__contents">
+                                    <div class="comment-box__top">
+                                        <a href="" class="comment-box__nickname font-size--13px  ">닉네임</a>
+                                        <div class="comment-box__info">
+                                            <a class="comment-box__report font-size--12px" href="">신고</a>
+                                        </div>
+                                    </div>
+                                    <div class="comment-box__middle">
+                                        <p class="comment-box__text font-size--13px ">Lorem ipsum dolor, sit amet
+                                            consectetur adipisicing elit. Maiores, excepturi!</p>
+                                    </div>
+                                    <div class="comment-box__bottom">
+                                        <span class="comment-box__date font-size--12px">2022.08.02 14:25</span>
+                                        <a class="comment-box__reply font-size--12px" href="">답글</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="reply-writer">
+                            <div class="comment-box">
+                                <div class="comment-box__profile">
+                                    <a href=""><img src="../img/profile.jpg" alt=""></a>
+                                </div>
+                                <div class="comment-box__contents">
+                                    <div class="comment-box__top">
+                                        <a href="" class="comment-box__nickname font-size--13px  ">닉네임</a>
+                                        <div class="comment-box__info">
+                                            <a class="comment-box__modify font-size--12px" href="">수정</a>
+                                            <a class="comment-box__delete font-size--12px" href="">삭제</a>
+                                        </div>
+                                    </div>
+                                    <div class="comment-box__middle">
+                                        <p class="comment-box__text font-size--13px ">Lorem ipsum dolor, sit amet
+                                            consectetur adipisicing elit. Maiores, excepturi!</p>
+                                    </div>
+                                    <div class="comment-box__bottom">
+                                        <span class="comment-box__date font-size--12px">2022.08.02 14:25</span>
+                                        <a class="comment-box__reply font-size--12px" href="">답글</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="comment__write">
+                    <div class="reply-box">
+                        <div class="reply-box__top">
+                            <span class="reply-box__nickname font-size--13px">닉네임</span>
+                        </div>
+                        <div class="reply-box__middle">
+                            <textarea class="reply-box__text" name="" id="" cols="30" rows="10" placeholder="댓글을 입력하세요."
+                                autofocus></textarea>
+                        </div>
+                        <div class="reply-box__bottom">
+                            <button class="reply-box__register-btn font-size--12px" href="">등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <!-- //댓글부분 -->
+
+        </main>
+        <!-- //main -->
+    </form>
+    <footer th:replace="~{layout/common_ui::footer}"></footer>
+</div>
+</form>
+
+<script th:inline="javascript">
+    //<!-- 목록 -->
+    document.querySelector('.btn_list').addEventListener('click', e=>{
+        console.log('수정');
+        location.href = [[@{|/great/zonning|}]];
+    });
+    //<!-- 수정 -->
+    document.querySelector('.btn_modify').addEventListener('click', e=>{
+        console.log('수정');
+        location.href = [[@{|/great/products/${form.pNumber}/edit|}]];
+    });
+    //<!-- 삭제 -->
+    document.querySelector('.btn_del').addEventListener('click', e=>{
+        if(!confirm('삭제하시겟습니까?')) return;
+        console.log('삭제');
+        location.href = [[@{|/great/products/${form.pNumber}/del|}]];
+    });
+</script>
+</body>
+<script type="text/javascript" th:src="@{/js/product/store_location.js}"></script>
+
+</html>

@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+:root {
+  --main-color-yel : #f1c40f;
+  --mainBtn-color-gre : #e0e0e0;
+  --main-color-gre : #eee;
+  --main-text-gre : #979797;
+  --color-red: rgb(219, 36, 36);
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+    <title>판매 내역 | GREAT</title>
+    <link rel="stylesheet" th:href="@{/css/product/판매내역.css}">
+</head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout/common_ui::header_owner}"></header>
+    <!-- main -->
+    <main class="main container">
+        <div class="main-side-left">
+            <ul>
+                <li class="p-manage">
+                    <h3><a href="/판매/상품관리.html">상품 관리</a></h3>
+                </li>
+                <li class="p-manage p-manage-choice">
+                    <h3><a href="/판매/판매내역.html">판매 내역</a></h3>
+                    <i class="fa-solid fa-angle-right"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="main-side-right">
+            <div class="main-head">
+                <div class="main-title">
+                    <i class="bar"></i>
+                    <h2>판매내역</h2>
+                    <span>고객과 거래한 내역을 확인하실 수 있습니다.</span>
+                </div>
+                <img src="/판매/img/판매내역.png" alt="">
+            </div>
+            <div class="order-manage">
+                <div class="order-choice">
+                    <div class="drop__period">
+                        <input type="date" name="" id="">~<input type="date" name="" id="">
+                        <button>조회</button>
+                    </div>
+                    <div class="drop__status">
+                        <select name="" id="">
+                            <option value="픽업 상태" selected disabled>픽업 상태</option>
+                            <option value="전체">전체</option>
+                            <option value="픽업 예정">픽업 예정</option>
+                            <option value="픽업 완료">픽업 완료</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ordered-list">
+                    <table class="sell_list-tb">
+                        <tr class="table_header">
+                            <th>주문번호</th>
+                            <th>주문일시</th>
+                            <th>구매자<br>(닉네임)</th>
+                            <th>상품명</th>
+                            <th>수량</th>
+                            <th>총주문액</th>
+                            <th>픽업시간</th>
+                            <th>결제 유형</th>
+                            <th>픽업상태</th>
+                        </tr>
+                        <tr th:each="rec : ${list}">
+                            <td><span>D000001</span></td>
+                            <td><span>2022-08-03</span></td>
+                            <td><span>콘</span></td>
+                            <td><a href="">[[${rec.pName}]]</a></td>
+                            <td><span>2</span>개</td>
+                            <td><span>13,000</span>원</td>
+                            <td><span>18:50</span></td>
+                            <td>온라인 결제</td>
+                            <td>
+                                <select name="" id="">
+                                    <option value="픽업 예정">픽업 예정</option>
+                                    <option value="픽업 완료">픽업 완료</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="page-move-btn">
+                            <span>
+                                <a href="#"><</a>
+                                <a href="#">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                                <a href="#">></a>
+                            </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- //main -->
+    <footer th:replace="~{layout/common_ui::footer}"></footer>
+</div>
+</body>
+</html>
