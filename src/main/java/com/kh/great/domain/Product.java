@@ -5,18 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
     private Long pNumber;           //상품번호    P_NUMBER	NUMBER(6,0)
-    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
+//    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
 //    private String storeName;       //가게명    STORE_NAME	VARCHAR2(60 BYTE)
     private String pTitle;          //상품 제목    P_TITLE	VARCHAR2(90 BYTE)
     private String pName;           //상품명    P_NAME	VARCHAR2(60 BYTE)
-    private Date deadlineTime;    //마감일자    DEADLINE_TIME	DATE
+    private String deadlineTime;    //마감일자    DEADLINE_TIME	DATE
     private String pCategory;      //업종카테고리    CATEGORY	VARCHAR2(17 BYTE)
     private Integer totalCount;     //총수량    TOTAL_COUNT	NUMBER(5,0)
     private Integer remainCount;    //남은 수량    REMAIN_COUNT	NUMBER(5,0)
@@ -28,4 +27,6 @@ public class Product {
     private LocalDateTime rDate;    //등록일    R_DATE DATE DEFAULT SYSDATE
     private LocalDateTime uDate;    //수정일    U_DATE	DATE DEFAULT SYSDATE
     private Integer pStatus;        //판매상태    P_STATUS	NUMBER(1,0)
+
+    private Member member;
 }
