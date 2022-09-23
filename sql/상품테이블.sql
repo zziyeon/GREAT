@@ -1,5 +1,5 @@
 drop table product_info;
---»óÇ° Å×ÀÌºí »ı¼º
+--ìƒí’ˆ í…Œì´ë¸” ìƒì„±
 create table product_info(
     P_NUMBER NUMBER(30, 0)
 ,    OWNER_NUMBER NUMBER(6, 0)
@@ -16,15 +16,17 @@ create table product_info(
 ,    DETAIL_INFO VARCHAR2(4000 BYTE)
 ,    R_DATE DATE default sysdate
 ,    U_DATE DATE default sysdate
-,    P_STATUS NUMBER(1, 0)
+,    P_STATUS NUMBER(1, 0) default 0
 );
 
---±âº»Å° ¼³Á¤
+--ê¸°ë³¸í‚¤ ì„¤ì •
 ALTER TABLE PRODUCT_INFO ADD CONSTRAINT product_info_p_id_pk PRIMARY key(p_NUMBER);
- --¿Ü·¡Å° ¼³Á¤
+ --ì™¸ë˜í‚¤ ì„¤ì •
  alter table PRODUCT_INFO ADD CONSTRAINT product_info_p_num_fk FOREIGN key(OWNER_NUMBER) REFERENCES member(mem_number) on delete cascade;
 
 drop sequence PRODUCT_P_NUMBER_SEQ;
--- »óÇ°¹øÈ£ ½ÃÄö½º »ı¼º
+-- ìƒí’ˆë²ˆí˜¸ ì‹œí€€ìŠ¤ ìƒì„±
 create sequence PRODUCT_P_NUMBER_SEQ;
 
+-- íŒë§¤ìƒíƒœ(0,1ë§Œ ì„ íƒ ê°€ëŠ¥)
+ALTER TABLE PRODUCT_INFO ADD CONSTRAINT porduct_info_p_status_ck CHECK (P_STATUS =0 OR P_STATUS =1);
