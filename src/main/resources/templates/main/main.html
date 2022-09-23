@@ -48,7 +48,7 @@
         <section class="title content">오늘의 마감 할인!</section>
         <section class="items content">
             <div class="item" th:each="rec:${list}" th:data-product-num="${rec.pNumber}">
-                <a th:href="@{/great/products/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"
+                <a th:href="@{/products/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"
                                                     alt=""></a>
                 <button class="heart_Btn"><i class="fa-regular fa-heart"></i></button>
                 <a href="#" class="item__title">[[${rec.pName}]]</a>
