@@ -1,5 +1,6 @@
 package com.kh.great.domain.dao.product;
 
+import com.kh.great.domain.Member;
 import com.kh.great.domain.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,13 +8,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class ProductDAOImpl implements ProductDAO {
                 pstmt.setLong(1, product.getPNumber());
                 pstmt.setString(2, product.getPTitle());
                 pstmt.setString(3, product.getPName());
-                pstmt.setDate(4, (Date) product.getDeadlineTime());
+                pstmt.setString(4, product.getDeadlineTime());
                 log.info("product.getDeadline_time()=>{}", product.getDeadlineTime());
                 pstmt.setString(5, product.getPCategory());
                 pstmt.setInt(6, product.getTotalCount());
@@ -54,6 +56,7 @@ public class ProductDAOImpl implements ProductDAO {
                 pstmt.setInt(10, (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice());
                 pstmt.setString(11, product.getPaymentOption());
                 pstmt.setString(12, product.getDetailInfo());
+
                 return pstmt;
             }
         }, keyHolder);
@@ -68,14 +71,24 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
         sql.append("select  *  ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number = m.mem_number and p_number=? ");
+        sql.append("where p.owner_number = m.mem_number and p.owner_number=9 ");
 
         Product product = null;
+
         try {
-            product=jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Product.class), pNum);
-        } catch (DataAccessException e) {
+            product= jt.queryForObject(sql.toString(),new RowMapper<Product>(){
+                @Override
+                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
+                    Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
+                    product.setMember(member);
+                    return product;
+                }
+            });
+        }catch (DataAccessException e) {
             log.info("조회할 상품이 없습니다. 상품번호={}", pNum);
         }
+        log.info("product={}", product);
         return product;
     }
     //상품수정
@@ -85,10 +98,10 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
 
         sql.append("update product_info ");
-        sql.append("SET p_title = ?, P_NAME=?, DEADLINE_TIME = ?, CATEGORY=?, TOTAL_COUNT = ?, REMAIN_COUNT=?, NORMAL_PRICE = ?, SALE_PRICE = ?, DISCOUNT_RATE=?, PAYMENT_OPTION=?, detail_info=? ");
+        sql.append("SET p_title = ?, P_NAME=?, DEADLINE_TIME = TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), CATEGORY=?, REMAIN_COUNT=?, NORMAL_PRICE = ?, SALE_PRICE = ?, DISCOUNT_RATE=?, PAYMENT_OPTION=?, detail_info=? ");
         sql.append("WHERE p_number = ? ");
 
-//        result=jt.update(sql.toString(), product.getP_title(), product.getP_name(), product.getDeadline_time(), product.getP_category(), product.getTotal_count(), product.getRemain_count(), product.getNormal_price(), product.getSale_price(), product.getDiscount_rate(), product.getPayment_option(), product.getDetail_info(), product.getP_number() );
+        result=jt.update(sql.toString(), product.getPTitle(), product.getPName(), product.getDeadlineTime(), product.getPCategory(), product.getRemainCount(), product.getNormalPrice(), product.getSalePrice(), (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice(), product.getPaymentOption(), product.getDetailInfo(), pNum );
 
         return result;
     }
@@ -121,11 +134,19 @@ public class ProductDAOImpl implements ProductDAO {
 
         sql.append("select p.P_NUMBER, p.P_STATUS, p.P_NAME, p.SALE_PRICE, p.REMAIN_COUNT, p.TOTAL_COUNT ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=? ");
+        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=10 ");
 
         List<Product> result =null;
         try {
-            result= jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class), ownerNumber);
+            result= jt.query(sql.toString(),new RowMapper<Product>(){
+                @Override
+                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
+                    Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
+                    product.setMember(member);
+                    return product;
+                }
+            });
         } catch (DataAccessException e) {
             log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
         }
