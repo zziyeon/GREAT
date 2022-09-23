@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/great")
+@RequestMapping("")
 @RequiredArgsConstructor
 public class MainController {
     final ProductSVC productSVC;
