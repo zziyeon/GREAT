@@ -154,7 +154,7 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> pManage(Long ownerNumber) {
         StringBuffer sql = new StringBuffer();
 
-        sql.append("select p.P_NUMBER, p.P_STATUS, p.P_NAME, p.SALE_PRICE, p.REMAIN_COUNT, p.TOTAL_COUNT ");
+        sql.append("select p.P_NUMBER, p.P_STATUS, p.P_NAME, p.SALE_PRICE, p.REMAIN_COUNT, p.TOTAL_COUNT, P.R_DATE ");
         sql.append("from product_info P, member M ");
         sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
 
@@ -175,13 +175,13 @@ public class ProductDAOImpl implements ProductDAO {
         return result;
     }
 
-    //상품 관리
+    // 판매 내역
     public List<Product> saleList(Long ownerNumber) {
         StringBuffer sql = new StringBuffer();
 
         sql.append("select *");
         sql.append("from product_info P, member M, Deal D ");
-        sql.append("where p.owner_number = m.mem_number and and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("where p.owner_number = m.mem_number and d.p_Number=p.p_Number and m.mem_type='owner' and p.owner_number=9 ");
 
         List<Product> result =null;
         try {
@@ -193,6 +193,8 @@ public class ProductDAOImpl implements ProductDAO {
                     Deal deal = (new BeanPropertyRowMapper<>(Deal.class)).mapRow(rs,rowNum);
                     product.setMember(member);
                     product.setDeal(deal);
+
+                    log.info("product={}", product);
                     return product;
                 }
             });
