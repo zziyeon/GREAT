@@ -6,9 +6,6 @@
 }
 
 /* figure */
-.active {   
-  color: red;
-}
 .figure {
   display: flex;
   position: relative;

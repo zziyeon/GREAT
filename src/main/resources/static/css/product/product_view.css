@@ -92,20 +92,22 @@ dl > dt {
     font-weight: bold;
     /* line-height: 19px; */
 }
-
-.product-info > .product-btn > button {
+.product-info > .product-btn {
+    display:flex;
+}
+.product-info > .product-btn > .wrapBtn> button {
     height: 35px;    
     font-weight: bold;    
     border: none;
     border-radius: 8px;
 }
 
-.product-info > .product-btn > .product-btn--like {
+.product-info > .product-btn > .wrapBtn > .product-btn--like {
     width: 50px;
     font-size: 20px;
 }
 
-.product-info > .product-btn > .product-btn--buy {
+.product-info > .product-btn > .wrapBtn > .product-btn--buy {
     width: 300px;
     background-color: var(--main-color-yel);
 }

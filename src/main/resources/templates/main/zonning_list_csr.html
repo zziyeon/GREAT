@@ -1,0 +1,120 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko"-->
+<!--      xmlns:th="https://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>-->
+<!--    <title>지역별 | GREAT</title>-->
+<!--    <link rel="stylesheet" th:href="@{/css/product/음식 카테고리.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="wrapper">-->
+<!--    <header th:replace="~{layout/common_ui::header_nonmember}"></header>-->
+<!--    <main class="main container">-->
+<!--        <section class="title content">남구</section>-->
+<!--        <section class="food-type">-->
+<!--            <ul>-->
+<!--                <li id="food-type_selected"><a href="">전체</a></li>-->
+<!--                <li><a href="">한식</a></li>-->
+<!--                <li><a href="">중식</a></li>-->
+<!--                <li><a href="">일식</a></li>-->
+<!--                <li><a href="">양식</a></li>-->
+<!--                <li><a href="">아시안식</a></li>-->
+<!--                <li><a href="">분식</a></li>-->
+<!--                <li><a href="">도시락</a></li>-->
+<!--                <li><a href="">디저트</a></li>-->
+<!--            </ul>-->
+<!--        </section>-->
+<!--        <div class="view_array" >-->
+<!--            <div class="view_array-total">총 <span th:text="|${list.size}|"></span> 건</div>-->
+<!--            <div class="view_array-type">-->
+<!--                <ul>-->
+<!--                    <li><a href="javascript: recentList();">최신순</a></li>-->
+<!--                    <li><a href="javascript: discountListDesc();">높은 할인순</a></li>-->
+<!--                    <li><a href="javascript: priceList();">낮은 가격순</a></li>-->
+<!--                    <li><a href="javascript: priceListDesc();">높은 가격순</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; main에 리스트들 &ndash;&gt;-->
+<!--        <section th:replace="~{layout/product_ui::each_product}"></section>-->
+<!--    </main>-->
+<!--    <footer th:replace="~{layout/common_ui::footer}"></footer>-->
+<!--</div>-->
+<!--<script>-->
+<!--    // 전체 목록 가져오기-->
+<!--    findAll();-->
+
+<!--    // 최신순 클릭시-->
+<!--    function recentList() {-->
+<!--        const url=`http://localhost:9080/api/zonning/recentList`;-->
+<!--        fetch(url, {-->
+<!--            method: 'GET';-->
+<!--            headers: {-->
+<!--                'Accept': 'application/json';-->
+<!--            }-->
+<!--        }).then(res=> {-->
+
+<!--        }-->
+<!--    }-->
+
+<!--    // 높은 할인순 클릭시-->
+<!--    function discountListDesc() {-->
+<!--        const url=`http://localhost:9080/api/zonning/discountListDesc`;-->
+<!--        fetch(url, {-->
+<!--            method: 'GET';-->
+<!--            headers: {-->
+<!--                'Accept': 'application/json';-->
+<!--            }-->
+<!--        }).then(res=> {-->
+
+<!--        }-->
+<!--    }-->
+
+<!--    // 낮은 가격순 클릭시-->
+<!--    function priceList() {-->
+<!--        const url=`http://localhost:9080/api/zonning/priceList`;-->
+<!--        fetch(url, {-->
+<!--            method: 'GET';-->
+<!--            headers: {-->
+<!--                'Accept': 'application/json';-->
+<!--            }-->
+<!--        }).then(res=> {-->
+
+<!--        }-->
+<!--    }-->
+
+<!--    // 높은 가격순 클릭시-->
+<!--    function priceListDesc() {-->
+<!--        const url=`http://localhost:9080/api/zonning/priceListDesc`;-->
+<!--        fetch(url, {-->
+<!--            method: 'GET';-->
+<!--            headers: {-->
+<!--                'Accept': 'application/json';-->
+<!--            }-->
+<!--        }).then(res=> {-->
+
+<!--        }-->
+<!--    }-->
+
+<!--    // 목록-->
+<!--    function findAll(){-->
+<!--        const url=`http://localhost:9080/api/zonning`;-->
+<!--        fetch(url, {-->
+<!--            method: 'GET',-->
+<!--            headers: {-->
+<!--                'Accept': 'application/json';-->
+<!--            }-->
+<!--        }).then(res=>{-->
+<!--            console.log(res);-->
+<!--            if(res.header.rtcd=='00'){-->
+<!--                const result = res.data.map(product => {-->
+<!--                    return `  `;-->
+<!--                });-->
+<!--                console.log(result.join(''));-->
+<!--&lt;!&ndash;                document.querySelector('#productList .wrap .body').innerHTML=result.join('');&ndash;&gt;-->
+<!--            }-->
+<!--        }).catch(err=>console.log(err));-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

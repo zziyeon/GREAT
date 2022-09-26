@@ -89,6 +89,28 @@
 }
 
 /* main 리스트들 */
+
+.main > .item_none {
+  display : flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.main > .item_none > .item > img {
+  width: 400px;
+}
+.main > .item_none > .item > .text_soldout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+u {
+  text-decoration: wavy rgb(210, 25, 25) underline;
+}
+
 .main > .items {
   display : flex;
   flex-wrap: wrap;

@@ -14,10 +14,10 @@
         <div class="main-side-left">
             <ul>
                 <li class="p-manage">
-                    <h3><a href="/판매/상품관리.html">상품 관리</a></h3>
+                    <h3><a th:href="@{/products/9/manage}">상품 관리</a></h3>
                 </li>
                 <li class="p-manage p-manage-choice">
-                    <h3><a href="/판매/판매내역.html">판매 내역</a></h3>
+                    <h3><a th:href="@{/products/9/saleList}">판매 내역</a></h3>
                     <i class="fa-solid fa-angle-right"></i>
                 </li>
             </ul>
@@ -29,7 +29,7 @@
                     <h2>판매내역</h2>
                     <span>고객과 거래한 내역을 확인하실 수 있습니다.</span>
                 </div>
-                <img src="/판매/img/판매내역.png" alt="">
+                <img th:src="@{/img/product/판매내역.png}">
             </div>
             <div class="order-manage">
                 <div class="order-choice">
