@@ -57,18 +57,32 @@
 <!--        }-->
 <!--    }-->
 
-<!--    // 높은 할인순 클릭시-->
-<!--    function discountListDesc() {-->
-<!--        const url=`http://localhost:9080/api/zonning/discountListDesc`;-->
-<!--        fetch(url, {-->
-<!--            method: 'GET';-->
-<!--            headers: {-->
-<!--                'Accept': 'application/json';-->
-<!--            }-->
-<!--        }).then(res=> {-->
+    // 높은 할인순 클릭시
+    function discountListDesc() {
+            const url=`http://localhost:9080/api/zonning/discountListDesc`;
+        fetch(url, {
+            method: 'GET';
+            headers: {
+                'Accept': 'application/json';
+            }
+        }).then(res=>res.json())
+        .then(res=>{
+          console.log("1111"+res);
+          if(res.header.rtcd == '00'){
+            const result =
+              res.data.map(product=>{
+                  return `<div>${product.productId}</div>
+                          <div><a href='#' onclick='findById(${product.productId})'>${product.pname}</a></div>
+                          <div>${product.quantity}</div>
+                          <div>${product.price}</div>`;
+               });
+            console.log(result.join(''));
+            document.querySelector('#productList .wrap .body').innerHTML=result.join('');
+          }else{
 
-<!--        }-->
-<!--    }-->
+          }
+        }).catch(err=>console.log(err));
+    }
 
 <!--    // 낮은 가격순 클릭시-->
 <!--    function priceList() {-->
