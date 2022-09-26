@@ -60,24 +60,24 @@
                 <th>기능</th>
               </tr>
               <tr th:each="rec : ${list}">
-                <td>1</td>
+                <td>[[${recStat.count}]]</td>
                 <td><img src="https://media.istockphoto.com/photos/fresh-strawberry-cake-with-cream-in-close-up-picture-id1316260838?b=1&k=20&m=1316260838&s=170667a&w=0&h=tVFyqbMds3BXZP5AyAV3xxvcKKng59gxLkLSoFEZRDM="
                          alt=""></td>
                 <td>
                   <select name="" id="">
                     <option value="판매중">판매중</option>
-                    <option value="예약중">예약중</option>
                     <option value="삭제">삭제</option>
                     <option value="판매완료">판매완료</option>
                   </select>
                 </td>
-                <td>[[${rec.pName}]]</td>
+                <td><a th:href="@{/products/{pNumber}(pNumber=${(rec.pNumber)})}">[[${rec.pName}]]</a></td>
                 <td>[[${rec.salePrice}]]원</td>
                 <td>[[${rec.remainCount}]]/[[${rec.totalCount}]]개</td>
-                <td><span>[[${rec.rDate}]]</span></td>
+                <td th:text="${#strings.substring(rec.rDate,0,10)}"></td>
                 <td><a class="updateBtn" th:href="@{/products/{pNumber}/edit(pNumber=${(rec.pNumber)})}">수정</a></td>
               </tr>
             </table>
+            <div th:replace="~{layout/common_ui::pagingBtn}"></div>
           </div>
         </div>
       </div>

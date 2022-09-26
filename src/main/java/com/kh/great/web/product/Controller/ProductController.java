@@ -153,7 +153,7 @@ public class ProductController {
     //판매 내역 목록
     @GetMapping("/{ownerNumber}/saleList")
     public String saleList(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
-        List<Product> list = productSVC.pManage(ownerNumber);
+        List<Product> list = productSVC.saleList(ownerNumber);
         model.addAttribute("list", list);
 
         return "product/saleList";

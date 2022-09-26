@@ -215,6 +215,22 @@
 .bottom-menu>.search .search__search-icon {
     color: grey;
 }
+// 페이징 버튼
+.board__page {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.board__page--select a {
+    margin: 0 3px;
+    font-size: 13px;
+}
+
+.board__page--select a:hover{
+    background-color: var(--mainBtn-color-gre);
+    border-radius: 5px;
+}
 
 /* footer */
 .footer {
