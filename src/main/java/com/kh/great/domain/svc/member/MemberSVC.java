@@ -1,8 +1,9 @@
-package com.kh.great.domain.svc.member;
+package com.kh.great3.domain.svc;
 
-import com.kh.great.domain.Member;
+import com.kh.great3.domain.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberSVC {
     /**
@@ -13,11 +14,19 @@ public interface MemberSVC {
     Member join(Member member);
 
     /**
+     * 로그인
+     * @param memId 아이디
+     * @param memPassword 패스워드
+     * @return 회원
+     */
+    Optional<Member> login(String memId, String memPassword);
+
+    /**
      * 조회 by 회원아이디
      * @param memNumber 회원아이디
      * @return 회원정보
      */
-    Member findById(int memNumber);
+    Member findByMemNumber(Long memNumber);
 
     /**
      * 수정
@@ -25,14 +34,14 @@ public interface MemberSVC {
      * @param member  수정할 정보
      * @return 수정건수
      */
-    int update(int memNumber, Member member);
+    Long update(Long memNumber, Member member);
 
     /**
      * 탈퇴
      * @param memNumber 회원아이디
      * @return 삭제건수
      */
-    int delete(int memNumber);
+    Long delete(Long memNumber);
 
     /**
      * 목록
