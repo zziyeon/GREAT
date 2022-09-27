@@ -15,6 +15,7 @@ function recentList() {
           if(res.header.rtcd == '00'){
             const result =
               res.data.map(product=>{
+                    product.deadlineTime = product.deadlineTime.substr(10,6);
                   return ` <div class="item">
                                 <a href="/products/${product.pnumber}" class="item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"  alt=""></a>
                                 <button class="heart_Btn"><i class="heartIcon far fa-heart fas"></i></button>
