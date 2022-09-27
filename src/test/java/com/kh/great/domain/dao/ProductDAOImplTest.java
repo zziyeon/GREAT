@@ -1,10 +1,12 @@
 package com.kh.great.domain.dao;
 
-import com.kh.great.domain.Product;
+
 import com.kh.great.domain.dao.product.ProductDAO;
+import com.kh.great.domain.entity.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

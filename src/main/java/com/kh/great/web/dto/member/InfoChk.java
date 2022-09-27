@@ -1,5 +1,4 @@
-package com.kh.great3.web.form;
-
+package com.kh.great.web.dto.member;
 import lombok.Data;
 
 @Data

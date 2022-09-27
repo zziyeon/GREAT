@@ -1,4 +1,4 @@
-package com.kh.great3.domain;
+package com.kh.great.domain.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

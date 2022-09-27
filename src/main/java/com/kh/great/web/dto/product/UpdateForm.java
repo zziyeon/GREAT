@@ -1,6 +1,6 @@
-package com.kh.great.web.product.dto;
+package com.kh.great.web.dto.product;
 
-import com.kh.great.domain.Member;
+import com.kh.great.domain.entity.Member;
 import lombok.Data;
 
 @Data

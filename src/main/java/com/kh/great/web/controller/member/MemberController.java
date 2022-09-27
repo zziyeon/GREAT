@@ -1,9 +1,10 @@
-package com.kh.great3.web;
+package com.kh.great.web.controller.member;
 
-import com.kh.great3.domain.Member;
-import com.kh.great3.domain.svc.MemberSVC;
-import com.kh.great3.web.form.Info;
-import com.kh.great3.web.form.InfoChk;
+
+import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.svc.member.MemberSVC;
+import com.kh.great.web.dto.member.Info;
+import com.kh.great.web.dto.member.InfoChk;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

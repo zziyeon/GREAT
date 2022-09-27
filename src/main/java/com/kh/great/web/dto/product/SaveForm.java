@@ -1,5 +1,4 @@
-package com.kh.great.web.product.dto;
-
+package com.kh.great.web.dto.product;
 import lombok.Data;
 @Data
 public class SaveForm {

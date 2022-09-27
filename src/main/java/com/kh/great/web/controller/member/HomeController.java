@@ -1,9 +1,10 @@
-package com.kh.great3.web;
+package com.kh.great.web.controller.member;
 
-import com.kh.great3.domain.Member;
-import com.kh.great3.domain.svc.MemberSVC;
-import com.kh.great3.web.form.*;
-import com.kh.great3.web.session.LoginMember;
+import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.svc.member.MemberSVC;
+import com.kh.great.domain.svc.product.ProductSVC;
+import com.kh.great.web.dto.member.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -22,15 +24,17 @@ import java.util.Optional;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class HomeController {
-
+    final ProductSVC productSVC;
     private final MemberSVC memberSVC;
 
     @GetMapping
-    public String home(HttpServletRequest request) {
+    public String home(HttpServletRequest request, Model model) {
+        List<Product> list = productSVC.today_deadline();
+        model.addAttribute("list", list);
 
         String view = null;
         HttpSession session = request.getSession(false);
-        view = (session == null) ? "main" : "mainMember" ;
+        view = (session == null) ? "main/main" : "main/mainMember" ;
 
         return view;
 //        return "main";
@@ -94,11 +98,10 @@ public class HomeController {
     //회원가입 완료 화면
     @GetMapping("/joinComplete")
     public String joinComplete(
-            @ModelAttribute("join") JoinComplete joinComplete,
-            MemberVO memberVO
+            @ModelAttribute("join") JoinComplete joinComplete
     ) {
 
-        return "joinComplete";    //회원가입 화면
+        return "member/joinComplete";    //회원가입 화면
     }
 
     //아이디 찾기 화면
@@ -155,7 +158,7 @@ public class HomeController {
         }
 
         //세션에 회원정보 저장
-        LoginMember loginMember = new LoginMember(member.get().getMemNumber(), member.get().getMemType(),
+        com.kh.great3.web.session.LoginMember loginMember = new com.kh.great3.web.session.LoginMember(member.get().getMemNumber(), member.get().getMemType(),
                 member.get().getMemId(), member.get().getMemNickname(), member.get().getMemStoreName());
 
         //세션 생성

@@ -1,7 +1,8 @@
-package com.kh.great3.domain.svc;
+package com.kh.great.domain.svc.member;
 
-import com.kh.great3.domain.Member;
-import com.kh.great3.domain.dao.MemberDAO;
+
+import com.kh.great.domain.dao.member.MemberDAO;
+import com.kh.great.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package com.kh.great.web.main;
+package com.kh.great.web.controller.main;
 
-import com.kh.great.domain.Product;
+import com.kh.great.domain.entity.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +19,14 @@ import java.util.List;
 public class MainController {
     final ProductSVC productSVC;
 
-    //홈페이지 메인
-    @GetMapping("")
-    public String main(Model model) {
-        List<Product> list = productSVC.today_deadline();
-        model.addAttribute("list", list);
-
-        return "main/main";
-    }
+//    //홈페이지 메인
+//    @GetMapping("")
+//    public String main(Model model) {
+//        List<Product> list = productSVC.today_deadline();
+//        model.addAttribute("list", list);
+//
+//        return "main/main";
+//    }
 
     //지역별 상품 목록
     @GetMapping("/zonning")

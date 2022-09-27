@@ -1,8 +1,9 @@
 package com.kh.great.domain.dao.product;
 
-import com.kh.great.domain.Deal;
-import com.kh.great.domain.Member;
-import com.kh.great.domain.Product;
+
+import com.kh.great.domain.entity.Deal;
+import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.entity.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;

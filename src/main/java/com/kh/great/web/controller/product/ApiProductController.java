@@ -1,6 +1,6 @@
-package com.kh.great.web.product.Controller;
+package com.kh.great.web.controller.product;
 
-import com.kh.great.domain.Product;
+import com.kh.great.domain.entity.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.ApiResponse;
 import lombok.RequiredArgsConstructor;
