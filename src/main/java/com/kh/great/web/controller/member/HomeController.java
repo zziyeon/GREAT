@@ -1,8 +1,10 @@
-package com.kh.great3.web.controller;
+package com.kh.great.web.controller.member;
 
-import com.kh.great3.domain.Member;
-import com.kh.great3.domain.svc.MemberSVC;
-import com.kh.great3.web.form.*;
+import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.svc.member.MemberSVC;
+import com.kh.great.domain.svc.product.ProductSVC;
+import com.kh.great.web.dto.member.*;
 import com.kh.great3.web.session.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -24,9 +27,13 @@ import java.util.Optional;
 public class HomeController {
 
     private final MemberSVC memberSVC;
+    final ProductSVC productSVC;
 
     @GetMapping
-    public String home(HttpServletRequest request) {
+    public String home(HttpServletRequest request, Model model) {
+
+        List<Product> list = productSVC.today_deadline();
+        model.addAttribute("list", list);
 
         String view = null;
         HttpSession session = request.getSession(false);

@@ -20,7 +20,7 @@ public class ApiProductController {
 
     // 최신순 목록 GET /api/zonning/recentList
     @GetMapping("/zonning/recentList")
-    public ApiResponse<List<Product>>  recentList(){
+    public ApiResponse<List<Product>> recentList(){
         List<Product> list = productSVC.recentList();
 
         //api 응답 메시지

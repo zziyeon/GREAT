@@ -1,4 +1,5 @@
 package com.kh.great.web.dto.product;
+import com.kh.great.domain.entity.Member;
 import lombok.Data;
 @Data
 public class SaveForm {
@@ -18,4 +19,6 @@ public class SaveForm {
 //    private LocalDateTime rDate;    //등록일    R_DATE DATE DEFAULT SYSDATE
 //    private LocalDateTime uDate;    //수정일    U_DATE	DATE DEFAULT SYSDATE
 //    private Integer pStatus;        //판매상태    P_STATUS	NUMBER(1,0)
+
+  private Member member;
 }

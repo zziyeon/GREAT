@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,50 +31,32 @@ public class ProductController {
         model.addAttribute("form", new SaveForm());
         return "product/addForm";
     }
-    //    //등록처리
-//    @PostMapping("/add")
-//    public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-//        Product product = new Product();
-//        System.out.println(saveForm.toString());
-//        BeanUtils.copyProperties(saveForm, product);
-//
-//        System.out.println("product(before) -> " + product);
-//        Product savedProduct = productSVC.save(product);
-//        System.out.println("product(after) -> " + product);
-//        System.out.println("savedProduct -> " + savedProduct);
-//        Long num = savedProduct.getPNumber();
-//        System.out.println("num -> " + num);
-//
-//        redirectAttributes.addAttribute("num", num);
-//        return "redirect:/products/{num}";
-//    }
+
     //등록처리
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        //기본검증
-        if(bindingResult.hasErrors()){
+    public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult,
+                      RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        //검증
+        if (bindingResult.hasErrors()){
             log.info("bindingResult={}", bindingResult);
-            return "product/dto/saveForm";
+            return "product/addForm";
         }
 
         Product product = new Product();
-        System.out.println(saveForm.toString());
         BeanUtils.copyProperties(saveForm, product);
 
-//        System.out.println("product(before) -> " + product);
-////        Product savedProduct = productSVC.save(product);
-//        productSVC.save(product);
-//        System.out.println("product(after) -> " + product);
-////        System.out.println("savedProduct -> " + savedProduct);
-////        Long num = savedProduct.getPNumber();
-//        Long num = product.getPNumber();
-//        System.out.println("num -> " + num);
+//        // 세션
+//        HttpSession session = request.getSession(false);
+//        Object memNumber = session.getAttribute("memNumber");
+//
+//
 
         Long pNum = 0l;
         pNum = productSVC.save(product);
 
         redirectAttributes.addAttribute("num", pNum);
-        return "product/detailForm";
+        return "redirect:/products/{num}";
     }
 
     //origin) 상품 개별 조회
@@ -82,27 +65,11 @@ public class ProductController {
         Product findedProduct = productSVC.findByProductNum(num);
         DetailForm detailForm = new DetailForm();
         BeanUtils.copyProperties(findedProduct, detailForm);
-
+        log.info("detailForm={}", detailForm);
         model.addAttribute("form", detailForm);
 
         return "product/detailForm";
     }
-
-//    //수정) 상품 개별 조회
-//    @GetMapping("/{num}")
-//    public ApiResponse<Product> findByProductNum(@PathVariable("num") Long num) {
-//        //상품 조회
-//        Optional<Product> findedProduct = productSVC.findByProductNum(num);
-//        //응답 메시지
-//        ApiResponse<Product> response=null;
-//        if (findedProduct.isPresent()) {
-//            response = ApiResponse.createApiResMsg("00", "성공", findedProduct.get());
-//        } else {
-//            response = ApiResponse.createApiResMsg("01", "찾고자 하는 상품이 없습니다.", null);
-//        }
-//        log.info("response={}", response);
-//        return response;
-//    }
 
     //수정 화면
     @GetMapping("/{num}/edit")
@@ -126,7 +93,7 @@ public class ProductController {
         int updatedRow = productSVC.update(num, product);
         if (updatedRow == 0) {
 
-            return  "redirect: /products/{num}";
+            return  "redirect:/products/{num}";
         }
         return "redirect:/products/{num}";
     }
@@ -153,7 +120,7 @@ public class ProductController {
     //판매 내역 목록
     @GetMapping("/{ownerNumber}/saleList")
     public String saleList(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
-        List<Product> list = productSVC.saleList(ownerNumber);
+        List<Product> list = productSVC.pManage(ownerNumber);
         model.addAttribute("list", list);
 
         return "product/saleList";

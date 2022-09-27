@@ -1,6 +1,5 @@
 package com.kh.great.domain.dao.product;
 
-
 import com.kh.great.domain.entity.Deal;
 import com.kh.great.domain.entity.Member;
 import com.kh.great.domain.entity.Product;
@@ -145,7 +144,8 @@ public class ProductDAOImpl implements ProductDAO {
 
         sql.append("select P_NUMBER, P_NAME, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
         sql.append("from product_info ");
-        sql.append("where to_char(deadline_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and deadline_time>sysdate and REMAIN_COUNT >0 " );
+        sql.append("where to_char(deadline_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and deadline_time>sysdate and REMAIN_COUNT >0 ");
+        sql.append("order by R_DATE desc " );
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
         return result;
@@ -214,7 +214,10 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0  ");
         sql.append(" order by P_NUMBER desc ");
-        return null;
+
+        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
+
+        return result;
     }
 
     // 상품 높은 할인순 목록
@@ -225,7 +228,10 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by DISCOUNT_RATE desc ");
-        return null;
+
+        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
+
+        return result;
     }
 
     // 상품 낮은 가격순 목록
@@ -236,7 +242,10 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by SALE_PRICE asc ");
-        return null;
+
+        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
+
+        return result;
     }
 
     // 상품 높은 가격순 목록
@@ -247,6 +256,9 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by SALE_PRICE desc ");
-        return null;
+
+        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
+
+        return result;
     }
 }
