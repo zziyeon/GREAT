@@ -13,14 +13,16 @@ public class WebConfig implements WebMvcConfigurer {
 //                .order(1)
 //                .addPathPatterns("/**")
 //                .excludePathPatterns("/error");
+    
 //        //로그인 인증 체크(세션체크)
 //        List<String> whiteList = new ArrayList<>();
 //
-//        whiteList.add("/");
+//        whiteList.add("/");        
+//        whiteList.add("/zonning");   
 //        whiteList.add("/login");
 //        whiteList.add("/logout");
 //        whiteList.add("/error");
-//        whiteList.add("/**");
+//        whiteList.add("/products");
 //
 //        registry.addInterceptor(new LogIn_Interceptor())
 //                .order(2)

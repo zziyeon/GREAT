@@ -51,9 +51,9 @@
         <nav class="top-menu content">
             <li class="top-menu__member"><a href="#">점주</a>님
                 <ul>
-                    <li><a th:href="@{/great/products/add}">판매글 작성</a></li>
-                    <li><a th:href="@{/great/products/{ownerNumber}/manage}">상품 관리</a></li>
-                    <li><a href="/판매/판매내역.html">펀매 내역</a></li>
+                    <li><a th:href="@{/products/add}">판매글 작성</a></li>
+                    <li><a th:href="@{/products/9/manage}">상품 관리</a></li>
+                    <li><a th:href="@{/products/9/saleList}">판매 내역</a></li>
                     <li><a href="#">내 프로필</a></li>
                     <li><a href="/메인/비회원.html"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a></li>
                 </ul>
@@ -66,13 +66,14 @@
 
     <!-- 공통 헤더 -->
     <th:block th:fragment="common_header">
-        <div class="logo content"><a th:href="@{/great}">GR<span>EAT</span></a></div>
+        <div class="logo content"><a th:href="@{/}">GR<span>EAT</span></a></div>
         <nav class="bottom-menu content">
             <div class="category">
                 <ul>
                     <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
                         <ul>
-                            <li><a th:href="@{/great/zonning}">남구</a></li>
+<!--                            <li th:classappend="{#strings.substring(form.member.memStoreLocation,6,7)=='남구'}?'active':''"><a th:href="@{/zonning}">남구</a></li>-->
+                            <li><a th:href="@{/zonning}">남구</a></li>
                             <li><a href="">중구</a></li>
                             <li><a href="">북구</a></li>
                             <li><a href="">동구</a></li>
@@ -91,6 +92,18 @@
     <!-- top버튼 -->
     <div class="topbtn" th:fragment="topBtn">
         <a href="#top"><i class="fa-solid fa-angles-up"></i></a>
+    </div>
+
+    <div class="board__page width--900px" th:fragment="pagingBtn">
+        <div class="board__page--select">
+            <a href=""><i class="fa-solid fa-chevron-left"></i>이전</a>
+            <a href="">1</a>
+            <a href="">2</a>
+            <a href="">3</a>
+            <a href="">4</a>
+            <a href="">5</a>
+            <a href="">다음<i class="fa-solid fa-chevron-right"></i></a>
+        </div>
     </div>
 
     <!-- footer -->

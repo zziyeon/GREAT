@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/great")
+@RequestMapping("")
 @RequiredArgsConstructor
 public class MainController {
     final ProductSVC productSVC;
@@ -22,7 +22,7 @@ public class MainController {
     //홈페이지 메인
     @GetMapping("")
     public String main(Model model) {
-        List<Product> list = productSVC.findAll();
+        List<Product> list = productSVC.today_deadline();
         model.addAttribute("list", list);
 
         return "main/main";
@@ -37,4 +37,12 @@ public class MainController {
 
         return "main/zonning_list";
     }
+
+//    // 상품 검색
+//    public String select(Model model, String findStr) {
+//        List<Product> list = productSVC.select(findStr);
+//        model.addAttribute("list", list);
+//
+//        return
+//    }
 }

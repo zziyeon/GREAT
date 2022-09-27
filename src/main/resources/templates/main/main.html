@@ -6,6 +6,7 @@
     <title>GREAT</title>
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
     <link rel="stylesheet" th:href="@{/css/product/음식 카테고리.css}">
+    <script type="text/javascript" defer  th:src="@{/js/main/main.js}"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -17,16 +18,16 @@
     <figure class="figure container">
         <div class="slideshow-container">
             <div class="banner fade">
-                <img th:src="@{/img/배너.png}" />
+                <img th:src="@{/img/main/배너.png}" />
             </div>
             <div class="banner fade">
-                <img th:src="@{/img/배너2.png}" />
+                <img th:src="@{/img/main/배너2.png}" />
             </div>
             <div class="banner fade">
-                <img th:src="@{/img/배너3.png}" />
+                <img th:src="@{/img/main/배너3.png}" />
             </div>
             <div class="banner fade">
-                <img th:src="@{/img/배너4.png}" />
+                <img th:src="@{/img/main/배너4.png}" />
             </div>
 
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -46,23 +47,7 @@
     <!-- main -->
     <main class="main container">
         <section class="title content">오늘의 마감 할인!</section>
-        <section class="items content">
-            <div class="item" th:each="rec:${list}" th:data-product-num="${rec.pNumber}">
-                <a th:href="@{/great/products/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"
-                                                    alt=""></a>
-                <button class="heart_Btn"><i class="fa-regular fa-heart"></i></button>
-                <a href="#" class="item__title">[[${rec.pName}]]</a>
-                <div class="item__price-box">
-                    <div class="item__discount-rate">[[${rec.discountRate}]]%</div>
-                    <div class="item__price">[[${rec.salePrice}]]원</div>
-                    <div class="item__price--normal">[[${rec.normalPrice}]]원</div>
-                </div>
-                <div class="item__time-box">
-                    <div class="item__magam">마감시간</div>
-                    <div class="item__time">06:00 P.M.</div>
-                </div>
-            </div>
-        </section>
+        <section th:replace="~{layout/product_ui::each_product}"></section>
         <section class="view-all content"><a href="/판매/오늘마감할인_전체상품보기.html">전체보기</a></section>
     </main>
     <!-- //main -->
@@ -71,6 +56,6 @@
     <footer th:replace="~{layout/common_ui::footer}"></footer>
     <!-- //footer -->
 </div>
-<script type="text/javascript" th:src="@{/js/main/main.js}"></script>
+
 </body>
 </html>
