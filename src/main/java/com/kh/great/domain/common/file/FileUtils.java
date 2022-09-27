@@ -84,9 +84,5 @@ public class FileUtils {
     if (f.exists()) {
       f.delete();
     }
-//    else {
-//      throw new IllegalArgumentException("첨부파일 삭제 실패!"+code.name()+"-"+storeFileName);
-//    }
-
   }
 }

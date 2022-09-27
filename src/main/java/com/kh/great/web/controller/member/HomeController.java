@@ -1,9 +1,6 @@
 package com.kh.great.web.controller.member;
 
-import com.kh.great.domain.entity.Member;
-import com.kh.great.domain.entity.Product;
 import com.kh.great.domain.svc.member.MemberSVC;
-import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.dto.member.*;
 import com.kh.great3.web.session.LoginMember;
 import lombok.RequiredArgsConstructor;

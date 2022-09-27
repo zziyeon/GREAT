@@ -1,5 +1,8 @@
 package com.kh.great.web.controller.product;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.entity.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.dto.product.DetailForm;
@@ -14,8 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +27,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
     //등록 양식
     @GetMapping("/add")
@@ -34,11 +38,10 @@ public class ProductController {
 
     //등록처리
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult,
-                      RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        //검증
-        if (bindingResult.hasErrors()){
+        //기본검증
+        if(bindingResult.hasErrors()){
             log.info("bindingResult={}", bindingResult);
             return "product/addForm";
         }
@@ -46,25 +49,37 @@ public class ProductController {
         Product product = new Product();
         BeanUtils.copyProperties(saveForm, product);
 
-//        // 세션
-//        HttpSession session = request.getSession(false);
-//        Object memNumber = session.getAttribute("memNumber");
-//
-//
-
         Long pNum = 0l;
-        pNum = productSVC.save(product);
+        //상품 메타정보 저장
+        if (saveForm.getFiles().isEmpty()) {
+            pNum = productSVC.save(product);
+        } else if (!saveForm.getFiles().isEmpty()) {
+            pNum = productSVC.save(product, saveForm.getFiles());
+        }
 
         redirectAttributes.addAttribute("num", pNum);
         return "redirect:/products/{num}";
     }
 
-    //origin) 상품 개별 조회
+    //상품 개별 조회
     @GetMapping("/{num}")
     public String findByProductNum(@PathVariable("num") Long num, Model model) {
+        //1) 상품조회
         Product findedProduct = productSVC.findByProductNum(num);
         DetailForm detailForm = new DetailForm();
+
         BeanUtils.copyProperties(findedProduct, detailForm);
+
+        //2) 첨부파일 조회
+        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
+        if(uploadFiles.size() > 0 ){
+            List<UploadFile> imageFiles = new ArrayList<>();
+            for (UploadFile file : uploadFiles) {
+                imageFiles.add(file);
+            }
+            detailForm.setImageFiles(imageFiles);
+        }
+
         log.info("detailForm={}", detailForm);
         model.addAttribute("form", detailForm);
 
@@ -74,10 +89,20 @@ public class ProductController {
     //수정 화면
     @GetMapping("/{num}/edit")
     public String editFrom(@PathVariable("num") Long num, Model model) {
+        //1) 상품조회
         Product findedProduct = productSVC.findByProductNum(num);
-
         UpdateForm updateForm = new UpdateForm();
         BeanUtils.copyProperties(findedProduct, updateForm);
+
+        //2) 상품 이미지 조회
+        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
+        if(uploadFiles.size() > 0 ){
+            List<UploadFile> imageFiles = new ArrayList<>();
+            for (UploadFile file : uploadFiles) {
+                imageFiles.add(file);
+            }
+            updateForm.setImageFiles(imageFiles);
+        }
 
         model.addAttribute("form", updateForm);
 

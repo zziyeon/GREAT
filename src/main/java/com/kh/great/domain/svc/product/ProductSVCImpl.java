@@ -1,11 +1,15 @@
 package com.kh.great.domain.svc.product;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.FileUtils;
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.product.ProductDAO;
 import com.kh.great.domain.entity.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 @Slf4j
@@ -14,12 +18,24 @@ import java.util.List;
 @Transactional
 public class ProductSVCImpl implements ProductSVC {
     private final ProductDAO productDAO;
+    private final UploadFileSVC uploadFileSVC;
+    private final FileUtils fileUtils;
 
     //상품 등록
     @Override
     public Long save(Product product) {
         return productDAO.save(product);
     }
+
+    @Override
+    public Long save(Product product, List<MultipartFile> files) {
+        //1) 상품 등록
+        Long num = save(product);
+        //2) 첨부파일- 상품 설명
+        uploadFileSVC.addFile(files, AttachCode.P0102, num);
+        return num;
+    }
+
     //상품 조회
     @Transactional(readOnly = true)
     @Override

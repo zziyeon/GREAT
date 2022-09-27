@@ -7,10 +7,16 @@
     <link rel="stylesheet" th:href="@{/css/product/product_view.css}">
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
+    <style>
+        .good_Img {
+            width: 600px;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
     <header th:replace="~{layout/common_ui::header_owner}"></header>
+    <form th:object="${form}">
         <main class="main container">
             <article id="product-atf" class="product">
                 <div class="product">
@@ -53,7 +59,6 @@
                             </dl>
                             <dl>
                                 <dt>마감시간</dt>
-<!--                                <dd name="deadlineTime" th:text="${form.deadlineTime}"></dd>-->
                                 <dd name="deadline_time"  th:text="${#strings.substring(form.deadlineTime,0,16)}"></dd>
                             </dl>
                             <dl>
@@ -101,8 +106,12 @@
                 <div class="goods_info" id="s">
                     <h4>상품정보</h4>
                     <hr>
-                    <div>
-                        <img src="" alt="">
+                    <div th:if="${form.imageFiles}">
+                        <div th:each="imageFile : ${form.imageFiles}">
+                            <img class="good_Img" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
+                                 th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                 alt="이미지를 불러올수 없습니다">
+                        </div>
                     </div>
                     <div class="content" >
                         <p name="detail_info" th:text="${form.detailInfo}">달콤한 달기와 </p>
@@ -145,7 +154,6 @@
     </form>
     <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
-</form>
 
 <script th:inline="javascript">
     //<!-- 목록 -->

@@ -5,6 +5,7 @@
     <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <title>판매글 작성 | GREAT</title>
     <link rel="stylesheet" th:href="@{/css/product/product_write.css}">
+    <script type="text/javascript" defer th:src="@{/js/product/limitDate.js}"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -54,7 +55,7 @@
                             <option value="현장 결제">현장 결제</option>
                         </select></td>
                         <th><label for="">대표 사진 등록</label></th>
-                        <td><input type="file" accept="image/jpg, image/jpeg, image/png" >  </td>
+                        <td><input type="file" accept="image/jpg, image/jpeg, image/png" th:field="*{files}" th:multiple="multiple" ></td>
                     </tr>
                     <tr >
                         <td colspan="4">

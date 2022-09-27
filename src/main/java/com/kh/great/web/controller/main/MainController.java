@@ -19,14 +19,14 @@ import java.util.List;
 public class MainController {
     final ProductSVC productSVC;
 
-//    //홈페이지 메인
-//    @GetMapping("")
-//    public String main(Model model) {
-//        List<Product> list = productSVC.today_deadline();
-//        model.addAttribute("list", list);
-//
-//        return "main/main";
-//    }
+    //홈페이지 메인
+    @GetMapping("")
+    public String main(Model model) {
+        List<Product> list = productSVC.today_deadline();
+        model.addAttribute("list", list);
+
+        return "main/main";
+    }
 
     //지역별 상품 목록
     @GetMapping("/zonning")
@@ -36,6 +36,16 @@ public class MainController {
         model.addAttribute("list", list);
 
         return "main/zonning_list";
+    }
+
+    //지역별 상품 목록(할인순.,,,,??)
+    @GetMapping("/csr/zonning")
+    @Nullable
+    public String discountListDesc(Model model) {
+        List<Product> list = productSVC.findAll();
+        model.addAttribute("list", list);
+
+        return "main/zonning_list_csr";
     }
 
 //    // 상품 검색

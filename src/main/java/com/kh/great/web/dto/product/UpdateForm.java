@@ -1,12 +1,16 @@
 package com.kh.great.web.dto.product;
 
+import com.kh.great.domain.common.file.UploadFile;
 import com.kh.great.domain.entity.Member;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 public class UpdateForm {
     private Long pNumber;           //상품번호    P_NUMBER	NUMBER(6,0)
-    //    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
+//    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
 //    private String storeName;       //가게명    STORE_NAME	VARCHAR2(60 BYTE)
     private String pTitle;          //상품 제목    P_TITLE	VARCHAR2(90 BYTE)
     private String pName;           //상품명    P_NAME	VARCHAR2(60 BYTE)
@@ -24,4 +28,12 @@ public class UpdateForm {
 //    private Integer pStatus;        //판매상태    P_STATUS	NUMBER(1,0)
 
     private Member member;
+
+    ///파일 첨부
+    private MultipartFile file; //상품설명 첨부파일(단건)
+    private List<MultipartFile> files; //상품 이미지 첨부(여러건)
+
+    ///파일 참조
+    private UploadFile attachFile;
+    private List<UploadFile> imageFiles;
 }
