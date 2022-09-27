@@ -19,14 +19,14 @@ import java.util.List;
 public class MainController {
     final ProductSVC productSVC;
 
-    //홈페이지 메인
-    @GetMapping("")
-    public String main(Model model) {
-        List<Product> list = productSVC.today_deadline();
-        model.addAttribute("list", list);
-
-        return "main/main";
-    }
+//    //홈페이지 메인
+//    @GetMapping("")
+//    public String main(Model model) {
+//        List<Product> list = productSVC.today_deadline();
+//        model.addAttribute("list", list);
+//
+//        return "main/main";
+//    }
 
     //지역별 상품 목록
     @GetMapping("/zonning")

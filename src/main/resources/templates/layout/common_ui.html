@@ -20,8 +20,8 @@
     <!--비회원-->
     <header class="header container" th:fragment="header_nonmember">
         <nav class="top-menu content">
-            <a href="" class="top-menu__join">회원가입</a>
-            <a href="" class="top-menu__login">로그인</a>
+            <a href="/join" class="top-menu__join">회원가입</a>
+            <a href="/login" class="top-menu__login">로그인</a>
             <a href="" class="top-menu__cs">고객센터</a>
         </nav>
         <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
@@ -31,14 +31,13 @@
     <!--고객회원-->
     <header class="header container" th:fragment="header_customer">
         <nav class="top-menu content">
-            <li class="top-menu__member"><a href="#">회원</a>님
+            <li class="top-menu__member"><a th:href="@{/member/infoChk}">회원</a>님
                 <ul>
                     <li><a href="#">좋아요</a></li>
                     <li><a href="#">즐겨찾기</a></li>
                     <li><a href="#">내 리뷰</a></li>
                     <li><a href="#">주문 내역</a></li>
-                    <li><i ></i></li>
-                    <li><a href="/메인/비회원.html">로그아웃</a></li>
+                    <li><a th:href="@{/logout}">로그아웃</a></li>
                 </ul>
             </li>
             <a href="" class="top-menu__cs">고객센터</a>
@@ -51,6 +50,7 @@
     <header class="header container" th:fragment="header_owner">
         <nav class="top-menu content">
             <li class="top-menu__member"><a href="#">점주</a>님
+            <li th:class="top-menu__member"><a th:href="@{/member/infoChk}" th:if="${!session.isEmpty()}" th:text="${session.memNickname} + 님">회원님</a>
                 <ul>
                     <li><a th:href="@{/products/add}">판매글 작성</a></li>
                     <li><a th:href="@{/products/9/manage}">상품 관리</a></li>

@@ -1,21 +1,21 @@
 drop table product_info;
 --상품 테이블 생성
 create table product_info(
-    P_NUMBER NUMBER(30, 0)
-,    OWNER_NUMBER NUMBER(6, 0)
-,    P_TITLE VARCHAR2(300 BYTE)
-,    P_NAME VARCHAR2(30 BYTE)
-,    DEADLINE_TIME DATE
-,    CATEGORY VARCHAR2(17 BYTE)
-,    TOTAL_COUNT NUMBER(5, 0)
-,    REMAIN_COUNT NUMBER(5, 0)
-,    NORMAL_PRICE NUMBER(8, 0)
-,    SALE_PRICE NUMBER(8, 0)
-,    DISCOUNT_RATE NUMBER(2, 0)
-,    PAYMENT_OPTION VARCHAR2(32 BYTE)
-,    DETAIL_INFO VARCHAR2(4000 BYTE)
-,    R_DATE DATE default sysdate
-,    U_DATE DATE default sysdate
+     P_NUMBER NUMBER(30, 0) not null
+,    OWNER_NUMBER NUMBER(6, 0) not null
+,    P_TITLE VARCHAR2(300 BYTE) not null
+,    P_NAME VARCHAR2(30 BYTE) not null
+,    DEADLINE_TIME DATE not null
+,    CATEGORY VARCHAR2(17 BYTE) not null
+,    TOTAL_COUNT NUMBER(5, 0) not null
+,    REMAIN_COUNT NUMBER(5, 0) not null
+,    NORMAL_PRICE NUMBER(8, 0) not null
+,    SALE_PRICE NUMBER(8, 0) not null
+,    DISCOUNT_RATE NUMBER(2, 0) not null
+,    PAYMENT_OPTION VARCHAR2(32 BYTE) not null
+,    DETAIL_INFO VARCHAR2(4000 BYTE) not null
+,    R_DATE DATE default sysdate not null
+,    U_DATE DATE default sysdate not null
 ,    P_STATUS NUMBER(1, 0) default 0
 );
 

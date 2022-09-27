@@ -1,5 +1,7 @@
 package com.kh.great.domain.dao.product;
 
+import com.kh.great.domain.entity.Product;
+
 import java.util.List;
 
 public interface ProductDAO {

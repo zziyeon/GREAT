@@ -1,5 +1,7 @@
 package com.kh.great.domain.dao.member;
 
+import com.kh.great.domain.entity.Member;
+
 import java.util.List;
 import java.util.Optional;
 

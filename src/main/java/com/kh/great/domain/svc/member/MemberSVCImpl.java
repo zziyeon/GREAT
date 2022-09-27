@@ -2,6 +2,7 @@ package com.kh.great.domain.svc.member;
 
 
 import com.kh.great.domain.dao.member.MemberDAO;
+import com.kh.great.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,6 @@ public class MemberSVCImpl implements MemberSVC {
      */
     @Override
     public Member join(Member member) {
-
         //회원 아이디 생성
         Long generateMemberNumber = memberDAO.generateMemberNumber();
         member.setMemNumber(generateMemberNumber);

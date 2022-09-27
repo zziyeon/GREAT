@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layout}">
-<head layout:fragment="head">
-    <!-- common head -->
-    <th:block th:replace="fragments/layout :: commonHead"></th:block>
-    <!-- head -->
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+    <title>GREAT</title>
     <link rel="stylesheet" th:href="@{/css/member/join.css}">
-    <title>회원가입</title>
 </head>
 
-<body layout:fragment="body">
+<body>
     <div class="wrapper">
         <!-- header -->
         <header th:replace="fragments/layout :: fragNonHeader"></header>
@@ -224,16 +219,14 @@
                             <div class="terms-ele--3"><a href="" class="view-terms">약관 보기</a></div>
                         </div>
                     </div>
-                    <button type="submit" class="btn join-btn">
-                        <label for="">가입하기</label>
-                    </button>
+                    <button type="submit" class="btn join-btn">가입하기</button>
                 </form>
             </div>
         </main>
         <!-- //main -->
 
         <!-- footer -->
-        <footer th:replace="fragments/layout :: fragFooter" class="footer container"></footer>
+        <footer th:replace="~{layout/common_ui::footer}"></footer>
         <!-- //footer -->
     </div>
 
