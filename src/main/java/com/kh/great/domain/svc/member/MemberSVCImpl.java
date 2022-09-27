@@ -1,12 +1,13 @@
-package com.kh.great.domain.svc.member;
+package com.kh.great3.domain.svc;
 
-import com.kh.great.domain.Member;
-import com.kh.great.domain.dao.member.MemberDAO;
+import com.kh.great3.domain.Member;
+import com.kh.great3.domain.dao.MemberDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -24,10 +25,22 @@ public class MemberSVCImpl implements MemberSVC {
     public Member join(Member member) {
 
         //회원 아이디 생성
-        int generateMemberNumber = memberDAO.generateMemberNumber();
+        Long generateMemberNumber = memberDAO.generateMemberNumber();
         member.setMemNumber(generateMemberNumber);
         memberDAO.join(member);
-        return memberDAO.findById(generateMemberNumber);
+        return memberDAO.findByMemNumber(generateMemberNumber);
+    }
+
+    /**
+     * 로그인
+     *
+     * @param memId       아이디
+     * @param memPassword 패스워드
+     * @return 회원
+     */
+    @Override
+    public Optional<Member> login(String memId, String memPassword) {
+        return memberDAO.login(memId, memPassword);
     }
 
     /**
@@ -37,8 +50,8 @@ public class MemberSVCImpl implements MemberSVC {
      * @return 회원정보
      */
     @Override
-    public Member findById(int memNumber) {
-        return memberDAO.findById(memNumber);
+    public Member findByMemNumber(Long memNumber) {
+        return memberDAO.findByMemNumber(memNumber);
     }
 
     /**
@@ -49,8 +62,8 @@ public class MemberSVCImpl implements MemberSVC {
      * @return 수정건수
      */
     @Override
-    public int update(int memNumber, Member member) {
-        int cnt = memberDAO.update(memNumber, member);
+    public Long update(Long memNumber, Member member) {
+        Long cnt = memberDAO.update(memNumber, member);
         log.info("수정건수={}", cnt);
         return cnt;
     }
@@ -62,8 +75,8 @@ public class MemberSVCImpl implements MemberSVC {
      * @return 삭제건수
      */
     @Override
-    public int delete(int memNumber) {
-        int cnt = memberDAO.delete(memNumber);
+    public Long delete(Long memNumber) {
+        Long cnt = memberDAO.delete(memNumber);
         log.info("삭제건수={}", cnt);
         return cnt;
     }
