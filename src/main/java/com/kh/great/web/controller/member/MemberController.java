@@ -1,10 +1,9 @@
-package com.kh.great.web.controller.member;
+package com.kh.great3.web.controller;
 
-
-import com.kh.great.domain.entity.Member;
-import com.kh.great.domain.svc.member.MemberSVC;
-import com.kh.great.web.dto.member.Info;
-import com.kh.great.web.dto.member.InfoChk;
+import com.kh.great3.domain.Member;
+import com.kh.great3.domain.svc.MemberSVC;
+import com.kh.great3.web.form.Info;
+import com.kh.great3.web.form.InfoChk;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -30,7 +29,7 @@ public class MemberController {
     public String infoChk(Model model) {
         model.addAttribute("infoChk", new InfoChk());
 
-        return "infoChk";
+        return "member/infoChk";
     }
 
     //개인정보 조회 및 수정 본인확인 처리
@@ -70,7 +69,7 @@ public class MemberController {
         info.setMemEmail(findedMember.getMemEmail());
 
         model.addAttribute("info", info);
-        return "infoCust"; //회원 수정화면
+        return "member/infoCust"; //회원 수정화면
     }
 
     //점주회원정보 조회 및 수정 화면
@@ -98,7 +97,7 @@ public class MemberController {
 
 
         model.addAttribute("info", info);
-        return "infoOwn"; //회원 수정화면
+        return "member/infoOwn"; //회원 수정화면
     }
 
     //고객회원정보 수정 처리
@@ -112,7 +111,7 @@ public class MemberController {
         //검증
         if (bindingResult.hasErrors()){
             log.info("bindingResult={}", bindingResult);
-            return "infoCust";
+            return "member/infoCust";
         }
 
         Member member = new Member();
@@ -134,7 +133,7 @@ public class MemberController {
 
         Long updatedRow = memberSVC.update((Long) memNum, member);
         if (updatedRow == 0) {
-            return "infoCust";
+            return "member/infoCust";
         }
 
         return "redirect:/member/customer/{memNum}";
@@ -151,7 +150,7 @@ public class MemberController {
         //검증
         if(bindingResult.hasErrors()){
             log.info("bindingResult={}", bindingResult);
-            return "infoOwn";
+            return "member/infoOwn";
         }
 
         Member member = new Member();
@@ -179,7 +178,7 @@ public class MemberController {
 
         Long updatedRow = memberSVC.update((Long) memNum, member);
         if (updatedRow == 0) {
-            return "infoOwn";
+            return "member/infoOwn";
         }
 
         return "redirect:/member/owner/{memNum}";
