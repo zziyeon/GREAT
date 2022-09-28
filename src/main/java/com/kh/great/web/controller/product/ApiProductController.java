@@ -29,7 +29,7 @@ public class ApiProductController {
 
     // 높은 할인순순 목록 GET /api/zonning/discountListDesc
     @GetMapping("/zonning/discountListDesc")
-    public ApiResponse<List<Product>>  discountListDesc(){
+    public ApiResponse<List<Product>> discountListDesc(){
         List<Product> list = productSVC.discountListDesc();
 
         //api 응답 메시지
@@ -38,7 +38,7 @@ public class ApiProductController {
 
     // 낮은 가격순 목록 GET /api/zonning/priceList
     @GetMapping("/zonning/priceList")
-    public ApiResponse<List<Product>>  priceList(){
+    public ApiResponse<List<Product>> priceList(){
         List<Product> list = productSVC.priceList();
 
         //api 응답 메시지
@@ -47,7 +47,7 @@ public class ApiProductController {
 
     // 높은 가격순 목록 GET /api/zonning/priceListDesc
     @GetMapping("/zonning/priceListDesc")
-    public ApiResponse<List<Product>>  priceListDesc(){
+    public ApiResponse<List<Product>> priceListDesc(){
         List<Product> list = productSVC.priceListDesc();
 
         //api 응답 메시지

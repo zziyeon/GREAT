@@ -30,24 +30,24 @@ public class MainController {
 //        return "main/main";
 //    }
 
-    //지역별 상품 목록
-    @GetMapping("/zonning")
-    @Nullable
-    public String zonning(Model model) {
-        List<Product> list = productSVC.findAll();
-        model.addAttribute("list", list);
-
-        return "main/zonning_list";
-    }
-
     //지역별 상품 목록(할인순.,,,,??)
-    @GetMapping("/csr/zonning")
+    @GetMapping("/zonning")
     @Nullable
     public String discountListDesc(Model model) {
         List<Product> list = productSVC.findAll();
         model.addAttribute("list", list);
 
         return "main/zonning_list_csr";
+    }
+
+    // 오늘 마감상품 전체보기
+    @GetMapping("/todayDealine")
+    @Nullable
+    public String todayDealine(Model model) {
+        List<Product> list = productSVC.today_deadline();
+        model.addAttribute("list", list);
+
+        return "main/all_list";
     }
 
 //    // 상품 검색

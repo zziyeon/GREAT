@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <header th:replace="~{layout/common_ui::header_nonmember}"></header>
+    <header th:replace="~{layout/common_ui::choose_header}"></header>
 
     <!-- figure -->
     <figure class="figure container">
@@ -46,7 +46,7 @@
     <main class="main container">
         <section class="title content">오늘의 마감 할인!</section>
         <section th:replace="~{layout/product_ui::each_product}"></section>
-        <section class="view-all content"><a href="/판매/오늘마감할인_전체상품보기.html">전체보기</a></section>
+        <section class="view-all content"><a th:href="@{/todayDealine}">전체보기</a></section>
     </main>
     <!-- //main -->
 

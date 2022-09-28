@@ -123,7 +123,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
-        sql.append(" order by P_NUMBER desc ");
+        sql.append(" order by R_DATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
         return result;
@@ -213,7 +213,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0  ");
-        sql.append(" order by P_NUMBER desc ");
+        sql.append(" order by R_DATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
 

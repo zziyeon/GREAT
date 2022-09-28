@@ -1,4 +1,4 @@
-package com.kh.great3.web.session;
+package com.kh.great.web.session.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
