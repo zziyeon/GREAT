@@ -49,7 +49,6 @@
     <!-- 점주회원 -->
     <header class="header container" th:fragment="header_owner">
         <nav class="top-menu content">
-            <li class="top-menu__member"><a href="#">점주</a>님
             <li th:class="top-menu__member"><a th:href="@{/member/infoChk}" th:if="${!session.isEmpty()}" th:text="${session.memNickname} + 님">회원님</a>
                 <ul>
                     <li><a th:href="@{/products/add}">판매글 작성</a></li>

@@ -23,4 +23,5 @@ public class Deal {
   private Date orderdate;      //    orderdate date,          --주문일자
   private Long pickupStatus;      //    pickup_status number (1) default 0 --픽업상태
 
+  private Product product;
 }

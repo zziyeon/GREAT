@@ -28,6 +28,5 @@ public class DetailForm {
 //    private Integer pStatus;        //판매상태    P_STATUS	NUMBER(1,0)
 
     private Member member;
-
     private List<UploadFile> imageFiles;
 }

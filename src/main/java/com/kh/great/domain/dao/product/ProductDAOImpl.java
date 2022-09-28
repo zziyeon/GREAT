@@ -158,6 +158,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select p.P_NUMBER, p.P_STATUS, p.P_NAME, p.SALE_PRICE, p.REMAIN_COUNT, p.TOTAL_COUNT, P.R_DATE ");
         sql.append("from product_info P, member M ");
         sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("order by R_DATE desc " );
 
         List<Product> result =null;
         try {

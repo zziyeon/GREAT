@@ -45,18 +45,20 @@ public class ProductController {
             log.info("bindingResult={}", bindingResult);
             return "product/addForm";
         }
-
+        log.info("saveForm : {}",saveForm);
         Product product = new Product();
         BeanUtils.copyProperties(saveForm, product);
-
+        log.info("product : {}",product);
         Long pNum = 0l;
         //상품 메타정보 저장
-        if (saveForm.getFiles().isEmpty()) {
+        if (saveForm.getFiles().get(0).isEmpty()) {
+            log.info("1");
             pNum = productSVC.save(product);
-        } else if (!saveForm.getFiles().isEmpty()) {
+        } else if (!saveForm.getFiles().get(0).isEmpty()) {
+            log.info("2");
             pNum = productSVC.save(product, saveForm.getFiles());
         }
-
+        log.info("3");
         redirectAttributes.addAttribute("num", pNum);
         return "redirect:/products/{num}";
     }

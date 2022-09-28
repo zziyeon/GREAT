@@ -34,6 +34,5 @@ public class UpdateForm {
     private List<MultipartFile> files; //상품 이미지 첨부(여러건)
 
     ///파일 참조
-    private UploadFile attachFile;
     private List<UploadFile> imageFiles;
 }

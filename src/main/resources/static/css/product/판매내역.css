@@ -52,7 +52,6 @@ h3 {
 /* 메인-사이드(오른쪽) */
 .main-side-right {
     flex: 6;
-    height: 900px;
 }
 
 .main-head {
