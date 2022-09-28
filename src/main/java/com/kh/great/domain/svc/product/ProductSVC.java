@@ -32,6 +32,9 @@ public interface ProductSVC {
     //상품 관리
     List<Product> pManage(Long ownerNumber);
 
+//    // 날짜로 상품관리 목록
+//    List <Product> manageByDate();
+
     //상품 관리
     List<Product> saleList(Long ownerNumber);
 
