@@ -1,6 +1,6 @@
 package com.kh.great.web.dto.product;
 
-import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.dao.member.Member;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 

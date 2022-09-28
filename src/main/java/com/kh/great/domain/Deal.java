@@ -1,5 +1,6 @@
-package com.kh.great.domain.entity;
+package com.kh.great.domain;
 
+import com.kh.great.domain.dao.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

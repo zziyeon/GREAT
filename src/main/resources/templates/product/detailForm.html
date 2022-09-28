@@ -16,11 +16,17 @@
             <article id="product-atf" class="product">
                 <div class="product">
                     <div class="product-img">
-                        <th:block th:each="imageFile : ${form.imageFiles[0]}">
-                            <img class="good_Img" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
-                                 th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
-                                 alt="이미지를 불러올수 없습니다">
+                        <th:block th:if="${form.imageFiles}">
+                            <th:block th:each="imageFile : ${form.imageFiles[0]}">
+                                <img class="good_Img" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
+                                     th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                     alt="이미지를 불러올수 없습니다">
+                            </th:block>
                         </th:block>
+                        <th:block th:if="!(${form.imageFiles})">
+                            <img th:src="@{/img/main/배너4.png}" />
+                        </th:block>
+
                     </div>
                     <div class="product-info">
                         <div class="p_store">

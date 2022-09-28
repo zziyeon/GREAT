@@ -3,7 +3,7 @@ package com.kh.great.web.controller.product;
 import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.UploadFile;
 import com.kh.great.domain.common.file.UploadFileSVC;
-import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.dto.product.DetailForm;
 import com.kh.great.web.dto.product.SaveForm;
@@ -45,20 +45,15 @@ public class ProductController {
             log.info("bindingResult={}", bindingResult);
             return "product/addForm";
         }
-        log.info("saveForm : {}",saveForm);
         Product product = new Product();
         BeanUtils.copyProperties(saveForm, product);
-        log.info("product : {}",product);
         Long pNum = 0l;
         //상품 메타정보 저장
         if (saveForm.getFiles().get(0).isEmpty()) {
-            log.info("1");
             pNum = productSVC.save(product);
         } else if (!saveForm.getFiles().get(0).isEmpty()) {
-            log.info("2");
             pNum = productSVC.save(product, saveForm.getFiles());
         }
-        log.info("3");
         redirectAttributes.addAttribute("num", pNum);
         return "redirect:/products/{num}";
     }
@@ -82,7 +77,6 @@ public class ProductController {
             detailForm.setImageFiles(imageFiles);
         }
 
-        log.info("detailForm={}", detailForm);
         model.addAttribute("form", detailForm);
 
         return "product/detailForm";

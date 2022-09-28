@@ -1,6 +1,6 @@
 package com.kh.great.domain.svc.member;
 
-import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.dao.member.Member;
 
 import java.util.List;
 import java.util.Optional;

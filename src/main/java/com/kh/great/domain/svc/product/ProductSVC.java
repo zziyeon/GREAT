@@ -1,6 +1,6 @@
 package com.kh.great.domain.svc.product;
 
-import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.dao.product.Product;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

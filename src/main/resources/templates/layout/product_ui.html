@@ -8,7 +8,8 @@
 </head>
 <body>
 <section th:if="${list.size>0}" class="items content" th:fragment="each_product">
-    <div class="item" th:each="rec:${list}" th:data-product-num="${rec.pNumber}">
+    <div class="item" th:each="rec:${list.sequence(0,8)}" th:data-product-num="${rec.pNumber}">
+<!--        <p>[[${list}]]</p>-->
         <a th:href="@{/products/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image">
             <img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"  alt="">
         </a>

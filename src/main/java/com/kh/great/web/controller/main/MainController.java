@@ -1,6 +1,7 @@
 package com.kh.great.web.controller.main;
 
-import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.common.file.UploadFileSVC;
+import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
     final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
 //    //홈페이지 메인
 //    @GetMapping("")
