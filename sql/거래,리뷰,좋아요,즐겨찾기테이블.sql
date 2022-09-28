@@ -19,8 +19,6 @@ orderdate date default sysdate,          --주문일자
 pickup_status number (1) default 0 --픽업상태
 );
 
-
-
 --거래번호 시퀀스 생성
 drop sequence deal_order_number_seq;
 create sequence deal_order_number_seq;
