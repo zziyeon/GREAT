@@ -123,12 +123,11 @@
                     </div>
                 </div>
                 <!-- 가게 위치 지도 -->
+                <hr>
                 <div class="store_location" id="ss">
-                    <span > 해당 가게 위치</span>
-                    <hr>
-                    <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
+                    <span name="memStoreName" th:text=" '\''+ ${form.member.memStoreName} +'\'  가게 위치'"> </span>
                     <!-- 가게 위치 지도로 표시-->
-                    <div id="map"> </div>
+                    <div id="map"> 
                     <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
                     <div class="custom_zoomcontrol radius_border">
                         <span onclick="zoomIn()">
@@ -139,8 +138,9 @@
                                 src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
                                 alt="축소"></span>
                     </div>
+                </div>
                     <!-- 가게 위치로 돌아가는 버튼 -->
-                    <button class="storeBtn" onclick="panTo()">가게위치</button>
+                    <button class="storeBtn" type="button" onclick="panTo()">가게위치</button>
                 </div>
                 <div id="reply">
 
