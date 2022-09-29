@@ -1,5 +1,6 @@
-package com.kh.great.domain.entity;
+package com.kh.great.domain;
 
+import com.kh.great.domain.dao.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,5 @@ public class Deal {
   private Date orderdate;      //    orderdate date,          --주문일자
   private Long pickupStatus;      //    pickup_status number (1) default 0 --픽업상태
 
+  private Product product;
 }

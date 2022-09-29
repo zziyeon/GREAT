@@ -7,21 +7,26 @@
     <link rel="stylesheet" th:href="@{/css/product/product_view.css}">
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
-    <style>
-        .good_Img {
-            width: 600px;
-        }
-    </style>
 </head>
 <body>
 <div class="wrapper">
-    <header th:replace="~{layout/common_ui::header_owner}"></header>
+    <header th:replace="~{layout/common_ui::choose_header}"></header>
     <form th:object="${form}">
         <main class="main container">
             <article id="product-atf" class="product">
                 <div class="product">
                     <div class="product-img">
-                        <img src="https://cdn.pixabay.com/photo/2016/10/27/22/12/cakes-1776661__340.jpg" alt="">
+                        <th:block th:if="${form.imageFiles}">
+                            <th:block th:each="imageFile : ${form.imageFiles[0]}">
+                                <img class="good_Img" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
+                                     th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                     alt="이미지를 불러올수 없습니다">
+                            </th:block>
+                        </th:block>
+                        <th:block th:if="!(${form.imageFiles})">
+                            <img th:src="@{/img/main/배너4.png}" />
+                        </th:block>
+
                     </div>
                     <div class="product-info">
                         <div class="p_store">

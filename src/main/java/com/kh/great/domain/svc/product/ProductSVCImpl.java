@@ -4,7 +4,7 @@ import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.FileUtils;
 import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.product.ProductDAO;
-import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.dao.product.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -77,7 +77,7 @@ public class ProductSVCImpl implements ProductSVC {
         return productDAO.pManage(ownerNumber);
     }
 
-    //상품 관리 목록
+    //판매 내역 목록
     @Override
     public List<Product> saleList(Long ownerNumber) {
         return productDAO.saleList(ownerNumber);

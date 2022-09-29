@@ -3,7 +3,7 @@ package com.kh.great.web.controller.product;
 import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.UploadFile;
 import com.kh.great.domain.common.file.UploadFileSVC;
-import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.dto.product.DetailForm;
 import com.kh.great.web.dto.product.SaveForm;
@@ -45,18 +45,15 @@ public class ProductController {
             log.info("bindingResult={}", bindingResult);
             return "product/addForm";
         }
-
         Product product = new Product();
         BeanUtils.copyProperties(saveForm, product);
-
         Long pNum = 0l;
         //상품 메타정보 저장
-        if (saveForm.getFiles().isEmpty()) {
+        if (saveForm.getFiles().get(0).isEmpty()) {
             pNum = productSVC.save(product);
-        } else if (!saveForm.getFiles().isEmpty()) {
+        } else if (!saveForm.getFiles().get(0).isEmpty()) {
             pNum = productSVC.save(product, saveForm.getFiles());
         }
-
         redirectAttributes.addAttribute("num", pNum);
         return "redirect:/products/{num}";
     }
@@ -80,7 +77,6 @@ public class ProductController {
             detailForm.setImageFiles(imageFiles);
         }
 
-        log.info("detailForm={}", detailForm);
         model.addAttribute("form", detailForm);
 
         return "product/detailForm";
@@ -145,7 +141,7 @@ public class ProductController {
     //판매 내역 목록
     @GetMapping("/{ownerNumber}/saleList")
     public String saleList(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
-        List<Product> list = productSVC.pManage(ownerNumber);
+        List<Product> list = productSVC.saleList(ownerNumber);
         model.addAttribute("list", list);
 
         return "product/saleList";

@@ -1,7 +1,7 @@
 package com.kh.great.web.dto.product;
 
 import com.kh.great.domain.common.file.UploadFile;
-import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.dao.member.Member;
 import lombok.Data;
 
 import java.util.List;
@@ -28,6 +28,5 @@ public class DetailForm {
 //    private Integer pStatus;        //판매상태    P_STATUS	NUMBER(1,0)
 
     private Member member;
-
     private List<UploadFile> imageFiles;
 }

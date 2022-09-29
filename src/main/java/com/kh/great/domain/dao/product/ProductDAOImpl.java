@@ -1,8 +1,7 @@
 package com.kh.great.domain.dao.product;
 
-import com.kh.great.domain.entity.Deal;
-import com.kh.great.domain.entity.Member;
-import com.kh.great.domain.entity.Product;
+import com.kh.great.domain.Deal;
+import com.kh.great.domain.dao.member.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -124,7 +123,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
-        sql.append(" order by P_NUMBER desc ");
+        sql.append(" order by R_DATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
         return result;
@@ -158,6 +157,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select p.P_NUMBER, p.P_STATUS, p.P_NAME, p.SALE_PRICE, p.REMAIN_COUNT, p.TOTAL_COUNT, P.R_DATE ");
         sql.append("from product_info P, member M ");
         sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("order by R_DATE desc " );
 
         List<Product> result =null;
         try {
@@ -213,7 +213,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0  ");
-        sql.append(" order by P_NUMBER desc ");
+        sql.append(" order by R_DATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
 

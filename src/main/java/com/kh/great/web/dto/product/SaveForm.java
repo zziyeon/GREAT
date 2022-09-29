@@ -1,6 +1,6 @@
 package com.kh.great.web.dto.product;
 
-import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.dao.member.Member;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +27,5 @@ public class SaveForm {
 
     private Member member;
 
-    private MultipartFile file;   //상품설명 첨부파일(단건)
     private List<MultipartFile> files;    //상품 이미지 첨부(여러건)
 }

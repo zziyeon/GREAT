@@ -1,4 +1,4 @@
-package com.kh.great.domain.entity;
+package com.kh.great.domain.dao.member;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

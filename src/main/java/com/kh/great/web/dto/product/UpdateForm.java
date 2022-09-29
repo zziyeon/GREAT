@@ -1,7 +1,7 @@
 package com.kh.great.web.dto.product;
 
 import com.kh.great.domain.common.file.UploadFile;
-import com.kh.great.domain.entity.Member;
+import com.kh.great.domain.dao.member.Member;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +34,5 @@ public class UpdateForm {
     private List<MultipartFile> files; //상품 이미지 첨부(여러건)
 
     ///파일 참조
-    private UploadFile attachFile;
     private List<UploadFile> imageFiles;
 }
