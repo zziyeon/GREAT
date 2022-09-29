@@ -137,7 +137,7 @@ create table product_info(
 ,    SALE_PRICE NUMBER(8, 0) not null
 ,    DISCOUNT_RATE NUMBER(2, 0) not null
 ,    PAYMENT_OPTION VARCHAR2(32 BYTE) not null
-,    DETAIL_INFO VARCHAR2(4000 BYTE) not null
+,    DETAIL_INFO clob
 ,    R_DATE DATE default sysdate not null
 ,    U_DATE DATE default sysdate not null
 ,    P_STATUS NUMBER(1, 0) default 0

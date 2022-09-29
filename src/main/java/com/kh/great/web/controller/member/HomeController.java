@@ -8,6 +8,7 @@ import com.kh.great.web.dto.member.*;
 import com.kh.great.web.session.member.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -182,6 +183,27 @@ public class HomeController {
         }
 
         return "redirect:/"; //메인
+    }
+
+
+    //지역별 상품 목록(할인순.,,,,??)
+    @GetMapping("/zonning")
+    @Nullable
+    public String discountListDesc(Model model) {
+        List<Product> list = productSVC.findAll();
+        model.addAttribute("list", list);
+
+        return "main/zonning_list_csr";
+    }
+
+    // 오늘 마감상품 전체보기
+    @GetMapping("/todayDealine")
+    @Nullable
+    public String todayDealine(Model model) {
+        List<Product> list = productSVC.today_deadline();
+        model.addAttribute("list", list);
+
+        return "main/all_list";
     }
 
 }
