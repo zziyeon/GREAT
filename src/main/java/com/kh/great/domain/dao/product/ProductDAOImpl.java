@@ -31,27 +31,26 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
 
         sql.append("insert into product_info(p_number, owner_number, p_title, p_name, DEADLINE_TIME, CATEGORY, TOTAL_COUNT, REMAIN_COUNT ,NORMAL_PRICE, SALE_PRICE, DISCOUNT_RATE, PAYMENT_OPTION, DETAIL_INFO ) ");
-        sql.append("values(product_p_number_seq.nextval, 9, ?, ?, TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), ?, ?, ?, ?, ?, ?, ?, ?) ");
+        sql.append("values(product_p_number_seq.nextval, ?, ?, ?, TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), ?, ?, ?, ?, ?, ?, ?, ?) ");
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jt.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(sql.toString(), new String[]{"p_number"});
-//                pstmt.setLong(2, product.getOwnerNumber());
-                pstmt.setString(1, product.getPTitle());
-                pstmt.setString(2, product.getPName());
-                pstmt.setString(3, product.getDeadlineTime());
+                pstmt.setLong(1, product.getOwnerNumber());
+                pstmt.setString(2, product.getPTitle());
+                pstmt.setString(3, product.getPName());
+                pstmt.setString(4, product.getDeadlineTime());
                 log.info("product.getDeadline_time()=>{}", product.getDeadlineTime());
-                pstmt.setString(4, product.getCategory());
-                pstmt.setInt(5, product.getTotalCount());
+                pstmt.setString(5, product.getCategory());
                 pstmt.setInt(6, product.getTotalCount());
-                pstmt.setInt(7, product.getNormalPrice());
-                pstmt.setInt(8, product.getSalePrice());
-                pstmt.setInt(9, (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice());
-                pstmt.setString(10, product.getPaymentOption());
-                pstmt.setString(11, product.getDetailInfo());
-
+                pstmt.setInt(7, product.getTotalCount());
+                pstmt.setInt(8, product.getNormalPrice());
+                pstmt.setInt(9, product.getSalePrice());
+                pstmt.setInt(10, (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice());
+                pstmt.setString(11, product.getPaymentOption());
+                pstmt.setString(12, product.getDetailInfo());
                 return pstmt;
             }
         }, keyHolder);

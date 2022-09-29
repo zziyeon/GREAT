@@ -7,8 +7,8 @@
     <link rel="stylesheet" th:href="@{/css/product/product_view.css}">
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
-    <script th:src="@{/js/product/ckeditor.js}"></script>
-
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+<!--    <script asyn defer th:src="@{/js/product/ckeditor.js}"></script>-->
     <style>
         .ck-editor__top{
             display:none;
@@ -147,7 +147,7 @@
                 <!-- 버튼 -->
                 <div class="product_page_btn">
                     <button type="button" class="btn_list btn">목록</button>
-                        <div th:if="${session.memType}=='owner'">
+                    <div>
                         <button type="button" class="btn_modify btn">수정</button>
                         <button type="button" class="btn_del btn">삭제</button>
                     </div>
@@ -159,7 +159,7 @@
     <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 
-<script th:inline="javascript">
+<script asyn th:inline="javascript">
     //<!-- 목록 -->
     document.querySelector('.btn_list').addEventListener('click', e=>{
         console.log('수정');
