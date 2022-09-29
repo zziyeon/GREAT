@@ -35,11 +35,6 @@ public class HomeController {
         List<Product> list = productSVC.today_deadline();
         model.addAttribute("list", list);
 
-//        String view = null;
-//        HttpSession session = request.getSession(false);
-//        view = (session == null) ? "main/main" : "main/main" ;
-
-//        return view;
         return "main/main";
     }
 
@@ -76,7 +71,6 @@ public class HomeController {
         //    bindingResult.reject(null, "비밀번호 일치합니다");
         //    return "join";
         //}
-
 
         Member member = new Member();
         member.setMemType(join.getMemType());
