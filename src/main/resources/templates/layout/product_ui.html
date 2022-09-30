@@ -11,13 +11,13 @@
     <div class="item" th:each="rec, i:${list}" th:data-product-num="${rec.pNumber}">
         <th:block th:if="${i.count}<9">
             <a th:href="@{/products/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image">
-<!--                <img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"  alt="">-->
-                <th:block th:if="${rec.imageFiles}">
-                    <th:block th:each="imageFile : ${rec.imageFiles[0]}">
-                        <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
-                             alt="이미지를 불러올수 없습니다">
-                    </th:block>
-                </th:block>
+                <img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"  alt="">
+<!--                <th:block th:if="${rec.imageFiles}">-->
+<!--                    <th:block th:each="imageFile : ${rec.imageFiles[0]}">-->
+<!--                        <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"-->
+<!--                             alt="이미지를 불러올수 없습니다">-->
+<!--                    </th:block>-->
+<!--                </th:block>-->
             </a>
             <button class="heart_Btn"><i class="heartIcon far fa-heart fas"></i></button>
             <a href="#" class="item__title">[[${rec.pName}]]</a>

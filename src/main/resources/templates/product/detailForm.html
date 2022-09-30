@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/product/product_view.css}">
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript" defer th:src="@{/js/product/store_location.js}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
 <!--    <script asyn defer th:src="@{/js/product/ckeditor.js}"></script>-->
     <style>
@@ -146,7 +147,11 @@
                 <!-- 버튼 -->
                 <div class="product_page_btn">
                     <button type="button" class="btn_list btn">목록</button>
-                    <div th:if="${session.memType}=='owner'" ? : style="none" >
+                    <div th:if="${session.memType}=='owner'"style="block" >
+                        <button type="button" class="btn_modify btn">수정</button>
+                        <button type="button" class="btn_del btn">삭제</button>
+                    </div>
+                    <div th:if="${session.memType}=='customer'"style="none" >
                         <button type="button" class="btn_modify btn">수정</button>
                         <button type="button" class="btn_del btn">삭제</button>
                     </div>
@@ -157,7 +162,6 @@
     </form>
     <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
-
 <script asyn th:inline="javascript">
     //<!-- 목록 -->
     document.querySelector('.btn_list').addEventListener('click', e=>{
@@ -233,7 +237,6 @@
 			},
 		})
 		.then( editor => {
-
 			window.editor = editor;
 			editor.isReadOnly = true;  //읽기모드적용
 		} )
@@ -242,6 +245,4 @@
 		} );
 </script>
 </body>
-<script type="text/javascript" th:src="@{/js/product/store_location.js}"></script>
-
 </html>
