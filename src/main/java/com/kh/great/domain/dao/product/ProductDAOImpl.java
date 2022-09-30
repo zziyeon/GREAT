@@ -38,7 +38,7 @@ public class ProductDAOImpl implements ProductDAO {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(sql.toString(), new String[]{"p_number"});
-//                pstmt.setLong(2, product.getOwnerNumber());
+//                pstmt.setLong(1, product.getOwnerNumber());
                 pstmt.setString(1, product.getPTitle());
                 pstmt.setString(2, product.getPName());
                 pstmt.setString(3, product.getDeadlineTime());
@@ -51,7 +51,6 @@ public class ProductDAOImpl implements ProductDAO {
                 pstmt.setInt(9, (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice());
                 pstmt.setString(10, product.getPaymentOption());
                 pstmt.setString(11, product.getDetailInfo());
-
                 return pstmt;
             }
         }, keyHolder);

@@ -1,5 +1,6 @@
 package com.kh.great.web.controller.member;
 
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.member.MemberSVC;
@@ -8,6 +9,7 @@ import com.kh.great.web.dto.member.*;
 import com.kh.great.web.session.member.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,18 +30,15 @@ public class HomeController {
 
     private final MemberSVC memberSVC;
     final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
     @GetMapping
     public String home(HttpServletRequest request, Model model) {
-
         List<Product> list = productSVC.today_deadline();
+
         model.addAttribute("list", list);
 
-//        String view = null;
-//        HttpSession session = request.getSession(false);
-//        view = (session == null) ? "main/main" : "main/main" ;
-
-//        return view;
+        System.out.println( model);
         return "main/main";
     }
 
@@ -76,7 +75,6 @@ public class HomeController {
         //    bindingResult.reject(null, "비밀번호 일치합니다");
         //    return "join";
         //}
-
 
         Member member = new Member();
         member.setMemType(join.getMemType());
@@ -188,6 +186,27 @@ public class HomeController {
         }
 
         return "redirect:/"; //메인
+    }
+
+
+    //지역별 상품 목록(할인순.,,,,??)
+    @GetMapping("/zonning")
+    @Nullable
+    public String discountListDesc(Model model) {
+        List<Product> list = productSVC.findAll();
+        model.addAttribute("list", list);
+
+        return "main/zonning_list_csr";
+    }
+
+    // 오늘 마감상품 전체보기
+    @GetMapping("/todayDealine")
+    @Nullable
+    public String todayDealine(Model model) {
+        List<Product> list = productSVC.today_deadline();
+        model.addAttribute("list", list);
+
+        return "main/all_list";
     }
 
 }

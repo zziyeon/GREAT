@@ -1,60 +1,35 @@
-package com.kh.great.web.controller.main;
-
-import com.kh.great.domain.common.file.UploadFileSVC;
-import com.kh.great.domain.dao.product.Product;
-import com.kh.great.domain.svc.product.ProductSVC;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-
-@Slf4j
-@Controller
-@RequestMapping("")
-@RequiredArgsConstructor
-public class MainController {
-    final ProductSVC productSVC;
-    private final UploadFileSVC uploadFileSVC;
-
-//    //홈페이지 메인
-//    @GetMapping("")
-//    public String main(Model model) {
-//        List<Product> list = productSVC.today_deadline();
-//        model.addAttribute("list", list);
+//package com.kh.great.web.controller.main;
 //
-//        return "main/main";
-//    }
-
-    //지역별 상품 목록(할인순.,,,,??)
-    @GetMapping("/zonning")
-    @Nullable
-    public String discountListDesc(Model model) {
-        List<Product> list = productSVC.findAll();
-        model.addAttribute("list", list);
-
-        return "main/zonning_list_csr";
-    }
-
-    // 오늘 마감상품 전체보기
-    @GetMapping("/todayDealine")
-    @Nullable
-    public String todayDealine(Model model) {
-        List<Product> list = productSVC.today_deadline();
-        model.addAttribute("list", list);
-
-        return "main/all_list";
-    }
-
-//    // 상품 검색
-//    public String select(Model model, String findStr) {
-//        List<Product> list = productSVC.select(findStr);
-//        model.addAttribute("list", list);
+//import com.kh.great.domain.common.file.UploadFileSVC;
+//import com.kh.great.domain.svc.product.ProductSVC;
+//import lombok.RequiredArgsConstructor;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.RequestMapping;
 //
-//        return
-//    }
-}
+//@Slf4j
+//@Controller
+//@RequestMapping("")
+//@RequiredArgsConstructor
+//public class MainController {
+//    final ProductSVC productSVC;
+//    private final UploadFileSVC uploadFileSVC;
+//
+////    //홈페이지 메인
+////    @GetMapping("")
+////    public String main(Model model) {
+////        List<Product> list = productSVC.today_deadline();
+////        model.addAttribute("list", list);
+////
+////        return "main/main";
+////    }
+//
+//
+////    // 상품 검색
+////    public String select(Model model, String findStr) {
+////        List<Product> list = productSVC.select(findStr);
+////        model.addAttribute("list", list);
+////
+////        return
+////    }
+//}
