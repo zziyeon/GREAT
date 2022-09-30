@@ -1,6 +1,7 @@
 package com.kh.great.domain.dao.product;
 
 import com.kh.great.domain.Deal;
+import com.kh.great.domain.common.file.UploadFile;
 import com.kh.great.domain.dao.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,4 +36,6 @@ public class Product {
 
     private Member member;
     private Deal deal;
+
+    private List<UploadFile> imageFiles;
 }

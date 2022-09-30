@@ -1,5 +1,8 @@
 package com.kh.great.web.controller.member;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.member.MemberSVC;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +33,27 @@ public class HomeController {
 
     private final MemberSVC memberSVC;
     final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
     @GetMapping
     public String home(HttpServletRequest request, Model model) {
-
         List<Product> list = productSVC.today_deadline();
+        System.out.println( list);     //배열에 하나씩 [Product(pNumber=241, ownerNumber=null, pTitle=null, pName=육회비빔밥, deadlineTime=2022-09-30 21:30:00, category=null, totalCount=null, remainCount=null, normalPrice=45000, salePrice=13000, discountRate=71, paymentOption=null, detailInfo=null, rDate=null, uDate=null, pStatus=null, member=null, deal=null, imageFiles=null), +++++++ Product(pNumber=100, ownerNumber=null, pTitle=null, pName=adf, deadlineTime=2022-09-30 23:38:13, category=null, totalCount=null, remainCount=null, normalPrice=4000, salePrice=3000, discountRate=50, paymentOption=null, detailInfo=null, rDate=null, uDate=null, pStatus=null, member=null, deal=null, imageFiles=null)]
+
+        //rid가 pNumber다
+
+
+        List<List<UploadFile>> UploadFileListOfList = new ArrayList<>();
+
+        for (Product selectedProduct :
+                list) {
+            UploadFileListOfList.add(uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.toString(), selectedProduct.getPNumber()));
+        }
+
+        model.addAttribute("UploadFileListOfList",UploadFileListOfList);
         model.addAttribute("list", list);
 
+        System.out.println( model);     //{list=[Product(pNumber=241, ownerNumber=null, pTitle=null, pName=육회비빔밥, deadlineTime=2022-09-30 21:30:00, category=null, totalCount=null, remainCount=null, normalPrice=45000, salePrice=13000, discountRate=71, paymentOption=null, detailInfo=null, rDate=null, uDate=null, pStatus=null, member=null, deal=null, imageFiles=null),+++++++++ Product(pNumber=100, ownerNumber=null, pTitle=null, pName=adf, deadlineTime=2022-09-30 23:38:13, category=null, totalCount=null, remainCount=null, normalPrice=4000, salePrice=3000, discountRate=50, paymentOption=null, detailInfo=null, rDate=null, uDate=null, pStatus=null, member=null, deal=null, imageFiles=null)]
         return "main/main";
     }
 

@@ -57,8 +57,9 @@ public class ProductController {
         }
 
 //        HttpSession session = request.getSession(false);
-//        System.out.println("memNumber => " + session.memNumber);
-//        product.setOwnerNumber((Long) session.getAttribute("memNumber"));
+//        Object memNumber = session.getAttribute("memNumber");
+//        System.out.println(memNumber);
+//        product.setOwnerNumber((Long) memNumber);
         redirectAttributes.addAttribute("num", pNum);
         return "redirect:/products/{num}";
     }

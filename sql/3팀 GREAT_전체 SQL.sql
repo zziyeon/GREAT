@@ -276,7 +276,7 @@ create table article (
   mem_number            number(6),        -- 회원 번호
   article_category      varchar2(10),     -- 게시글 카테고리
   article_title         varchar2(90),     -- 게시글 제목
-  article_contents      varchar2(1500),   -- 게시글 내용
+  article_contents      clob,   -- 게시글 내용
   attachment            varchar2(1),      -- 첨부파일 유무
   create_date           date,             -- 게시글 작성일
   views                 number(5)         -- 조회수

@@ -25,13 +25,12 @@
                     <div class="product-img">
                         <th:block th:if="${form.imageFiles}">
                             <th:block th:each="imageFile : ${form.imageFiles[0]}">
-                                <img class="good_Img" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
-                                     th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
                                      alt="이미지를 불러올수 없습니다">
                             </th:block>
                         </th:block>
                         <th:block th:if="!(${form.imageFiles})">
-                            <img th:src="@{/img/main/배너4.png}" />
+                            <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                         </th:block>
 
                     </div>
@@ -86,9 +85,9 @@
                             <div class="wrapBtn">
                                 <button type="button" class="product-btn--buy"> 구매하기</button>
                             </div>
-                            <div class="wrapBtn" title="신고하기">
-                                <button type="button" class="product-btn--like"><i class="fa-regular fa-bell"></i></button>
-                            </div>
+<!--                            <div class="wrapBtn" title="신고하기">-->
+<!--                                <button type="button" class="product-btn&#45;&#45;like"><i class="fa-regular fa-bell"></i></button>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -119,7 +118,7 @@
                     <h4>상품정보</h4>
                     <hr>
                     <textarea class="board-write__article-content" name="detailInfo" id="detailInfo" cols="30" rows="10"
-                              placeholder="내용을 작성하세요." autofocus th:text="*{detailInfo}"></textarea>
+                              placeholder="내용을 작성하세요." readonly autofocus th:text="*{detailInfo}"></textarea>
                 </div>
                 <!-- 가게 위치 지도 -->
                 <hr>
@@ -147,7 +146,7 @@
                 <!-- 버튼 -->
                 <div class="product_page_btn">
                     <button type="button" class="btn_list btn">목록</button>
-                    <div>
+                    <div th:if="${session.memType}=='owner'" ? : style="none" >
                         <button type="button" class="btn_modify btn">수정</button>
                         <button type="button" class="btn_del btn">삭제</button>
                     </div>
