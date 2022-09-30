@@ -11,6 +11,19 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/*
+public class A {
+    private int i;
+    private int j;
+
+    int getI() {
+        reutrn this.i;
+   }
+   void setI(int i) {
+    this.i = i;
+   }
+}
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

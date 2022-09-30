@@ -1,5 +1,6 @@
 package com.kh.great.web.controller.member;
 
+import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
@@ -32,13 +33,46 @@ public class HomeController {
     final ProductSVC productSVC;
     private final UploadFileSVC uploadFileSVC;
 
+//    @GetMapping
+//    public String home(HttpServletRequest request, Model model) {
+//        List<Product> list = productSVC.today_deadline();
+//
+//        model.addAttribute("list", list);
+//
+//        System.out.println( model);
+//        return "main/main";
+//    }
+
     @GetMapping
     public String home(HttpServletRequest request, Model model) {
+        /*
+        Product A = new Product();
+        Product B = new Product();
+        Product C = new Product();
+        list => [A, B, C]
+        A.get~~();
+        A.set~~(값)
+         */
         List<Product> list = productSVC.today_deadline();
+//        List<UploadFile> uploadFileList = new ArrayList<>();
+//        list.forEach((product) -> {
+//            product.setImageFiles(uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), product.getPNumber()));
+//        });
 
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                                                            AttachCode.P0102.name(),
+                                                            list.get(i).getPNumber()));
+        }
+
+        list.forEach((each) -> {
+            System.out.println(each.toString());
+            System.out.println();
+        });
+
+//        model.addAttribute("UploadFileListOfList", uploadFileListOfList);
         model.addAttribute("list", list);
 
-        System.out.println( model);
         return "main/main";
     }
 

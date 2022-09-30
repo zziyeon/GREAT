@@ -20,12 +20,20 @@ function arrayType(requestUrl) {
             }
         }).then(res=>res.json())
               .then(res=>{
+                let img_url = "";
                 if(res.header.rtcd == '00'){
                   const result =
                     res.data.map(product=>{
                           product.deadlineTime = product.deadlineTime.substr(10,6);
+                          if(product.imageFiles != null && product.imageFiles.length > 0) {
+                            img_url = `<img class="good_Img" src="/api/attach/img/${product.imageFiles[0].code}/${product.imageFiles[0].storeFilename}" alt="이미지를 불러올수 없습니다">`;
+                          } else {
+                            img_url = `<img src="/img/product/등록된 사진이 없습니다.png" alt="">`;
+                          }
                         return ` <div class="item">
-                                      <a href="/products/${product.pnumber}" class="item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"  alt=""></a>
+                                      <a href="/products/${product.pnumber}" class="item__image">
+                                        ${img_url}
+                                      </a>
                                       <button class="heart_Btn"><i class="heartIcon far fa-heart fas"></i></button>
                                       <a href="#" class="item__title">${product.pname}</a>
                                       <div class="item__price-box">

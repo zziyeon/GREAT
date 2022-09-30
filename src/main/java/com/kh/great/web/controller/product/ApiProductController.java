@@ -1,5 +1,7 @@
 package com.kh.great.web.controller.product;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.ApiResponse;
@@ -19,12 +21,23 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiProductController {
     private final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
     // 최신순 목록 GET /api/zonning/recentList
     @GetMapping("/zonning/recentList")
     public ApiResponse<List<Product>> recentList(){
         List<Product> list = productSVC.recentList();
 
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
+
+        list.forEach((each) -> {
+            System.out.println(each.toString());
+            System.out.println("1111");
+        });
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }

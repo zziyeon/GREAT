@@ -74,13 +74,18 @@ public class ProductController {
         BeanUtils.copyProperties(findedProduct, detailForm);
 
         //2) 첨부파일 조회
+//        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
+//        if(uploadFiles.size() > 0 ){
+//            List<UploadFile> imageFiles = new ArrayList<>();
+//            for (UploadFile file : uploadFiles) {
+//                imageFiles.add(file);
+//            }
+//            detailForm.setImageFiles(imageFiles);
+//        }
+
         List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
         if(uploadFiles.size() > 0 ){
-            List<UploadFile> imageFiles = new ArrayList<>();
-            for (UploadFile file : uploadFiles) {
-                imageFiles.add(file);
-            }
-            detailForm.setImageFiles(imageFiles);
+            detailForm.setImageFiles(uploadFiles);
         }
 
         model.addAttribute("form", detailForm);
