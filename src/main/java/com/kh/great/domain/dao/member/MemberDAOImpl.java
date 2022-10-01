@@ -48,6 +48,62 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     /**
+     * 아이디 찾기
+     *
+     * @param memName 이름
+     * @param memEmail 이메일
+     * @return 아이디, 등록일자
+     */
+    @Override
+    public Member findByMemNameAndMemEmail (String memName, String memEmail) {
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("select mem_id, mem_regtime ");
+        sql.append("  from member ");
+        sql.append(" where mem_name = ? ");
+        sql.append("   and mem_email = ? ");
+
+        Member findedMember = null;
+        try {
+            //BeanPropertyRowMapper는 매핑되는 자바클래스에 디폴트 생성자 필수!
+            findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memName, memEmail);
+        } catch (DataAccessException e) {
+            log.info("찾고자하는 회원이 없습니다!={} {}", memName, memEmail);
+            throw e;
+        }
+
+        return findedMember;
+    }
+
+    /**
+     * 비밀번호 찾기
+     *
+     * @param memId
+     * @param memEmail
+     * @return
+     */
+    @Override
+    public Member findByMemIdAndMemEmail(String memId, String memEmail) {
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("select * ");
+        sql.append("  from member ");
+        sql.append(" where mem_id = ? ");
+        sql.append("   and mem_email = ? ");
+
+        Member findedMember = null;
+        try {
+            //BeanPropertyRowMapper는 매핑되는 자바클래스에 디폴트 생성자 필수!
+            findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memId, memEmail);
+        } catch (DataAccessException e) {
+            log.info("찾고자하는 회원이 없습니다!={} {}", memId, memEmail);
+            throw e;
+        }
+
+        return findedMember;
+    }
+
+    /**
      * 로그인
      *
      * @param memId 아이디
@@ -130,14 +186,18 @@ public class MemberDAOImpl implements MemberDAO {
     /**
      * 탈퇴
      *
-     * @param memNumber 회원아이디
+     * @param memNumber 회원번호
+     * @return 삭제건수
      */
     @Override
-    public Long delete(Long memNumber) {
+    public Long exit(Long memNumber) {
         int result = 0;
-        String sql = "delete from member where member_id = ? ";
+        StringBuffer sql = new StringBuffer();
+        sql.append(" delete ");
+        sql.append("   from member ");
+        sql.append("  where mem_number = ? ");
 
-        result = jt.update(sql, memNumber);
+        result = jt.update(sql.toString(), memNumber);
         return Long.valueOf(result);
     }
 
