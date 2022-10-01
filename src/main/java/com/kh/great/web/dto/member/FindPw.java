@@ -10,5 +10,4 @@ public class FindPw {
   private String memId;
   @NotBlank
   private String memEmail;
-
 }

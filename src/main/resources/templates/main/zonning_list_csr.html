@@ -23,6 +23,14 @@
         <li><a href="">분식</a></li>
         <li><a href="">도시락</a></li>
         <li><a href="">디저트</a></li>
+<!--        <li><a th:href="@{/zonning?zone={},type=한식}">한식</a></li>-->
+<!--        <li><a th:href="@{/zonning?zone={},type=중식}">중식</a></li>-->
+<!--        <li><a th:href="@{/zonning?zone={},type=일식}">일식</a></li>-->
+<!--        <li><a th:href="@{/zonning?zone={},type=양식}">양식</a></li>-->
+<!--        <li><a th:href="@{/zonning?zone={},type=아시안식}">아시안식</a></li>-->
+<!--        <li><a th:href="@{/zonning?zone={},type=분식}">분식</a></li>-->
+<!--        <li><a th:href="@{/zonning?zone={},type=도시락}">도시락</a></li>-->
+<!--        <li><a th:href="@{/zonning?zone={},type=디저트}">디저트</a></li>-->
       </ul>
     </section>
     <div class="view_array">
@@ -43,5 +51,18 @@
 </div>
 </body>
 <script>
+const arrayClick= document.querySelector('.view_array-type ul li');
+
+function arrayClick(){
+  arrayClick.classList.toggle("cliked");
+}
+
+arrayClick.addEventListener("click", arrayClick);
+
+<!--  const categoryType= document.querySelector('.food-type li a');-->
+<!--  function add_remove_class(){-->
+<!--    const selected= "selected";-->
+<!--    if(categoryType.classList.contains()-->
+<!--  }-->
 </script>
 </html>
