@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -86,22 +87,22 @@ public class ProductSVCImpl implements ProductSVC {
     //------------------------------------------
     // 상품 최신순 목록
     @Override
-    public List<Product> recentList() {
-        return productDAO.recentList();
+    public List<Product> recentList(@RequestParam("zone") String zone) {
+        return productDAO.recentList(zone);
     }
     // 상품 높은 할인순 목록
     @Override
-    public List<Product> discountListDesc() {
+    public List<Product> discountListDesc(@RequestParam("zone") String zone) {
         return productDAO.discountListDesc();
     }
     // 상품 높은 가격순 목록
     @Override
-    public List<Product> priceList() {
+    public List<Product> priceList(@RequestParam("zone") String zone) {
         return productDAO.priceList();
     }
     // 상품 높은 가격순 목록
     @Override
-    public List<Product> priceListDesc() {
+    public List<Product> priceListDesc(@RequestParam("zone") String zone) {
         return productDAO.priceListDesc();
     }
 

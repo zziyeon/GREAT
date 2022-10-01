@@ -24,7 +24,8 @@ public class ApiProductController {
     @GetMapping("/zonning/recentList")
     public ApiResponse<List<Product>> recentList(@RequestParam("zone") String zone){
         log.info("zone={}", zone);
-            List<Product> list = productSVC.recentList();
+
+        List<Product> list = productSVC.recentList(zone);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
@@ -32,10 +33,7 @@ public class ApiProductController {
                     list.get(i).getPNumber()));
         }
 
-        list.forEach((each) -> {
-            System.out.println(each.toString());
-            System.out.println("1111");
-        });
+        log.info("list={}", list);
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
 
@@ -43,8 +41,8 @@ public class ApiProductController {
 
     // 높은 할인순순 목록 GET /api/zonning/discountListDesc
     @GetMapping("/zonning/discountListDesc")
-    public ApiResponse<List<Product>> discountListDesc(){
-        List<Product> list = productSVC.discountListDesc();
+    public ApiResponse<List<Product>> discountListDesc(@RequestParam("zone") String zone){
+        List<Product> list = productSVC.discountListDesc(zone);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
@@ -57,8 +55,8 @@ public class ApiProductController {
 
     // 낮은 가격순 목록 GET /api/zonning/priceList
     @GetMapping("/zonning/priceList")
-    public ApiResponse<List<Product>> priceList(){
-        List<Product> list = productSVC.priceList();
+    public ApiResponse<List<Product>> priceList(@RequestParam("zone") String zone){
+        List<Product> list = productSVC.priceList(zone);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
@@ -71,8 +69,8 @@ public class ApiProductController {
 
     // 높은 가격순 목록 GET /api/zonning/priceListDesc
     @GetMapping("/zonning/priceListDesc")
-    public ApiResponse<List<Product>> priceListDesc(){
-        List<Product> list = productSVC.priceListDesc();
+    public ApiResponse<List<Product>> priceListDesc(@RequestParam("zone") String zone){
+        List<Product> list = productSVC.priceListDesc(zone);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(

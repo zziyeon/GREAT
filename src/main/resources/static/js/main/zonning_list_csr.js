@@ -4,11 +4,11 @@ arrayType('recentList');
 function arrayType(requestUrl) {
     const zone = document.querySelector(".title.content").dataset.zone;
     const urls = [
-        `http://localhost:9089/api/zonning/recentList`,
-        `http://localhost:9089/api/zonning/discountListDesc`,
-        `http://localhost:9089/api/zonning/priceList`,
-        `http://localhost:9089/api/zonning/priceListDesc`,
-        `http://localhost:9089/api/zonning/kFood`
+        `http://localhost:9080/api/zonning/recentList`,
+        `http://localhost:9080/api/zonning/discountListDesc`,
+        `http://localhost:9080/api/zonning/priceList`,
+        `http://localhost:9080/api/zonning/priceListDesc`,
+        `http://localhost:9080/api/zonning/kFood`
     ];
     const urlsWithZone = urls.map(url=>url+`?zone=${zone}`);
 

@@ -1,6 +1,7 @@
 package com.kh.great.domain.svc.product;
 
 import com.kh.great.domain.dao.product.Product;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -37,16 +38,16 @@ public interface ProductSVC {
 
     //----------------------------------------------
     // 상품 최신순 목록
-    List <Product> recentList();
+    List <Product> recentList(@RequestParam("zone") String zone);
 
     // 상품 높은 할인순 목록
-    List <Product> discountListDesc();
+    List <Product> discountListDesc(@RequestParam("zone") String zone);
 
     // 상품 높은 가격순 목록
-    List <Product> priceList();
+    List <Product> priceList(@RequestParam("zone") String zone);
 
     // 상품 높은 가격순 목록
-    List <Product> priceListDesc();
+    List <Product> priceListDesc(@RequestParam("zone") String zone);
 
 
     //--------------------------------------------------
