@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class resetPw {
+public class ResetPw {
     @NotBlank
     private String memId;                       //varchar2(30)
 

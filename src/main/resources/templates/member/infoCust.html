@@ -1,23 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layout}">
-<head layout:fragment="head">
-    <!-- common head -->
-    <th:block th:replace="fragments/layout :: commonHead"></th:block>
-    <!-- head -->
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/member/infoCust.css}">
-    <script th:src="@{/js/member/info.js}"></script>
+    <script type="text/javascript" defer th:src="@{/js/member/info.js}"></script>
     <title>고객회원 개인정보</title>
 </head>
-
-<body layout:fragment="body">
+<body>
     <div class="wrapper">
-        <!-- header -->
-        <header th:replace="fragments/layout :: fragMemHeader"></header>
-        <!-- //header -->
+        <header th:replace="~{layout/common_ui::choose_header}"></header>
 
         <!-- main -->
         <main class="main container">
@@ -115,7 +107,7 @@
         <!-- //main -->
 
         <!-- footer -->
-        <footer th:replace="fragments/layout :: fragFooter" class="footer container"></footer>
+        <footer th:replace="~{layout/common_ui::footer}"></footer>
         <!-- //footer -->
 
         <!-- 모달 팝업 -->
@@ -137,13 +129,13 @@
                     <div class="pwc">
                         <i class="fa-solid fa-key"></i>
                         <i class="bar"></i>
-                        <input type="password" placeholder="비밀번호를 입력하세요." />
+                        <input id="aa" type="password" placeholder="비밀번호를 입력하세요." />
                     </div>
                     <div class="location-choice">
                         <a href="javascript:close();">
                             돌아가기
                         </a>
-                        <a href="main_nonmem.html">
+                        <a class="exit-btn" href="#" onclick="return false;">
                             탈퇴
                         </a>
                     </div>
@@ -152,5 +144,26 @@
         </div>
         <!-- //모달 팝업 -->
     </div>
+
+    <script type="text/javascript">
+        //개인정보에 접근한 회원의 회원번호
+        const memNumber = [[${info.memNumber}]];
+
+        //회원탈퇴 AJAX
+        function exit(memNumber){
+          const url = `/api/member/exit`;
+          const data = { "memNumber" : memNumber };
+          fetch(url, {
+            method:'DELETE',
+            headers: {
+              'Accept':'application/json',
+              'Content-type': 'application/json'
+            },
+            body:JSON.stringify(data)
+          }).then(res => res.json())
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        }
+    </script>
 </body>
 </html>
