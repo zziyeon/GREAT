@@ -2,7 +2,6 @@
 arrayType('recentList');
 
 function arrayType(requestUrl) {
-<<<<<<< HEAD
     const zone = document.querySelector(".title.content").dataset.zone;
     const urls = [
         `http://localhost:9080/api/zonning/recentList`,
@@ -18,12 +17,6 @@ function arrayType(requestUrl) {
                 : requestUrl === 'priceList' ? urlsWithZone[2]
                 : requestUrl === 'priceListDesc' ? urlsWithZone[3]
                 : requestUrl === 'kFood' ? urlsWithZone[4]
-=======
-    const URL = requestUrl === 'recentList' ? `http://localhost:9080/api/zonning/recentList`
-                : requestUrl === 'discountListDesc' ? `http://localhost:9080/api/zonning/discountListDesc`
-                : requestUrl === 'priceList' ? `http://localhost:9080/api/zonning/priceList`
-                : requestUrl === 'priceListDesc' ? `http://localhost:9080/api/zonning/priceListDesc`
->>>>>>> 149c2b97c020eb4068f335f516d57c5a705973bc
                 : `doesn\'t exist`;
 
     if(URL === `doesn\'t exist`) {

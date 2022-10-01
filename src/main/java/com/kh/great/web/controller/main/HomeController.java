@@ -6,6 +6,7 @@ import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.member.MemberSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
+import com.kh.great.web.api.member.FindId;
 import com.kh.great.web.dto.member.*;
 import com.kh.great.web.session.member.LoginMember;
 import lombok.RequiredArgsConstructor;
@@ -118,7 +119,7 @@ public class HomeController {
     //아이디 찾기 화면
     @GetMapping("/findId")
     public String findId(Model model) {
-        model.addAttribute("findId", new findId());
+        model.addAttribute("findId", new FindId());
 
         return "member/findId";
     }
@@ -126,7 +127,7 @@ public class HomeController {
     //비밀번호 찾기 화면
     @GetMapping("/findPw")
     public String findPw(Model model) {
-        model.addAttribute("findPw", new findPw());
+        model.addAttribute("findPw", new FindPw());
 
         return "member/findPw";
     }
@@ -134,7 +135,7 @@ public class HomeController {
     //비밀번호 재설정 화면
     @GetMapping("/resetPw")
     public String resetPw(Model model) {
-        model.addAttribute("resetPw", new resetPw());
+        model.addAttribute("resetPw", new ResetPw());
 
         return "member/resetPw";
     }
