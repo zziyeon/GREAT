@@ -59,12 +59,11 @@
                 <ul>
                     <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
                         <ul>
-<!--                            <li th:classappend="{#strings.substring(form.member.memStoreLocation,6,7)=='남구'}?'active':''"><a th:href="@{/zonning}">남구</a></li>-->
-                            <li><a th:href="@{/zonning}">남구</a></li>
-                            <li><a href="">중구</a></li>
-                            <li><a href="">북구</a></li>
-                            <li><a href="">동구</a></li>
-                            <li><a href="">울주군</a></li>
+                            <li><a th:href="@{/zonning?zone=남구}">남구</a></li>
+                            <li><a th:href="@{/zonning?zone=중구}">중구</a></li>
+                            <li><a th:href="@{/zonning?zone=북구}">북구</a></li>
+                            <li><a th:href="@{/zonning?zone=동구}">동구</a></li>
+                            <li><a th:href="@{/zonning?zone=울주군}">울주군</a></li>
                         </ul>
                     </li>
                 </ul>

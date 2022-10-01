@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -207,11 +208,13 @@ public class ProductDAOImpl implements ProductDAO {
     //------------------------------
     // 상품 최신순 목록
     @Override
-    public List<Product> recentList() {
+    public List<Product> recentList(@RequestParam("zone") String zone) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
-        sql.append(" from product_info");
-        sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0  ");
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
+//        sql.append("and p.category like '%한식' ");
         sql.append(" order by R_DATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
@@ -223,7 +226,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> discountListDesc() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by DISCOUNT_RATE desc ");
@@ -237,7 +240,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> priceList() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by SALE_PRICE asc ");
@@ -251,12 +254,27 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> priceListDesc() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by SALE_PRICE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
+
+        return result;
+    }
+
+    //-----------------------------------------------
+    // 구역
+    @Override
+    public List<Product> kFood() {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+//        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0 AND m.mem_store_location LIKE '%"+ filterCondition.getKeyword()+"%' ");
+        sql.append("order by SALE_PRICE desc ");
+
+        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class) );
 
         return result;
     }

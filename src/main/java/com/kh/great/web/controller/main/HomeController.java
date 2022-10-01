@@ -1,5 +1,6 @@
-package com.kh.great.web.controller.member;
+package com.kh.great.web.controller.main;
 
+import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
@@ -36,9 +37,18 @@ public class HomeController {
     public String home(HttpServletRequest request, Model model) {
         List<Product> list = productSVC.today_deadline();
 
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(),
+                                                            list.get(i).getPNumber()));
+        }
+
+        list.forEach((each) -> {
+            System.out.println(each.toString());
+            System.out.println();
+        });
+
         model.addAttribute("list", list);
 
-        System.out.println( model);
         return "main/main";
     }
 
@@ -209,4 +219,22 @@ public class HomeController {
         return "main/all_list";
     }
 
+
+    //------------------------------------------------------------
+//    @GetMapping("/zonning")
+//    public String zones(@RequestParam(required = false) Optional<String> zone){
+//        log.info("/list 요청됨{}",zone);
+//
+//        String zo = getZone(zone);
+//
+//
+//    }
+//
+//
+//    //쿼리스트링 카테고리 읽기, 없으면 ""반환
+//    private String getZone(Optional<String> zone) {
+//        String zo = zone.isPresent()? zone.get():"";
+//        log.info("zone={}", zo);
+//        return zo;
+//    }
 }

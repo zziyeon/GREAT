@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="https://www.thymeleaf.org">
 <head>
   <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
   <title>상품관리 | GREAT</title>
@@ -34,14 +34,15 @@
         <div class="order-manage">
           <div class="order-choice">
             <div class="drop__period">
-              <input type="date" name="" id="startDate">~<input type="date" name="" id="finishDate">
-              <button type="button" id="searchBtn">조회</button>
+              <input type="date" name="" id="">~<input type="date" name="" id="">
+              <button>조회</button>
             </div>
             <div class="drop__status">
               <select name="" id="">
                 <option value="판매상태" selected disabled>판매상태</option>
                 <option value="전체">전체</option>
                 <option value="판매중">판매중</option>
+                <option value="예약중">예약중</option>
                 <option value="판매완료">판매완료</option>
               </select>
             </div>
@@ -83,6 +84,8 @@
     </main>
   <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
+<<<<<<< HEAD:src/main/resources/templates/product/manage_real.html
+=======
 <script>
 <!--  // 전체 상품관리 목록-->
 <!--  manageList();-->
@@ -137,5 +140,6 @@ searchBtn.addEventListener('click', e=>{
       }).catch(err=>console.log(err));
   }
 </script>
+>>>>>>> 149c2b97c020eb4068f335f516d57c5a705973bc:src/main/resources/templates/product/manage_csr.html
 </body>
 </html>

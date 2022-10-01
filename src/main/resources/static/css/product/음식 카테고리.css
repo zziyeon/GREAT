@@ -75,6 +75,23 @@
   color: var(--main-text-gre);
 }
 
+/*------------------------------------------------------*/
+.main > .view_array > .view_array-type > ul > li:hover {
+    color : black;
+}
+/*
+.main > .view_array > .view_array-type > ul > li:active a{
+    color : blue;
+}
+.main > .view_array > .view_array-type > ul > li.selected{
+    color : green;
+}
+.main > .view_array > .view_array-type > ul > li a:visited{
+    color : red;
+}
+*/
+/*------------------------------------------------------*/
+
 .main > .view_array > .view_array-type > ul >li:nth-child(1):before {
   display: none;
 }
