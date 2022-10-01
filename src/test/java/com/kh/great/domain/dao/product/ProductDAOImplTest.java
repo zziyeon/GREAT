@@ -23,7 +23,7 @@ class ProductDAOImplTest {
 
 
 
-    productList.stream().forEach(product1 -> log.info(product1.toString()));
+//    productList.stream().forEach(product1 -> log.info(product1.toString()));
 
 
   }

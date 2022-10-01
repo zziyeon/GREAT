@@ -43,10 +43,10 @@ public class HomeController {
                                                             list.get(i).getPNumber()));
         }
 
-        list.forEach((each) -> {
-            System.out.println(each.toString());
-            System.out.println();
-        });
+//        list.forEach((each) -> {
+//            System.out.println(each.toString());
+//            System.out.println();
+//        });
 
         model.addAttribute("list", list);
 

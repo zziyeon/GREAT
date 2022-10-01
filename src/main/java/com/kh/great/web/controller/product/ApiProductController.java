@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,20 +23,26 @@ public class ApiProductController {
 
     // 최신순 목록 GET /api/zonning/recentList
     @GetMapping("/zonning/recentList")
-    public ApiResponse<List<Product>> recentList(@RequestParam("zone") String zone){
-        log.info("zone={}", zone);
+//    public ApiResponse<List<Product>> recentList(@RequestParam("zone") String zone){
+    public ApiResponse<List<Product>> recentList(@RequestParam Map<String, Object> allParameters){
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
 
-        List<Product> list = productSVC.recentList(zone);
+        log.info("allParameters.get(\"zone\")={}", zone);
+        log.info("allParameters.get(\"category\")={}", category);
 
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
-                    AttachCode.P0102.name(),
-                    list.get(i).getPNumber()));
-        }
+        List<Product> list = productSVC.recentList(allParameters);
 
-        log.info("list={}", list);
-        //api 응답 메시지
+//        for (int i = 0; i < list.size(); i++) {
+//            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+//                    AttachCode.P0102.name(),
+//                    list.get(i).getPNumber()));
+//        }
+//
+//        log.info("list={}", list);
+//        //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
+//        return ApiResponse.createApiResMsg("00", "성공", null );
 
     }
 

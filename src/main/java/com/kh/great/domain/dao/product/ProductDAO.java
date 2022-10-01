@@ -3,6 +3,7 @@ package com.kh.great.domain.dao.product;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductDAO {
     //상품등록
@@ -34,7 +35,7 @@ public interface ProductDAO {
 
     //------------------------------------
     // 상품 최신순 목록
-    List <Product> recentList(@RequestParam("zone") String zone);
+    List <Product> recentList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 할인순 목록
     List <Product> discountListDesc();

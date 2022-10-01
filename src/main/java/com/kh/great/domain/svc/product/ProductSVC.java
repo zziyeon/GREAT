@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+
 public interface ProductSVC {
 
     //상품등록
@@ -38,7 +40,8 @@ public interface ProductSVC {
 
     //----------------------------------------------
     // 상품 최신순 목록
-    List <Product> recentList(@RequestParam("zone") String zone);
+//    List <Product> recentList(@RequestParam("zone") String zone);
+    List <Product> recentList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 할인순 목록
     List <Product> discountListDesc(@RequestParam("zone") String zone);

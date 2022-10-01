@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Repository
@@ -76,7 +77,7 @@ public class ProductDAOImpl implements ProductDAO {
                     Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
                     Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
                     product.setMember(member);
-                    log.info("product={}", product);
+//                    log.info("product={}", product);
                     return product;
                 }
             },pNum);
@@ -195,7 +196,7 @@ public class ProductDAOImpl implements ProductDAO {
                     product.setMember(member);
                     product.setDeal(deal);
 
-                    log.info("product={}", product);
+//                    log.info("product={}", product);
                     return product;
                 }
             });
@@ -208,17 +209,23 @@ public class ProductDAOImpl implements ProductDAO {
     //------------------------------
     // 상품 최신순 목록
     @Override
-    public List<Product> recentList(@RequestParam("zone") String zone) {
+    public List<Product> recentList(@RequestParam Map<String, Object> allParameters) {
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
         StringBuffer sql = new StringBuffer();
         sql.append("select * ");
         sql.append("from product_info P, member M ");
         sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
         sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
-//        sql.append("and p.category like '%한식' ");
+        if (!category.equals("전체")) {
+            sql.append("and p.category like '%"+category+"%' ");
+        }
         sql.append(" order by R_DATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
-
+        System.out.println("sql => "+ sql);
+//        System.out.println(result);
         return result;
     }
 

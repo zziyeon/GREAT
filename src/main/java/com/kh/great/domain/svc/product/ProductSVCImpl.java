@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -87,8 +89,8 @@ public class ProductSVCImpl implements ProductSVC {
     //------------------------------------------
     // 상품 최신순 목록
     @Override
-    public List<Product> recentList(@RequestParam("zone") String zone) {
-        return productDAO.recentList(zone);
+    public List<Product> recentList(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.recentList(allParameters);
     }
     // 상품 높은 할인순 목록
     @Override
