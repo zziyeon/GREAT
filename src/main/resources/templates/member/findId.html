@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layout}">
-<head layout:fragment="head">
-    <!-- common head -->
-    <th:block th:replace="fragments/layout :: commonHead"></th:block>
-    <!-- head -->
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/member/findId.css}">
-    <script th:src="@{/js/member/findId.js}"></script>
+    <script type="text/javascript" defer th:src="@{/js/member/findId.js}"></script>
     <title>아이디 찾기</title>
 </head>
 
-<body layout:fragment="body">
+<body>
     <div class="wrapper">
-        <!-- header -->
-        <header th:replace="fragments/layout :: fragNonHeader"></header>
-        <!-- //header -->
+        <header th:replace="~{layout/common_ui::choose_header}"></header>
 
         <!-- main -->
         <main class="main container">
@@ -32,23 +25,23 @@
                     <div class="name">
                         <i class="icon__name fa-regular fa-address-card"></i>
                         <i class="bar__name"></i>
-                        <input type="text" placeholder="이름을 입력하세요." />
+                        <input id="inputName" type="text" placeholder="이름을 입력하세요." />
                     </div>
                     <div class="email">
                         <i class="icon__email fa-regular fa-envelope"></i>
                         <i class="bar__email"></i>
-                        <input type="email" placeholder="이메일 주소를 입력하세요." />
+                        <input id="inputEmail" type="email" placeholder="이메일 주소를 입력하세요." />
                     </div>
                 </div>
                 <div class="wrap-confirm-btn content">
-                    <button class="btn confirm-btn" onclick="location.href='javascript:show();'">확인</button>
+                    <button type="button" class="btn confirm-btn">확인</button>
                 </div>
             </div>
         </main>
         <!-- //main -->
 
         <!-- footer -->
-        <footer th:replace="fragments/layout :: fragFooter" class="footer container"></footer>
+        <footer th:replace="~{layout/common_ui::footer}"></footer>
         <!-- //footer -->
 
         <!-- 모달 팝업 -->
@@ -58,8 +51,8 @@
                     <div class="msg-find-id">
                         <h2>아이디 찾기가 완료되었습니다.</h2>
                         <div class="msg">
-                            <p><label for="">회원님의 아이디는 <span>abc1234</span> 입니다.</label></p>
-                            <p><label for="">가입일자는 <span>2022.08.15</span> 입니다.</label></p>
+                            <p><label for="">회원님의 아이디는 <span class="span-id">abc1234</span> 입니다.</label></p>
+                            <p><label for="">가입일자는 <span class="span-reg">2022.08.15</span> 입니다.</label></p>
                         </div>
                     </div>
                     <div class="location-choice">

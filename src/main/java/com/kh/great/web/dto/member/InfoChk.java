@@ -1,4 +1,5 @@
 package com.kh.great.web.dto.member;
+
 import lombok.Data;
 
 @Data
