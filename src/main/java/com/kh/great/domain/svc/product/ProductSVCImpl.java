@@ -104,4 +104,11 @@ public class ProductSVCImpl implements ProductSVC {
     public List<Product> priceListDesc() {
         return productDAO.priceListDesc();
     }
+
+    //-----------------------------
+    //한식 목록
+    @Override
+    public List<Product> kFood() {
+        return productDAO.kFood();
+    }
 }

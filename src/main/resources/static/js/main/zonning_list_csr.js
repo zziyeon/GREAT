@@ -6,6 +6,7 @@ function arrayType(requestUrl) {
                 : requestUrl === 'discountListDesc' ? `http://localhost:9089/api/zonning/discountListDesc`
                 : requestUrl === 'priceList' ? `http://localhost:9089/api/zonning/priceList`
                 : requestUrl === 'priceListDesc' ? `http://localhost:9089/api/zonning/priceListDesc`
+                : requestUrl === 'kFood' ? `http://localhost:9089/api/zonning/kFood`
                 : `doesn\'t exist`;
     if(URL === `doesn\'t exist`) {
         console.log("URL load error");

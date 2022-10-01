@@ -209,7 +209,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> recentList() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0  ");
         sql.append(" order by R_DATE desc ");
@@ -223,7 +223,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> discountListDesc() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by DISCOUNT_RATE desc ");
@@ -237,7 +237,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> priceList() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
         sql.append(" order by SALE_PRICE asc ");
@@ -251,9 +251,24 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> priceListDesc() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
         sql.append(" from product_info");
         sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
+        sql.append(" order by SALE_PRICE desc ");
+
+        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
+
+        return result;
+    }
+
+    //-----------------------------------------------
+    //한식
+    @Override
+    public List<Product> kFood() {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
+        sql.append(" from product_info");
+        sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 AND CATEGORY LIKE '%한%' ");
         sql.append(" order by SALE_PRICE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));

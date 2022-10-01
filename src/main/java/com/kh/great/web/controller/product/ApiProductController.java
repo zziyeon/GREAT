@@ -47,6 +47,11 @@ public class ApiProductController {
     public ApiResponse<List<Product>> discountListDesc(){
         List<Product> list = productSVC.discountListDesc();
 
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
@@ -56,6 +61,11 @@ public class ApiProductController {
     public ApiResponse<List<Product>> priceList(){
         List<Product> list = productSVC.priceList();
 
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
@@ -65,6 +75,11 @@ public class ApiProductController {
     public ApiResponse<List<Product>> priceListDesc(){
         List<Product> list = productSVC.priceListDesc();
 
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
@@ -75,6 +90,21 @@ public class ApiProductController {
         List<Product> list = productSVC.pManage(ownerNumber);
         model.addAttribute("list", list);
 
+        //api 응답 메시지
+        return ApiResponse.createApiResMsg("00", "성공", list);
+    }
+    //---------------------------------------------------------------------------------------------------------------
+    // 한식 카테고리
+    // 높은 가격순 목록 GET /api/zonning/priceListDesc
+    @GetMapping("/zonning/kFood")
+    public ApiResponse<List<Product>> kFood(){
+        List<Product> list = productSVC.kFood();
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
