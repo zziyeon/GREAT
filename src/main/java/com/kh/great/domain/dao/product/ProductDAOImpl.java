@@ -262,16 +262,16 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     //-----------------------------------------------
-    //한식
+    // 구역
     @Override
     public List<Product> kFood() {
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME, CATEGORY ");
-        sql.append(" from product_info");
-        sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 AND CATEGORY LIKE '%한%' ");
-        sql.append(" order by SALE_PRICE desc ");
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0 AND m.mem_store_location LIKE '%중구%' ");
+        sql.append("order by SALE_PRICE desc ");
 
-        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
+        List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class) );
 
         return result;
     }

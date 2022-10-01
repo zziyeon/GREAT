@@ -2,12 +2,23 @@
 arrayType('recentList');
 
 function arrayType(requestUrl) {
-    const URL = requestUrl === 'recentList' ? `http://localhost:9089/api/zonning/recentList`
-                : requestUrl === 'discountListDesc' ? `http://localhost:9089/api/zonning/discountListDesc`
-                : requestUrl === 'priceList' ? `http://localhost:9089/api/zonning/priceList`
-                : requestUrl === 'priceListDesc' ? `http://localhost:9089/api/zonning/priceListDesc`
-                : requestUrl === 'kFood' ? `http://localhost:9089/api/zonning/kFood`
+    const zone = document.querySelector(".title.content").dataset.zone;
+    const urls = [
+        `http://localhost:9089/api/zonning/recentList`,
+        `http://localhost:9089/api/zonning/discountListDesc`,
+        `http://localhost:9089/api/zonning/priceList`,
+        `http://localhost:9089/api/zonning/priceListDesc`,
+        `http://localhost:9089/api/zonning/kFood`
+    ];
+    const urlsWithZone = urls.map(url=>url+`?zone=${zone}`);
+
+    const URL = requestUrl === 'recentList' ? urlsWithZone[0]
+                : requestUrl === 'discountListDesc' ? urlsWithZone[1]
+                : requestUrl === 'priceList' ? urlsWithZone[2]
+                : requestUrl === 'priceListDesc' ? urlsWithZone[3]
+                : requestUrl === 'kFood' ? urlsWithZone[4]
                 : `doesn\'t exist`;
+
     if(URL === `doesn\'t exist`) {
         console.log("URL load error");
         // need error page append!

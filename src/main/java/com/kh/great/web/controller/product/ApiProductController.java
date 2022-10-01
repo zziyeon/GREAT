@@ -8,10 +8,7 @@ import com.kh.great.web.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,8 +22,9 @@ public class ApiProductController {
 
     // 최신순 목록 GET /api/zonning/recentList
     @GetMapping("/zonning/recentList")
-    public ApiResponse<List<Product>> recentList(){
-        List<Product> list = productSVC.recentList();
+    public ApiResponse<List<Product>> recentList(@RequestParam("zone") String zone){
+        log.info("zone={}", zone);
+            List<Product> list = productSVC.recentList();
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
@@ -40,6 +38,7 @@ public class ApiProductController {
         });
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
+
     }
 
     // 높은 할인순순 목록 GET /api/zonning/discountListDesc

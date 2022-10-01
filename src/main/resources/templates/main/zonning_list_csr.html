@@ -8,10 +8,10 @@
   <script type="text/javascript" defer th:src="@{/js/main/zonning_list_csr.js}"></script>
 </head>
 <body>
-<div class="wrapper">
+<div class="wrapper" >
   <header th:replace="~{layout/common_ui::choose_header}"></header>
-  <main class="main container">
-    <section class="title content">남구</section>
+  <main class="main container" th:with="zone=${param.zone}">
+    <section class="title content"  th:data-zone="${zone}" th:text="${zone}">남구</section>
     <section class="food-type">
       <ul>
         <li id="food-type_selected"><a href="">전체</a></li>

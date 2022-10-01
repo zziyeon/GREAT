@@ -43,6 +43,9 @@ public interface ProductDAO {
     // 상품 높은 가격순 목록
     List <Product> priceListDesc();
     //---------------------------------------
-    //한식
-    List <Product> kFood();
+    // 구역
+    List<Product> kFood();
+
+    //-----------------------------------------------
+
 }
