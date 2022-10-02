@@ -23,92 +23,84 @@ public class ApiProductController {
 
     // 최신순 목록 GET /api/zonning/recentList
     @GetMapping("/zonning/recentList")
-//    public ApiResponse<List<Product>> recentList(@RequestParam("zone") String zone){
     public ApiResponse<List<Product>> recentList(@RequestParam Map<String, Object> allParameters){
         String zone = allParameters.get("zone").toString();
         String category = allParameters.get("category").toString();
 
-        log.info("allParameters.get(\"zone\")={}", zone);
-        log.info("allParameters.get(\"category\")={}", category);
-
         List<Product> list = productSVC.recentList(allParameters);
-
-//        for (int i = 0; i < list.size(); i++) {
-//            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
-//                    AttachCode.P0102.name(),
-//                    list.get(i).getPNumber()));
-//        }
-//
-//        log.info("list={}", list);
-//        //api 응답 메시지
-        return ApiResponse.createApiResMsg("00", "성공", list);
-//        return ApiResponse.createApiResMsg("00", "성공", null );
-
-    }
-
-    // 높은 할인순순 목록 GET /api/zonning/discountListDesc
-    @GetMapping("/zonning/discountListDesc")
-    public ApiResponse<List<Product>> discountListDesc(@RequestParam("zone") String zone){
-        List<Product> list = productSVC.discountListDesc(zone);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
                     AttachCode.P0102.name(),
                     list.get(i).getPNumber()));
         }
-        //api 응답 메시지
+//        //api 응답 메시지
+        return ApiResponse.createApiResMsg("00", "성공", list);
+    }
+
+    // 높은 할인순 목록 GET /api/zonning/discountListDesc
+    @GetMapping("/zonning/discountListDesc")
+    public ApiResponse<List<Product>> discountListDesc(@RequestParam Map<String, Object> allParameters){
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
+        List<Product> list = productSVC.discountListDesc(allParameters);
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
+//        //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
 
     // 낮은 가격순 목록 GET /api/zonning/priceList
     @GetMapping("/zonning/priceList")
-    public ApiResponse<List<Product>> priceList(@RequestParam("zone") String zone){
-        List<Product> list = productSVC.priceList(zone);
+    public ApiResponse<List<Product>> priceList(@RequestParam Map<String, Object> allParameters){
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
+        List<Product> list = productSVC.priceList(allParameters);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
                     AttachCode.P0102.name(),
                     list.get(i).getPNumber()));
         }
-        //api 응답 메시지
+//        //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
 
     // 높은 가격순 목록 GET /api/zonning/priceListDesc
     @GetMapping("/zonning/priceListDesc")
-    public ApiResponse<List<Product>> priceListDesc(@RequestParam("zone") String zone){
-        List<Product> list = productSVC.priceListDesc(zone);
+    public ApiResponse<List<Product>> priceListDesc(@RequestParam Map<String, Object> allParameters){
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
+        List<Product> list = productSVC.priceListDesc(allParameters);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
                     AttachCode.P0102.name(),
                     list.get(i).getPNumber()));
         }
-        //api 응답 메시지
+//        //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
 
-    // 날짜로 상품관리 목록 조회
+    // 상품관리
     @GetMapping("/manage/{ownerNumber}")
     public ApiResponse<List<Product>> manageByDate(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
         List<Product> list = productSVC.pManage(ownerNumber);
         model.addAttribute("list", list);
 
-        //api 응답 메시지
-        return ApiResponse.createApiResMsg("00", "성공", list);
-    }
-    //---------------------------------------------------------------------------------------------------------------
-    // 한식 카테고리
-    // 높은 가격순 목록 GET /api/zonning/priceListDesc
-    @GetMapping("/zonning/kFood")
-    public ApiResponse<List<Product>> kFood(){
-        List<Product> list = productSVC.kFood();
-
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
                     AttachCode.P0102.name(),
                     list.get(i).getPNumber()));
         }
+
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }

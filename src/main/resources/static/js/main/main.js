@@ -26,7 +26,7 @@ function showSlides(n) {
     setTimeout(showSlides, 6000);
 }
 
-document.querySelector('.heart_Btn').addEventListener('click', heart);
+//document.querySelector('.heart_Btn').addEventListener('click', heart);
 
 // mouse click event
 function heart(e) {
@@ -34,44 +34,27 @@ function heart(e) {
     e.target.classList.toggle('active');
 }
 
+// 검색 입력창
+const $searchInput =document.querySelector('.bottom-menu .search .search__search-box');
+// 검색 버튼
+const $searchBtn = document.querySelector('.bottom-menu .search i');
 
-// const screenHight = document.body.clientHeight;
-// if(screenHight <=740){
-//   document.querySelector('.topbtn').style.display="none";
-// }
-// else if(screenHight > 800){
-//   document.querySelector('.topbtn').style.display="block";
-// }
+// 검색 버튼 클릭시
+$searchBtn.addEventListener('click', search_h);
 
-// const dm = document.documentElement;
-// const topButton = document.querySelector('.topbtn');
-// const documentHeight = dm.scrollHeight;
+function search_h(){
+    console.log("클릭됨");
+    // 검색어 입력 유무 체크
+    if($searchInput.value.trim().length ===0){
+        alert('검색어를 입력하세요');
+        $searchInput.focus();
+        $searchInput.select();
+        return false;
+    }
+    const url = `?search=${$searchInput.value}`;
+    location.href=url;
+}
 
-// window.addEventListener('scroll', function () {
-//     const scrollToTop = dm.scrollTop;
 
-//     if (documentHeight != 0 ){
-//         const actionHeight = 800;
 
-//         if (scrollToTop > actionHeight) {
-//             topButton.classList.add('action');
-//         } else {
-//             topButton.classList.remove('action');
-//         }
-//     }
-// });
 
-// topButton.addEventListener('click', function (e) {
-//     e.preventDefault();
-//     scrollUp();
-// });
-
-// function scrollUp() {
-//     const upper = setInterval(function () {
-//         if (dm.scrollTo != 0) {
-//             window.scrollBy(0, -55);
-//         } else {
-//             clearInterval(upper);
-//         }
-//     }, 10);
-// }

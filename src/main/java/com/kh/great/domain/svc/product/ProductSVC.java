@@ -44,16 +44,11 @@ public interface ProductSVC {
     List <Product> recentList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 할인순 목록
-    List <Product> discountListDesc(@RequestParam("zone") String zone);
+    List <Product> discountListDesc(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 가격순 목록
-    List <Product> priceList(@RequestParam("zone") String zone);
+    List <Product> priceList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 가격순 목록
-    List <Product> priceListDesc(@RequestParam("zone") String zone);
-
-
-    //--------------------------------------------------
-    //한식
-    List <Product> kFood();
+    List <Product> priceListDesc(@RequestParam Map<String, Object> allParameters);
 }

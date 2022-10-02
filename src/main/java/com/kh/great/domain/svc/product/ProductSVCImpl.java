@@ -94,24 +94,17 @@ public class ProductSVCImpl implements ProductSVC {
     }
     // 상품 높은 할인순 목록
     @Override
-    public List<Product> discountListDesc(@RequestParam("zone") String zone) {
-        return productDAO.discountListDesc();
+    public List<Product> discountListDesc(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.discountListDesc(allParameters);
     }
     // 상품 높은 가격순 목록
     @Override
-    public List<Product> priceList(@RequestParam("zone") String zone) {
-        return productDAO.priceList();
+    public List<Product> priceList(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.priceList(allParameters);
     }
     // 상품 높은 가격순 목록
     @Override
-    public List<Product> priceListDesc(@RequestParam("zone") String zone) {
-        return productDAO.priceListDesc();
-    }
-
-    //-----------------------------
-    //한식 목록
-    @Override
-    public List<Product> kFood() {
-        return productDAO.kFood();
+    public List<Product> priceListDesc(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.priceListDesc(allParameters);
     }
 }

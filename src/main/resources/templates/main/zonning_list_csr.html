@@ -7,57 +7,29 @@
   <link rel="stylesheet" th:href="@{/css/product/음식 카테고리.css}">
   <script type="text/javascript" defer th:src="@{/js/main/zonning_list_csr.js}"></script>
 </head>
-<style>
-  .active {
-    background-color: yellow;
-  }
-</style>
-
 <body>
 <div class="wrapper" >
   <header th:replace="~{layout/common_ui::choose_header}"></header>
   <main class="main container" th:with="zone=${param.zone}">
     <section class="title content"  th:data-zone="${zone}" th:text="${zone}">남구</section>
     <section class="food-type">
-<!--      <ul class="food_list">-->
-<!--        <li class="select active"><a href="">전체</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">한식</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">중식</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">일식</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">양식</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">아시안식</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">분식</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">도시락</a></li>-->
-<!--        <li class="select"><a href="javascript: arrayType('recentList');">디저트</a></li>-->
-<!--      </ul>-->
       <ul class="food_list">
-        <li class="select active">전체</li>
-        <li class="select">한식</li>
-        <li class="select">중식</li>
-        <li class="select">일식</li>
-        <li class="select">양식</li>
-        <li class="select">아시안식</li>
-        <li class="select">분식</li>
-        <li class="select">도시락</li>
-        <li class="select">디저트</li>
+        <li class="active">전체</li>
+        <li>한식</li>
+        <li>중식</li>
+        <li>일식</li>
+        <li>양식</li>
+        <li>아시안식</li>
+        <li>분식</li>
+        <li>도시락</li>
+        <li>디저트</li>
       </ul>
-<!--      <div class="food_list">-->
-<!--        <div class="select" id="food-type_selected"><button type="button">전체</button></div>-->
-<!--        <div class="select"><button type="button">한식</button></div>-->
-<!--        <div class="select"><button type="button">중식</button></div>-->
-<!--        <div class="select"><button type="button">일식</button></div>-->
-<!--        <div class="select"><button type="button">양식</button></div>-->
-<!--        <div class="select"><button type="button">아시안식</button></div>-->
-<!--        <div class="select"><button type="button">분식</button></div>-->
-<!--        <div class="select"><button type="button">도시락</button></div>-->
-<!--        <div class="select"><button type="button">디저트</button></div>-->
-<!--      </div>-->
     </section>
     <div class="view_array">
-      <div class="view_array-total">총 <span th:text="|${list.size}|"></span> 건</div>
+      <div class="view_array-total">총 <span></span> 건</div>
       <div class="view_array-type">
         <ul>
-          <li><a href="javascript: arrayType('recentList');" >최신순</a></li>
+          <li><a href="javascript: arrayType('recentList');" class="selected" >최신순</a></li>
           <li><a href="javascript: arrayType('discountListDesc');">높은 할인순</a></li>
           <li><a href="javascript: arrayType('priceList');" >낮은 가격순</a></li>
           <li><a href="javascript: arrayType('priceListDesc');">높은 가격순</a></li>
@@ -70,6 +42,4 @@
   <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 </body>
-<script>
-</script>
 </html>
