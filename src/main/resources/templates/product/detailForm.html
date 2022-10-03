@@ -151,14 +151,6 @@
                             <button type="button" class="btn_modify btn">수정</button>
                             <button type="button" class="btn_del btn">삭제</button>
                         </div>
-<!--                    <div th:if="${session.memType}=='owner'"style="block" >-->
-<!--                        <button type="button" class="btn_modify btn">수정</button>-->
-<!--                        <button type="button" class="btn_del btn">삭제</button>-->
-<!--                    </div>-->
-<!--                    <div th:if="${session.memType}!='owner'"style="visibility: hidden;" >-->
-<!--                        <button type="button" class="btn_modify btn">수정</button>-->
-<!--                        <button type="button" class="btn_del btn">삭제</button>-->
-<!--                    </div>-->
                 </div>
             </div>
         </main>
@@ -168,7 +160,12 @@
 </div>
 <script asyn th:inline="javascript">
     document.getElementById("edit_btn").style.display = (
-        [[${session.memType}]] == 'owner' ? "block" : "none"
+        console.log([[${session.memType}]]),
+        console.log([[${session.memNumber}]]),
+        console.log([[${form.ownerNumber}]]),
+        console.log([[${session.memType}]]=='owner'&&[[${session.memNumber}]]==[[${form.ownerNumber}]]),
+<!--        ([[${session.memType}]]=='owner'&&[[${session.memNumber}]]==[[${form.ownerNumber}]]) == 'true' ? "block" : "none"-->
+        [[${session.memNumber}]] == [[${form.ownerNumber}]] ? "block" : "none"
     );
 
     //<!-- 목록 -->

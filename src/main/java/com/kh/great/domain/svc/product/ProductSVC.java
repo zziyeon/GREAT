@@ -30,7 +30,8 @@ public interface ProductSVC {
     List<Product> today_deadline();
 
     //상품 관리
-    List<Product> pManage(Long ownerNumber);
+    List<Product> manage(Long ownerNumber);
+    List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
 
     //상품 관리
     List<Product> saleList(Long ownerNumber);
@@ -50,5 +51,6 @@ public interface ProductSVC {
     List <Product> priceListDesc(@RequestParam Map<String, Object> allParameters);
 
     //--------------------------------------------------------------------------------
+    // 검색 목록
     List<Product> search(@RequestParam ("searchKeyword") String searchKeyword);
 }

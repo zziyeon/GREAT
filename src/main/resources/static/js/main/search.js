@@ -15,7 +15,7 @@ function search_h(){
         $searchInput.select();
         return false;
     }
-    const url = `?search=${$searchInput.value}`;
+    const url = `/searchresult?searchKeyword=${$searchInput.value}`;
     location.href=url;
 }
 

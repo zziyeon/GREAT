@@ -10,11 +10,18 @@
 }
 
 .main > .title {
+  display: flex;
+  justify-content: center;
   text-align: center;
   font-size: 22px;
   font-weight: bold;
   margin : 20px 0px;
   width: 100%;
+}
+
+.main > .title > p {
+    margin: 0 10px;
+    color: rgba(234, 165, 6, 1);
 }
 
 /* main 업종 카테고리 */

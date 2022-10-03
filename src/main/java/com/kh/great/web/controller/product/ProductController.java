@@ -141,9 +141,16 @@ public class ProductController {
     }
 
     //상품관리
+//    @GetMapping("/{ownerNumber}/manage")
+//    public String manage(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
+//        List<Product> list = productSVC.pManage(ownerNumber);
+//        model.addAttribute("list", list);
+//
+//        return "product/manage";
+//    }
     @GetMapping("/{ownerNumber}/manage")
     public String manage(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
-        List<Product> list = productSVC.pManage(ownerNumber);
+        List<Product> list = productSVC.manage(ownerNumber);
         model.addAttribute("list", list);
 
         return "product/manage";

@@ -25,7 +25,8 @@ public interface ProductDAO {
     List<Product> today_deadline();
 
     //상품관리목록
-    List<Product> pManage(Long ownerNumber);
+    List<Product> manage(Long ownerNumber);
+    List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
 
     //판매 내역
     List<Product> saleList(Long ownerNumber);

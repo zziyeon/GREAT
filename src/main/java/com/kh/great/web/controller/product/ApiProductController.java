@@ -7,7 +7,6 @@ import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -99,15 +98,17 @@ public class ApiProductController {
                     AttachCode.P0102.name(),
                     list.get(i).getPNumber()));
         }
+
+        log.info("list={}", list);
         //api 응답 메시지
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
 
     // 상품관리
     @GetMapping("/manage/{ownerNumber}")
-    public ApiResponse<List<Product>> manageByDate(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
-        List<Product> list = productSVC.pManage(ownerNumber);
-        model.addAttribute("list", list);
+    public ApiResponse<List<Product>> manageByDate(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        List<Product> list = productSVC.pManage(ownerNumber, history_start_date, history_end_date);
+        System.out.println("list = " + list);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
@@ -115,7 +116,25 @@ public class ApiProductController {
                     list.get(i).getPNumber()));
         }
 
+//        model.addAttribute("list", list);
         //api 응답 메시지
+        System.out.println("ownerNumber = " + ownerNumber + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
+
+//    // 상품관리
+//    @GetMapping("/manage/{ownerNumber}")
+//    public ApiResponse<List<Product>> manageByDate(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
+//        List<Product> list = productSVC.pManage(ownerNumber);
+//
+//        for (int i = 0; i < list.size(); i++) {
+//            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+//                    AttachCode.P0102.name(),
+//                    list.get(i).getPNumber()));
+//        }
+//
+////        model.addAttribute("list", list);
+//        //api 응답 메시지
+//        return ApiResponse.createApiResMsg("00", "성공", list);
+//    }
 }

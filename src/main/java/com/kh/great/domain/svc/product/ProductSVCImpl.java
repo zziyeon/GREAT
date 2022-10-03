@@ -70,8 +70,12 @@ public class ProductSVCImpl implements ProductSVC {
 
     //상품 관리 목록
     @Override
-    public List<Product> pManage(Long ownerNumber) {
-        return productDAO.pManage(ownerNumber);
+    public List<Product> manage(Long ownerNumber) {
+        return productDAO.manage(ownerNumber);
+    }
+    @Override
+    public List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        return productDAO.pManage(ownerNumber, history_start_date, history_end_date);
     }
 
     //판매 내역 목록

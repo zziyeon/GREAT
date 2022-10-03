@@ -94,8 +94,6 @@ function arrayType(requestUrl) {
                             </div>`;
                     });
                     document.querySelector('.main .items').innerHTML=result.join('');
-                    }else{
-
                     }
                     }).catch(err=>console.log(err));
 }

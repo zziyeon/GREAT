@@ -140,14 +140,42 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     //상품 관리
-    public List<Product> pManage(Long ownerNumber) {
+    public List<Product> manage(Long ownerNumber) {
         StringBuffer sql = new StringBuffer();
 
         sql.append("select * ");
         sql.append("from product_info P, member M ");
         sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("and p.r_date between '2022-09-30' and '2022-10-03' ");
         sql.append("order by R_DATE desc " );
 
+        List<Product> result =null;
+        try {
+            result= jt.query(sql.toString(),new RowMapper<Product>(){
+                @Override
+                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
+                    Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
+                    product.setMember(member);
+                    return product;
+                }
+            });
+        } catch (DataAccessException e) {
+            log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
+        }
+        return result;
+    }
+    //상품 관리
+    public List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("and p.r_date between '" + history_start_date + "' and '" + history_end_date+"' ");
+        sql.append("order by R_DATE desc " );
+
+        System.out.println("sql = " + sql);
         List<Product> result =null;
         try {
             result= jt.query(sql.toString(),new RowMapper<Product>(){

@@ -194,15 +194,25 @@ public class HomeController {
         return "redirect:/"; //메인
     }
 
-//    //지역별 상품 목록(할인순.,,,,??)
-//    @GetMapping("/zonning")
-//    @Nullable
-//    public String discountListDesc(Model model) {
-//        List<Product> list = productSVC.findAll();
-//        model.addAttribute("list", list);
-//
-//        return "main/zonning_list_csr";
-//    }
+    // 검색 목록
+    @GetMapping("/searchresult")
+    public  String searchresult(Model model){
+        List<Product> list = productSVC.findAll();
+        model.addAttribute("list", list);
+
+        return "main/search_result";
+
+    }
+
+    //지역별 상품 목록
+    @GetMapping("/zonning")
+    @Nullable
+    public String discountListDesc(Model model) {
+        List<Product> list = productSVC.findAll();
+        model.addAttribute("list", list);
+
+        return "main/zonning_list_csr";
+    }
 
     // 오늘 마감상품 전체보기
     @GetMapping("/todayDealine")
