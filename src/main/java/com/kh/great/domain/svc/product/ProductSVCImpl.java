@@ -46,12 +46,6 @@ public class ProductSVCImpl implements ProductSVC {
         return productDAO.findByProductNum(pNum);
     }
 
-    // 상품 검색
-    @Override
-    public List<Product> select(String findStr) {
-        return productDAO.select(findStr);
-    }
-
     //상품 수정
     @Override
     public int update(Long pNum, Product product) {
@@ -106,5 +100,12 @@ public class ProductSVCImpl implements ProductSVC {
     @Override
     public List<Product> priceListDesc(@RequestParam Map<String, Object> allParameters) {
         return productDAO.priceListDesc(allParameters);
+    }
+
+    //------------------------------------------------
+    // 검색 목록
+    @Override
+    public List<Product> search(@RequestParam ("searchKeyword") String searchKeyword) {
+        return productDAO.search(searchKeyword);
     }
 }

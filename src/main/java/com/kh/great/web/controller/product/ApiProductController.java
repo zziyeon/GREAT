@@ -89,6 +89,20 @@ public class ApiProductController {
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
 
+    // 검색 결과 목록 @GET /api/searchresult
+    @GetMapping("searchresult")
+    public ApiResponse<List<Product>> searchresult(@RequestParam ("searchKeyword") String searchKeyword){
+        List<Product> list = productSVC.search(searchKeyword);
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
+        //api 응답 메시지
+        return ApiResponse.createApiResMsg("00", "성공", list);
+    }
+
     // 상품관리
     @GetMapping("/manage/{ownerNumber}")
     public ApiResponse<List<Product>> manageByDate(@PathVariable("ownerNumber") Long ownerNumber, Model model) {

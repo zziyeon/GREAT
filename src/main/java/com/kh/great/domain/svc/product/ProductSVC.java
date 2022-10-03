@@ -17,9 +17,6 @@ public interface ProductSVC {
     //상품조회
     Product findByProductNum(Long pNum);
 
-    // 상품 검색
-    List<Product> select(String findStr);
-
     //상품변경
     int update(Long pNum, Product product);
 
@@ -51,4 +48,7 @@ public interface ProductSVC {
 
     // 상품 높은 가격순 목록
     List <Product> priceListDesc(@RequestParam Map<String, Object> allParameters);
+
+    //--------------------------------------------------------------------------------
+    List<Product> search(@RequestParam ("searchKeyword") String searchKeyword);
 }

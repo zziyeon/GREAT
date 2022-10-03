@@ -89,18 +89,6 @@ public class ProductDAOImpl implements ProductDAO {
         return product;
     }
 
-    // 상품 검색
-    @Override
-    public List<Product> select(String findStr) {
-        StringBuffer sql = new StringBuffer();
-        sql.append("select * ");
-        sql.append("from product_info ");
-        sql.append("where p_name like '%?%' or p_title like '%?%' ");
-
-        List<Product> result= jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class), findStr, findStr);
-        return result;
-    }
-
     //상품수정
     @Override
     public int update(Long pNum, Product product) {
@@ -289,6 +277,20 @@ public class ProductDAOImpl implements ProductDAO {
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
 
+        return result;
+    }
+
+    //-------------------------------------------------------------------------------------
+    // 상품 검색
+    @Override
+    public List<Product> search(@RequestParam ("searchKeyword") String searchKeyword) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * ");
+        sql.append("from product_info ");
+        sql.append("where p_name like '%"+searchKeyword+"%' or p_title like '%"+searchKeyword+"%' ");
+        sql.append(" order by R_DATE desc ");
+
+        List<Product> result= jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
         return result;
     }
 }

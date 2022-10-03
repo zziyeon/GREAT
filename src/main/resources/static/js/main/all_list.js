@@ -1,11 +1,8 @@
 // 전체 목록 가져오기
-arrayType('recentList');
+arrayType('view');
 
 function arrayType(requestUrl) {
-    const URL = requestUrl === 'recentList' ? `http://localhost:9080/api/zonning/recentList`
-                : requestUrl === 'discountListDesc' ? `http://localhost:9080/api/zonning/discountListDesc`
-                : requestUrl === 'priceList' ? `http://localhost:9080/api/zonning/priceList`
-                : requestUrl === 'priceListDesc' ? `http://localhost:9080/api/zonning/priceListDesc`
+    const URL = requestUrl === 'view' ? `http://localhost:9080/api/zonning/recentList`
                 : `doesn\'t exist`;
     if(URL === `doesn\'t exist`) {
         console.log("URL load error");
