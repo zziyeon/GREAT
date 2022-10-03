@@ -90,7 +90,7 @@ public class ApiProductController {
     }
 
     // 검색 결과 목록 @GET /api/searchresult
-    @GetMapping("searchresult")
+    @GetMapping("/searchresult")
     public ApiResponse<List<Product>> searchresult(@RequestParam ("searchKeyword") String searchKeyword){
         List<Product> list = productSVC.search(searchKeyword);
 

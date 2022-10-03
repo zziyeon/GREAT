@@ -43,11 +43,6 @@ public class HomeController {
                                                             list.get(i).getPNumber()));
         }
 
-//        list.forEach((each) -> {
-//            System.out.println(each.toString());
-//            System.out.println();
-//        });
-
         model.addAttribute("list", list);
 
         return "main/main";
@@ -199,7 +194,6 @@ public class HomeController {
         return "redirect:/"; //메인
     }
 
-
 //    //지역별 상품 목록(할인순.,,,,??)
 //    @GetMapping("/zonning")
 //    @Nullable
@@ -219,23 +213,4 @@ public class HomeController {
 
         return "main/all_list";
     }
-
-
-    //------------------------------------------------------------
-//    @GetMapping("/zonning")
-//    public String zones(@RequestParam(required = false) Optional<String> zone){
-//        log.info("/list 요청됨{}",zone);
-//
-//        String zo = getZone(zone);
-//
-//
-//    }
-//
-//
-//    //쿼리스트링 카테고리 읽기, 없으면 ""반환
-//    private String getZone(Optional<String> zone) {
-//        String zo = zone.isPresent()? zone.get():"";
-//        log.info("zone={}", zo);
-//        return zo;
-//    }
 }
