@@ -10,11 +10,18 @@
 }
 
 .main > .title {
+  display: flex;
+  justify-content: center;
   text-align: center;
   font-size: 22px;
   font-weight: bold;
   margin : 20px 0px;
   width: 100%;
+}
+
+.main > .title > p {
+    margin: 0 10px;
+    color: rgba(234, 165, 6, 1);
 }
 
 /* main 업종 카테고리 */
@@ -48,9 +55,12 @@
   background-color: var(--main-color-yel);
   outline: none;
 }
+.active {
+  background-color: rgba(240, 236, 191, 0.787);   
+}
 
 .food-type> ul > li:hover {
-  background-color: rgba(226, 226, 183, 0.267);
+  background-color: rgba(240, 236, 191, 0.787);
 }
 /* //main 업종 카테고리 */
 
@@ -75,21 +85,15 @@
   color: var(--main-text-gre);
 }
 
+.view_array-type  ul li .selected {
+  color:black;
+  font-weight: bold;
+}
+
 /*------------------------------------------------------*/
 .main > .view_array > .view_array-type > ul > li:hover {
     color : black;
 }
-/*
-.main > .view_array > .view_array-type > ul > li:active a{
-    color : blue;
-}
-.main > .view_array > .view_array-type > ul > li.selected{
-    color : green;
-}
-.main > .view_array > .view_array-type > ul > li a:visited{
-    color : red;
-}
-*/
 /*------------------------------------------------------*/
 
 .main > .view_array > .view_array-type > ul >li:nth-child(1):before {

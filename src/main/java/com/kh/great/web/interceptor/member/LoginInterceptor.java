@@ -1,4 +1,4 @@
-package com.kh.great3.web.interceptor;
+package com.kh.great.web.interceptor.member;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     ) throws Exception {
         String redirectUrl = null;
         String requestURI = request.getRequestURI();
-        log.info("인증체크 = {}", requestURI);
+//        log.info("인증체크 = {}", requestURI);
 
         //세션 조회
 //        HttpSession session = request.getSession(false);

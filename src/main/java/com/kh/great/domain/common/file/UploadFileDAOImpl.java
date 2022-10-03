@@ -130,7 +130,7 @@ public class UploadFileDAOImpl implements UploadFileDAO {
     List<UploadFile> list = jdbcTemplate.query(sql.toString(),
             //db table의 칼럼명(snake case) => 별칭 줄 필요 없이 java 객체(camel case)로 자동으로 변환
             new BeanPropertyRowMapper<>(UploadFile.class), code, rid);
-    log.info("list={}",list);
+//    log.info("list={}",list);
     return list;
   }
 

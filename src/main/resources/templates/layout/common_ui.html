@@ -12,6 +12,7 @@
         <link rel="stylesheet" th:href="@{/css/common/common.css}">
         <link rel="icon" th:href="@{/css/common/icon.svg}">
         <script src="https://kit.fontawesome.com/132ba309f6.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" defer th:src="@{/js/main/search.js}"></script>
     </th:block>
 </head>
 <body>
@@ -59,18 +60,21 @@
                 <ul>
                     <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
                         <ul>
-                            <li><a th:href="@{/zonning?zone=남구}">남구</a></li>
-                            <li><a th:href="@{/zonning?zone=중구}">중구</a></li>
-                            <li><a th:href="@{/zonning?zone=북구}">북구</a></li>
-                            <li><a th:href="@{/zonning?zone=동구}">동구</a></li>
-                            <li><a th:href="@{/zonning?zone=울주군}">울주군</a></li>
+                            <li><a th:href="@{/zonning?zone=남구&category=전체}">남구</a></li>
+                            <li><a th:href="@{/zonning?zone=중구&category=전체}">중구</a></li>
+                            <li><a th:href="@{/zonning?zone=북구&category=전체}">북구</a></li>
+                            <li><a th:href="@{/zonning?zone=동구&category=전체}">동구</a></li>
+                            <li><a th:href="@{/zonning?zone=울주군&category=전체}">울주군</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="search">
                 <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
-                <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <i class="fa-solid fa-magnifying-glass"></i>
+<!--                <a href="" class="search__search-icon">-->
+<!--                    <i class="fa-solid fa-magnifying-glass"></i>-->
+<!--                </a>-->
             </div>
         </nav>
     </th:block>
