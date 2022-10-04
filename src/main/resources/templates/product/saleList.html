@@ -5,7 +5,7 @@
     <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <title>판매 내역 | GREAT</title>
     <link rel="stylesheet" th:href="@{/css/product/판매내역.css}">
-    <script type="text/javascript" defer th:src="@{/js/product/sellList.js}"></script>
+    <script type="text/javascript" defer th:src="@{/js/product/saleList.js}"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -16,10 +16,10 @@
             <p class="memNum" th:text="${session.memNumber}"></p>
             <ul>
                 <li class="p-manage">
-                    <h3><a th:href="@{/products/9/manage}">상품 관리</a></h3>
+                    <h3><a th:href="@{/products/}+${session.memNumber}+@{/manage}">상품 관리</a></h3>
                 </li>
                 <li class="p-manage p-manage-choice">
-                    <h3><a th:href="@{/products/9/saleList}">판매 내역</a></h3>
+                    <h3><a th:href="@{/products/}+${session.memNumber}+@{/saleList}">판매 내역</a></h3>
                     <i class="fa-solid fa-angle-right"></i>
                 </li>
             </ul>

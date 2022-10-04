@@ -1,10 +1,7 @@
-// 상품별 판매 선택
-//const $each_sell_status = document.querySelector('#each_sell_status');
-
 // 판매 상태별 조회할 목록 키워드
 const $sell_status_keyword = document.querySelector(".drop__status select ");
 
-// 판매 상태별 조회할 목록
+// 판매 상태별 조회할 목록 클릭
 $sell_status_keyword.addEventListener('change', sell_status_keyword_h);
 
 let sell_status_selected="3";
@@ -32,7 +29,7 @@ function sell_status_keyword_h(){
     }
     return sell_status_selected;
 }
-
+//
 //$each_sell_status.addEventListener('change',e=>{
 //    if($each_sell_status.value == '삭제'){
 //        alert("판매글을 삭제 하시겠습니까?");
@@ -106,12 +103,15 @@ function search(searchData){
 // 해당 점주 전체 상품 목록 조회
 manageList(sell_status_selected,$startDate.value, $finishDate.value);
 
+// sample
+//let get_pNumber;
 // 상품관리 목록
 function manageList(sell_status,startDate, endDate) {
 
 //sell_status=sell_status_keyword_h();
 const ownerNumber= document.querySelector('.memNum').textContent;
 const url = 'http://localhost:9080/api/manage/'+ownerNumber+'?sell_status='+sell_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
+
 fetch(url, {
   methode: 'GET',
   headers:{
@@ -130,22 +130,21 @@ fetch(url, {
           } else {
             img_url = `<img src="/img/product/등록된 사진이 없습니다.png" alt="">`;
           }
-
+//          get_pNumber = product.pnumber;
           return `<tr>
                     <td>${i}</td>
                     <td>${img_url}</td>
                     <td>
-                      <select name="product.pstatus" id="productStatus"  onchange="location.href=this.value">
-                       <option value="" ${product.pstatus == 0 ? 'selected' : ''}  >판매중</option>
-                       <option value="" ${product.pstatus == 1 ? 'selected' : ''}  >판매완료</option>
-                       <option value="/products/${product.pnumber}/del">삭제</option>
+                      <select name="" id="productStatus"  onchange="javascript:each_sell_status(this, ${product.pnumber}, ${product.pstatus})">
+                       <option value="0" ${product.pstatus == 0 ? 'selected' : ''}  >판매중</option>
+                       <option value="1" ${product.pstatus == 1 ? 'selected' : ''}  >판매완료</option>
+                       <option value="del">삭제</option>
                       </select>
                     </td>
                     <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
                     <td>${product.salePrice}/ ${product.normalPrice}원</td>
                     <td>${product.remainCount}/${product.totalCount}개</td>
                     <td>${product.rdate}</td>
-                    <p></p>
                     <td><a class="updateBtn" href="/products/${product.pnumber}/edit">수정</a></td>
                   </tr>`;
         });
@@ -154,4 +153,51 @@ fetch(url, {
     }
   }).catch(err=>console.log(err));
 }
+// 상품별 판매 선택
+function each_sell_status(obj, pNumber, pstatus){
+    console.log("pNumber -> " + pNumber);
 
+    if(obj.value=='0'){
+        console.log("판매중으로 변경?");
+        sell_st_uf(pNumber, obj.value);
+    }
+    if(obj.value=='1'){
+        console.log("판매완료로 변경?");
+        sell_st_uf(pNumber, obj.value);
+    }
+    if(obj.value=='del'){
+        const check = confirm("판매글을 삭제하시겠습니까?");
+        if(check){
+            window.location.href = "/products/" + pNumber + "/del";
+        }
+        else{
+            obj.value=pstatus;
+        }
+
+    }
+}
+
+// 상품 상태 변경
+function sell_st_uf(pNumber, pstatus){
+    console.log("sell_st_uf 함수 안");
+  const url = 'http://localhost:9080/api/manage/' + pNumber;
+  fetch( url,{            //url
+    method:'PATCH',        //http method
+    headers:{             //http header
+      'Content-Type':'application/json',
+      'Accept':'application/json'
+    },
+    body: JSON.stringify({
+            "pStatus" : pstatus
+        }),  //http body
+
+  }).then(res=>res.json())
+    .then(data=>{
+      console.log(data);
+      // 1) 입력데이터 가져오기
+      const inputDate = getInputData();
+      // 2) 날짜 조회 처리
+      search(inputDate);
+    })
+    .catch(err=>console.log(err));
+}

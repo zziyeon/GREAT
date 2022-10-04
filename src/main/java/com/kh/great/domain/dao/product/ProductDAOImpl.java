@@ -167,6 +167,7 @@ public class ProductDAOImpl implements ProductDAO {
         }
         return result;
     }
+
     //상품 관리
     public List<Product> pManage(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("sell_status") Integer sell_status,  @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
         StringBuffer sql = new StringBuffer();
@@ -199,6 +200,21 @@ public class ProductDAOImpl implements ProductDAO {
         return result;
     }
 
+    // 판매관리화면에서 각 상품 판매 상태 변경하기
+    @Override
+    public int pManage_status_update(Long pNum, Integer pStatus) {
+        int result = 0;
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("update product_info ");
+        sql.append("   SET p_status=? ");
+        sql.append("WHERE p_number = ? ");
+
+        result=jt.update(sql.toString(), pStatus, pNum );
+
+        return result;
+    }
+
     // 판매 내역
     public List<Product> saleList(Long ownerNumber) {
         StringBuffer sql = new StringBuffer();
@@ -218,7 +234,6 @@ public class ProductDAOImpl implements ProductDAO {
                     product.setMember(member);
                     product.setDeal(deal);
 
-                    log.info("product={}", product);
                     return product;
                 }
             });
@@ -238,7 +253,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("and d.orderdate between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
 
         if(pickUp_status==0||pickUp_status==1) {
-            sql.append("and p_status=" + pickUp_status + " ");
+            sql.append("and d.pickup_status=" + pickUp_status + " ");
         }
         sql.append("order by d.orderdate desc " );
 
@@ -263,6 +278,8 @@ public class ProductDAOImpl implements ProductDAO {
         }
         return result;
     }
+
+
 
     //------------------------------
     // 상품 최신순 목록

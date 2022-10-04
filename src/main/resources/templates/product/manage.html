@@ -15,11 +15,11 @@
         <p class="memNum" th:text="${session.memNumber}"></p>
         <ul>
           <li class="p-manage p-manage-choice">
-            <h3><a th:href="@{/products/9/manage}">상품 관리</a></h3>
+            <h3><a th:href="@{/products/}+${session.memNumber}+@{/manage}">상품 관리</a></h3>
             <i class="fa-solid fa-angle-right"></i>
           </li>
           <li class="p-manage">
-            <h3><a th:href="@{/products/9/saleList}">판매 내역</a></h3>
+            <h3><a th:href="@{/products/}+${session.memNumber}+@{/saleList}">판매 내역</a></h3>
           </li>
         </ul>
       </div>

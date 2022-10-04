@@ -33,6 +33,7 @@ public interface ProductSVC {
     //상품 관리
     List<Product> manage(Long ownerNumber);
     List<Product> pManage(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("sell_status") Integer sell_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
+    int pManage_status_update(Long pNum, Integer pStatus);
 
     //상품 관리
     List<Product> saleList(Long ownerNumber);

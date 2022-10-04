@@ -5,10 +5,12 @@ import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.ApiResponse;
+import com.kh.great.web.api.product.EditReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -122,8 +124,19 @@ public class ApiProductController {
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
 
+    // 상품관리 페이지에서 각 판매 상태 변경
+    @PatchMapping("/manage/{pNumber}")
+    public ApiResponse<Object> pManage_status_update(@PathVariable("pNumber") Long pNumber, @Valid @RequestBody EditReq editReq){
+//        Product product = new Product();
+//        BeanUtils.copyProperties(editReq, product);
+//        editReq.setPStatus();
+        productSVC.pManage_status_update(pNumber, editReq.getPStatus());
+
+        return ApiResponse.createApiResMsg("00", "성공", productSVC.findByProductNum(pNumber));
+    }
+
     // 판매내역
-    @GetMapping("/sellList/{ownerNumber}")
+    @GetMapping("/saleList/{ownerNumber}")
     public ApiResponse<List<Product>> pSaleList(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("pickUp_status") Integer pickUp_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
         List<Product> list = productSVC.pSaleList(ownerNumber, pickUp_status, history_start_date, history_end_date);
         System.out.println("@@@@list = " + list);

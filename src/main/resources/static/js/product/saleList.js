@@ -17,6 +17,7 @@ function pickUp_status_keyword_h(){
         search(inputDate);
     }
     if($pickUp_status_keyword.value == '픽업 예정'){
+        console.log("픽업 예정");
         pickUp_status_selected ="0";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
@@ -24,6 +25,7 @@ function pickUp_status_keyword_h(){
         search(inputDate);
     }
     if($pickUp_status_keyword.value=='픽업 완료'){
+        console.log("픽업 완료");
         pickUp_status_selected = "1";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
@@ -103,7 +105,7 @@ manageList(pickUp_status_selected,$startDate.value, $finishDate.value);
 function manageList(pickUp_status,startDate, endDate) {
 
 const ownerNumber= document.querySelector('.memNum').textContent;
-const url = 'http://localhost:9080/api/sellList/'+ownerNumber+'?pickUp_status='+pickUp_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
+const url = 'http://localhost:9080/api/saleList/'+ownerNumber+'?pickUp_status='+pickUp_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
 fetch(url, {
   methode: 'GET',
   headers:{
@@ -117,7 +119,9 @@ fetch(url, {
         res.data.map(product =>{
             console.log(product);
           i++;
-          product.rdate=product.rdate.substr(0,10);
+          product.deal.orderdate = product.deal.orderdate.substr(0,10);
+          product.deal.visittime = product.deal.visittime.substr(0,10);
+//          product.rdate=product.rdate.substr(0,10);
           if(product.imageFiles != null && product.imageFiles.length > 0) {
             img_url = `<img class="good_Img" src="/api/attach/img/${product.imageFiles[0].code}/${product.imageFiles[0].storeFilename}" alt="이미지를 불러올수 없습니다">`;
           } else {
@@ -125,21 +129,22 @@ fetch(url, {
           }
 
           return `<tr>
-                    <td>${}</td>
-                    <td>${img_url}</td>
+                    <td>${product.deal.orderNumber}</td>
+                    <td>${product.deal.orderdate}</td>
+                    <td>${product.member.memNickname}</td>
+                    <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
+                    <td>${product.deal.pcount}</td>
+                    <td>${product.deal.price}</td>
+                    <td>${product.deal.visittime}</td>
                     <td>
-                      <select name="product.pstatus" id="productStatus"  onchange="location.href=this.value">
-                       <option value="" ${product.pstatus == 0 ? 'selected' : ''}  >판매중</option>
-                       <option value="" ${product.pstatus == 1 ? 'selected' : ''}  >판매완료</option>
-                       <option value="/products/${product.pnumber}/del">삭제</option>
+                    <p>${product.deal.buyType==0? '온라인 결제':'현장 결제'}</p>
+                    </td>
+                    <td>
+                      <select name="" id="">
+                       <option value="" ${product.deal.pickupStatus == 0 ? 'selected' : ''}  >픽업 예정</option>
+                       <option value="" ${product.deal.pickupStatus == 1 ? 'selected' : ''}  >픽업 완료</option>
                       </select>
                     </td>
-                    <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
-                    <td>${product.salePrice}/ ${product.normalPrice}원</td>
-                    <td>${product.remainCount}/${product.totalCount}개</td>
-                    <td>${product.rdate}</td>
-                    <p></p>
-                    <td><a class="updateBtn" href="/products/${product.pnumber}/edit">수정</a></td>
                   </tr>`;
         });
         document.querySelector('.sell_list-tb tbody').innerHTML=result.join('');
