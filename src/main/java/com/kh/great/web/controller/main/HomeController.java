@@ -201,7 +201,6 @@ public class HomeController {
         model.addAttribute("list", list);
 
         return "main/search_result";
-
     }
 
     //지역별 상품 목록

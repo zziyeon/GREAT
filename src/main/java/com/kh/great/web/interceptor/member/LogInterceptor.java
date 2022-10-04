@@ -18,14 +18,11 @@ public class LogInterceptor implements HandlerInterceptor {
             HttpServletResponse response,
             Object handler
     ) throws Exception {
-        log.info("preHandle called!");
 
         String requestURI = request.getRequestURI(); //클라이언트의 요청 URI
         String uuid = String.valueOf(UUID.randomUUID()); //요청 추적번호
 
         request.setAttribute("transactionId", uuid);
-
-        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
 
         return true;
     }
@@ -40,12 +37,10 @@ public class LogInterceptor implements HandlerInterceptor {
             Object handler,
             ModelAndView modelAndView
     ) throws Exception {
-        log.info("postHandle called!");
 
         String requestURI = request.getRequestURI(); //클라이언트의 요청 URI
         String uuid = String.valueOf(request.getAttribute("transactionId"));
 
-        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
     }
 
     //뷰 렌더링 후, 클라이언트에 응답메세지 전송 후
@@ -57,12 +52,9 @@ public class LogInterceptor implements HandlerInterceptor {
             Object handler,
             Exception ex
     ) throws Exception {
-        log.info("afterCompletion!");
 
         String requestURI = request.getRequestURI(); //클라이언트의 요청 URI
         String uuid = String.valueOf(request.getAttribute("transactionId"));
-
-        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
 
         if (ex != null) {
             log.error("afterCompletion error!!", ex);
