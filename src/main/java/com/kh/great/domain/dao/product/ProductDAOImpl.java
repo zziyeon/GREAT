@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Connection;
@@ -35,6 +36,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("insert into product_info(p_number, owner_number, p_title, p_name, DEADLINE_TIME, CATEGORY, TOTAL_COUNT, REMAIN_COUNT ,NORMAL_PRICE, SALE_PRICE, DISCOUNT_RATE, PAYMENT_OPTION, DETAIL_INFO ) ");
         sql.append("values(product_p_number_seq.nextval, ?, ?, ?, TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), ?, ?, ?, ?, ?, ?, ?, ?) ");
 
+        log.info("sql={}", sql);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jt.update(new PreparedStatementCreator() {
             @Override
@@ -96,7 +98,7 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
 
         sql.append("update product_info ");
-        sql.append("SET p_title = ?, P_NAME=?, DEADLINE_TIME = TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), CATEGORY=?, REMAIN_COUNT=?, NORMAL_PRICE = ?, SALE_PRICE = ?, DISCOUNT_RATE=?, PAYMENT_OPTION=?, detail_info=? ");
+        sql.append("SET p_title = ?, P_NAME=?, DEADLINE_TIME = TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), CATEGORY=?, REMAIN_COUNT=?, NORMAL_PRICE = ?, SALE_PRICE = ?, DISCOUNT_RATE=?, PAYMENT_OPTION=?, detail_info=?, u_date=sysdate ");
         sql.append("WHERE p_number = ? ");
 
         result=jt.update(sql.toString(), product.getPTitle(), product.getPName(), product.getDeadlineTime(), product.getCategory(), product.getRemainCount(), product.getNormalPrice(), product.getSalePrice(), (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice(), product.getPaymentOption(), product.getDetailInfo(), pNum );
@@ -145,7 +147,7 @@ public class ProductDAOImpl implements ProductDAO {
 
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=? ");
         sql.append("and p.r_date between '2022-09-30' and '2022-10-03' ");
         sql.append("order by R_DATE desc " );
 
@@ -159,20 +161,24 @@ public class ProductDAOImpl implements ProductDAO {
                     product.setMember(member);
                     return product;
                 }
-            });
+            },ownerNumber);
         } catch (DataAccessException e) {
             log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
         }
         return result;
     }
     //상품 관리
-    public List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+    public List<Product> pManage(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("sell_status") Integer sell_status,  @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
         StringBuffer sql = new StringBuffer();
-
+        System.out.println("ownerNumber = " + ownerNumber + ", sell_status = " + sell_status + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number="+ownerNumber+"  ");
         sql.append("and p.r_date between '" + history_start_date + "' and '" + history_end_date+"' ");
+
+        if(sell_status==0||sell_status==1) {
+            sql.append("and p_status=" + sell_status + " ");
+        }
         sql.append("order by R_DATE desc " );
 
         System.out.println("sql = " + sql);

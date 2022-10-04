@@ -106,9 +106,9 @@ public class ApiProductController {
 
     // 상품관리
     @GetMapping("/manage/{ownerNumber}")
-    public ApiResponse<List<Product>> manageByDate(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
-        List<Product> list = productSVC.pManage(ownerNumber, history_start_date, history_end_date);
-        System.out.println("list = " + list);
+    public ApiResponse<List<Product>> manageByDate(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("sell_status") Integer sell_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        List<Product> list = productSVC.pManage(ownerNumber, sell_status, history_start_date, history_end_date);
+        System.out.println("@@@@list = " + list);
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(

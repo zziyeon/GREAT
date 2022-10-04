@@ -12,6 +12,7 @@
   <header th:replace="~{layout/common_ui::choose_header}"></header>
     <main class="main container">
       <div class="main-side-left">
+        <p class="memNum" th:text="${session.memNumber}"></p>
         <ul>
           <li class="p-manage p-manage-choice">
             <h3><a th:href="@{/products/9/manage}">상품 관리</a></h3>
@@ -38,11 +39,10 @@
               <button type="button" id="searchBtn">조회</button>
             </div>
             <div class="drop__status">
-              <select name="" id="">
-                <option value="판매상태" selected disabled>판매상태</option>
-                <option value="전체">전체</option>
-                <option value="판매중">판매중</option>
-                <option value="판매완료">판매완료</option>
+              <select name="" id="sell_status">
+                <option class="sell_all" value="전체">전체</option>
+                <option class="sell_ing" value="판매중">판매중</option>
+                <option class="sell_ed" value="판매완료">판매완료</option>
               </select>
             </div>
           </div>

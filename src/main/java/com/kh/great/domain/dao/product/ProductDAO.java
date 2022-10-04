@@ -1,5 +1,6 @@
 package com.kh.great.domain.dao.product;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface ProductDAO {
 
     //상품관리목록
     List<Product> manage(Long ownerNumber);
-    List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
+    List<Product> pManage(@PathVariable("ownerNumber") Long ownerNumber,  @RequestParam ("sell_status") Integer sell_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
 
     //판매 내역
     List<Product> saleList(Long ownerNumber);

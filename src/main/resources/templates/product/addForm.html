@@ -80,6 +80,12 @@
 </div>
 
 <script>
+    //<!-- 취소 버튼 -->
+    const $cancelBtn = document.getElementById('cancelBtn');
+    $cancelBtn.addEventListener('click', evt=>{
+        location.href=`/`;
+    });
+
     const form = {
         articleContents: document.getElementById('detailInfo')
     };

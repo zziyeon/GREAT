@@ -1,3 +1,46 @@
+// 상품별 판매 선택
+//const $each_sell_status = document.querySelector('#each_sell_status');
+
+// 판매 상태별 조회할 목록 키워드
+const $sell_status_keyword = document.querySelector(".drop__status select ");
+
+// 판매 상태별 조회할 목록
+$sell_status_keyword.addEventListener('change', sell_status_keyword_h);
+
+let sell_status_selected="3";
+function sell_status_keyword_h(){
+    if($sell_status_keyword.value == '전체'){
+        sell_status_selected = "3";
+        // 1) 입력데이터 가져오기
+        const inputDate = getInputData();
+        // 2) 날짜 조회 처리
+        search(inputDate);
+    }
+    if($sell_status_keyword.value == '판매중'){
+        sell_status_selected ="0";
+        // 1) 입력데이터 가져오기
+        const inputDate = getInputData();
+        // 2) 날짜 조회 처리
+        search(inputDate);
+    }
+    if($sell_status_keyword.value=='판매완료'){
+        sell_status_selected = "1";
+        // 1) 입력데이터 가져오기
+        const inputDate = getInputData();
+        // 2) 날짜 조회 처리
+        search(inputDate);
+    }
+    return sell_status_selected;
+}
+
+//$each_sell_status.addEventListener('change',e=>{
+//    if($each_sell_status.value == '삭제'){
+//        alert("판매글을 삭제 하시겠습니까?");
+//    }
+//});
+
+
+//----------------------------------------------------------
 // 날짜 선택
 let $startDate = document.querySelector('#startDate');
 let $finishDate= document.querySelector('#finishDate');
@@ -38,17 +81,17 @@ const $period = document.querySelector('.drop__period #searchBtn');
 function getInputData(){
     const startDateData = $startDate.value;
     const finishDateData = $finishDate.value;
+    const sell_status= sell_status_selected;
 
     return {
         "startDate" : startDateData,
-        "endDate" : finishDateData
+        "endDate" : finishDateData,
+        "sell_status" : sell_status
     };
 }
 
 // 날짜 조회 버튼 클릭
-$period .addEventListener('click', e=>{
-    console.log("클릭됨");
-
+$period.addEventListener('click', e=>{
     // 1) 입력데이터 가져오기
     const inputDate = getInputData();
     // 2) 날짜 조회 처리
@@ -56,33 +99,19 @@ $period .addEventListener('click', e=>{
 });
 
 function search(searchData){
-console.log('searchData.startDate -> ' + searchData.startDate);
-console.log('searchData.endDate -> ' + searchData.endDate);
-
-manageList(searchData.startDate, searchData.endDate);
-//const url = 'http://localhost:9080/api/manage/9?history_start_date=' + searchData.startDate + '&history_end_date=' + searchData.endDate;
-//    fetch(url, {
-//        method:'GET',
-//        headers:{
-//            'Accept':'application/json'
-//        },
-//    }).then(res=>res.json())
-//        .then(res=>{
-//            console.log(res);
-//            if(res.header.rtcd == '00'){
-//            // 검색 결과
-//            console.log("성공");
-//            }
-//        })
+    manageList(searchData.sell_status, searchData.startDate, searchData.endDate);
 }
 
 //-------------------------------------------
 // 해당 점주 전체 상품 목록 조회
-manageList($startDate.value, $finishDate.value);
+manageList(sell_status_selected,$startDate.value, $finishDate.value);
 
 // 상품관리 목록
-function manageList(startDate, endDate) {
-const url = 'http://localhost:9080/api/manage/9?history_start_date=' + startDate + '&history_end_date=' + endDate;
+function manageList(sell_status,startDate, endDate) {
+
+//sell_status=sell_status_keyword_h();
+const ownerNumber= document.querySelector('.memNum').textContent;
+const url = 'http://localhost:9080/api/manage/'+ownerNumber+'?sell_status='+sell_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
 fetch(url, {
   methode: 'GET',
   headers:{
@@ -91,7 +120,6 @@ fetch(url, {
 }).then(res=>res.json())
   .then(res=>{
     if(res.header.rtcd == '00'){
-      console.log(res.pName);
       let i =0;
       const result =
         res.data.map(product =>{
@@ -102,26 +130,28 @@ fetch(url, {
           } else {
             img_url = `<img src="/img/product/등록된 사진이 없습니다.png" alt="">`;
           }
+
           return `<tr>
                     <td>${i}</td>
                     <td>${img_url}</td>
                     <td>
-                      <select name="" id="">
-                        <option value="판매중">판매중</option>
-                        <option value="삭제">삭제</option>
-                        <option value="판매완료">판매완료</option>
+                      <select name="product.pstatus" id="productStatus"  onchange="location.href=this.value">
+                       <option value="" ${product.pstatus == 0 ? 'selected' : ''}  >판매중</option>
+                       <option value="" ${product.pstatus == 1 ? 'selected' : ''}  >판매완료</option>
+                       <option value="/products/${product.pnumber}/del">삭제</option>
                       </select>
                     </td>
-                    <td>${product.pname}</td>
+                    <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
                     <td>${product.salePrice}/ ${product.normalPrice}원</td>
                     <td>${product.remainCount}/${product.totalCount}개</td>
                     <td>${product.rdate}</td>
                     <p></p>
                     <td><a class="updateBtn" href="/products/${product.pnumber}/edit">수정</a></td>
-                  </tr>
-          `;
+                  </tr>`;
         });
         document.querySelector('.product_manage-tb tbody').innerHTML=result.join('');
+
     }
   }).catch(err=>console.log(err));
 }
+

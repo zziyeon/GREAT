@@ -19,6 +19,11 @@ h3 {
     margin: 0 20px 0 10px;
     font-size: 15px;
 }
+
+.memNum {
+    display:none;
+}
+
 .main-side-left > ul> li {
     width: 155px;
     height: 40px;

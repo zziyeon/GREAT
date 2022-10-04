@@ -4,7 +4,6 @@ drop table deal;
 drop table good;
 drop table review;
 drop table bookmark;
-drop table profile;
 drop table product_info;
 drop table comments;
 drop table article;
@@ -22,7 +21,6 @@ drop sequence comments_comment_num_seq;
 drop sequence uploadfile_uploadfile_id_seq;
 drop sequence good_good_number_seq;
 drop sequence review_review_number_seq;
-drop sequence profile_profile_number_seq;
 drop sequence PRODUCT_P_NUMBER_SEQ;
 drop sequence bookmark_bookmark_number_seq;
 
@@ -138,8 +136,8 @@ create table product_info(
 ,    DISCOUNT_RATE NUMBER(2, 0) not null
 ,    PAYMENT_OPTION VARCHAR2(32 BYTE) not null
 ,    DETAIL_INFO clob
-,    R_DATE DATE default sysdate not null
-,    U_DATE DATE default sysdate not null
+,    R_DATE DATE not null
+,    U_DATE DATE not null
 ,    P_STATUS NUMBER(1, 0) default 0
 );
 
@@ -193,25 +191,6 @@ ALTER TABLE deal ADD CONSTRAINT deal_o_status_ck CHECK (o_status ='0' OR o_statu
 -- 픽업상태
 ALTER TABLE deal ADD CONSTRAINT deal_pickup_status_ck CHECK (pickup_status ='0' OR pickup_status ='1'); 
   
-    
-create table profile (  --프로필 테이블
-profile_number number(5),  --프로필 번호
-mem_number number (6),-- 유저 번호
-p_number number(5)--상품 번호
-);
-
---프로필번호 시퀀스 생성
-create sequence  profile_profile_number_seq;
-
---기본키설정
-alter table profile add constraint profile_profile_number_pk primary key (profile_number);--프로필 번호 pk
---외래키설정
-alter table profile add constraint profile_mem_number_fk
-    foreign key (mem_number) references member (mem_number) on delete cascade;-- 유저번호 회원테이블 fk 참조
-alter table profile add constraint profile_p_number_fk
-    foreign key (p_number) references product_info (p_number) on delete cascade; --판매글 번호 판매테이블 fk 참조
-
-
 create table review (   --리뷰테이블
 review_number number(10),  --리뷰 번호
 buyer_number number (6),-- 작성자 번호
@@ -311,7 +290,7 @@ create table comments (
   comment_num          number(6),       -- 댓글 번호
   p_comment_num        number(6),       -- 부모 댓글 번호
   mem_number           number(6),       -- 회원 번호
-  comment_contents     varchar2(300),   -- 댓글 내용
+  comment_contents     clob,   -- 댓글 내용
   create_date          date,            -- 댓글 생성일
   comment_indent       number(3)        -- 대댓글 들여쓰기
 );

@@ -24,6 +24,9 @@ h2 {
     flex-direction: column;
     justify-items: center;
 }
+.pNumber{
+    display:none;
+}
 
 th {
     font-weight: bold;
