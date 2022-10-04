@@ -1,9 +1,10 @@
+const $lat= document.querySelector('.store_location .lat').textContent;
+const $lng= document.querySelector('.store_location .lng').textContent;
+
 // 지도 띄우기!!
 //지도를 담을 영역의 DOM 레퍼런스
 const container = document.getElementById('map');
-const $store_location = new kakao.maps.LatLng(35.5351, 129.3108);
-//↑ 위에 가게별 위도 경도 넣으면 됨.
-
+const $store_location = new kakao.maps.LatLng($lat, $lng);
 
 const options = { //지도를 생성할 때 필요한 기본 옵션
     center: $store_location, //지도의 중심좌표.
@@ -21,6 +22,8 @@ const marker = new kakao.maps.Marker({
     position: markerPosition
 });
 
+console.log("marker", marker);
+
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
 //마우스 휠로 지도 확대, 축소 금지w
@@ -32,15 +35,15 @@ const renderInfowindow = data => {
         <p class = 'infowindow_title'>${data.title}</p>
         <p class = 'infowindow_addr'>${data.addr}</p>
     </div>`;
+    //data 각각 가지고와서 info창
+    const infowindows = data.map((ele, idx, arr) => {
+        return new naver.maps.InfoWindow({
+            content: renderInfowindow(ele),
+            disableAnchor: true
+        });
+    });
 }
 
-//data 각각 가지고와서 info창
-const infowindows = data.map((ele, idx, arr) => {
-    return new naver.maps.InfoWindow({
-        content: renderInfowindow(ele),
-        disableAnchor: true
-    });
-});
 
 //마커 클릭시 info창 띄우기
 markers.forEach((ele, idx, arr) => {

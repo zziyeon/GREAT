@@ -76,7 +76,6 @@
                             <dl>
                                 <dt>결제 가능 방식</dt>
                                 <dd name="paymentOption" th:text="${form.paymentOption}"></dd>
-<!--                                <dd>온라인 결제, 현장 결제</dd>-->
                             </dl>
                         </div>
                         <div class="product-btn">
@@ -125,6 +124,8 @@
                 <hr>
                 <div class="store_location" id="ss">
                     <span name="memStoreName" th:text=" '\''+ ${form.member.memStoreName} +'\'  가게 위치'"> </span>
+                    <span class=lat th:text="${form.member.memStoreLatitude}" ></span>
+                    <span class="lng" th:text="${form.member.memStoreLongitude}" ></span>
                     <!-- 가게 위치 지도로 표시-->
                     <div id="map"> 
                     <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
@@ -160,11 +161,6 @@
 </div>
 <script asyn th:inline="javascript">
     document.getElementById("edit_btn").style.display = (
-        console.log([[${session.memType}]]),
-        console.log([[${session.memNumber}]]),
-        console.log([[${form.ownerNumber}]]),
-        console.log([[${session.memType}]]=='owner'&&[[${session.memNumber}]]==[[${form.ownerNumber}]]),
-<!--        ([[${session.memType}]]=='owner'&&[[${session.memNumber}]]==[[${form.ownerNumber}]]) == 'true' ? "block" : "none"-->
         [[${session.memNumber}]] == [[${form.ownerNumber}]] ? "block" : "none"
     );
 
