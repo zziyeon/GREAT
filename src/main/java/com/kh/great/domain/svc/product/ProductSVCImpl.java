@@ -84,6 +84,10 @@ public class ProductSVCImpl implements ProductSVC {
     public List<Product> saleList(Long ownerNumber) {
         return productDAO.saleList(ownerNumber);
     }
+    @Override
+    public List<Product> pSaleList(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("pickUp_status") Integer pickUp_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        return productDAO.pSaleList(ownerNumber, pickUp_status, history_start_date, history_end_date);
+    }
 
     //------------------------------------------
     // 상품 최신순 목록

@@ -174,7 +174,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select * ");
         sql.append("from product_info P, member M ");
         sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number="+ownerNumber+"  ");
-        sql.append("and p.r_date between '" + history_start_date + "' and '" + history_end_date+"' ");
+        sql.append("and p.r_date between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
 
         if(sell_status==0||sell_status==1) {
             sql.append("and p_status=" + sell_status + " ");
@@ -207,6 +207,42 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("from product_info P, member M, Deal D ");
         sql.append("where p.owner_number = m.mem_number and d.p_Number=p.p_Number and m.mem_type='owner' and p.owner_number=9 ");
 
+        List<Product> result =null;
+        try {
+            result= jt.query(sql.toString(),new RowMapper<Product>(){
+                @Override
+                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
+                    Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
+                    Deal deal = (new BeanPropertyRowMapper<>(Deal.class)).mapRow(rs,rowNum);
+                    product.setMember(member);
+                    product.setDeal(deal);
+
+                    log.info("product={}", product);
+                    return product;
+                }
+            });
+        } catch (DataAccessException e) {
+            log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
+        }
+        return result;
+    }
+
+    //판매내역 csr
+    public List<Product> pSaleList(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("pickUp_status") Integer pickUp_status,  @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        StringBuffer sql = new StringBuffer();
+        System.out.println("ownerNumber = " + ownerNumber + ", pickUp_status = " + pickUp_status + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
+        sql.append("select * ");
+        sql.append("from product_info P, member M, Deal D ");
+        sql.append("where p.owner_number = m.mem_number and d.p_Number=p.p_Number and m.mem_type='owner' and p.owner_number="+ownerNumber+" ");
+        sql.append("and d.orderdate between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
+
+        if(pickUp_status==0||pickUp_status==1) {
+            sql.append("and p_status=" + pickUp_status + " ");
+        }
+        sql.append("order by d.orderdate desc " );
+
+        System.out.println("sql = " + sql);
         List<Product> result =null;
         try {
             result= jt.query(sql.toString(),new RowMapper<Product>(){

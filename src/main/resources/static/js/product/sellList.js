@@ -1,44 +1,37 @@
 // 상품별 판매 선택
-//const $each_sell_status = document.querySelector('#each_sell_status');
+//const $each_pickUp_status = document.querySelector('#each_pickUp_status');
 
 // 판매 상태별 조회할 목록 키워드
-const $sell_status_keyword = document.querySelector(".drop__status select ");
+const $pickUp_status_keyword = document.querySelector(".drop__status select ");
 
 // 판매 상태별 조회할 목록
-$sell_status_keyword.addEventListener('change', sell_status_keyword_h);
+$pickUp_status_keyword.addEventListener('change', pickUp_status_keyword_h);
 
-let sell_status_selected="3";
-function sell_status_keyword_h(){
-    if($sell_status_keyword.value == '전체'){
-        sell_status_selected = "3";
+let pickUp_status_selected="3";
+function pickUp_status_keyword_h(){
+    if($pickUp_status_keyword.value == '전체'){
+        pickUp_status_selected = "3";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
         // 2) 날짜 조회 처리
         search(inputDate);
     }
-    if($sell_status_keyword.value == '판매중'){
-        sell_status_selected ="0";
+    if($pickUp_status_keyword.value == '픽업 예정'){
+        pickUp_status_selected ="0";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
         // 2) 날짜 조회 처리
         search(inputDate);
     }
-    if($sell_status_keyword.value=='판매완료'){
-        sell_status_selected = "1";
+    if($pickUp_status_keyword.value=='픽업 완료'){
+        pickUp_status_selected = "1";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
         // 2) 날짜 조회 처리
         search(inputDate);
     }
-    return sell_status_selected;
+    return pickUp_status_selected;
 }
-
-//$each_sell_status.addEventListener('change',e=>{
-//    if($each_sell_status.value == '삭제'){
-//        alert("판매글을 삭제 하시겠습니까?");
-//    }
-//});
-
 
 //----------------------------------------------------------
 // 날짜 선택
@@ -81,12 +74,12 @@ const $period = document.querySelector('.drop__period #searchBtn');
 function getInputData(){
     const startDateData = $startDate.value;
     const finishDateData = $finishDate.value;
-    const sell_status= sell_status_selected;
+    const pickUp_status= pickUp_status_selected;
 
     return {
         "startDate" : startDateData,
         "endDate" : finishDateData,
-        "sell_status" : sell_status
+        "pickUp_status" : pickUp_status
     };
 }
 
@@ -99,19 +92,18 @@ $period.addEventListener('click', e=>{
 });
 
 function search(searchData){
-    manageList(searchData.sell_status, searchData.startDate, searchData.endDate);
+    manageList(searchData.pickUp_status, searchData.startDate, searchData.endDate);
 }
 
 //-------------------------------------------
 // 해당 점주 전체 상품 목록 조회
-manageList(sell_status_selected,$startDate.value, $finishDate.value);
+manageList(pickUp_status_selected,$startDate.value, $finishDate.value);
 
 // 상품관리 목록
-function manageList(sell_status,startDate, endDate) {
+function manageList(pickUp_status,startDate, endDate) {
 
-//sell_status=sell_status_keyword_h();
 const ownerNumber= document.querySelector('.memNum').textContent;
-const url = 'http://localhost:9080/api/manage/'+ownerNumber+'?sell_status='+sell_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
+const url = 'http://localhost:9080/api/sellList/'+ownerNumber+'?pickUp_status='+pickUp_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
 fetch(url, {
   methode: 'GET',
   headers:{
@@ -123,6 +115,7 @@ fetch(url, {
       let i =0;
       const result =
         res.data.map(product =>{
+            console.log(product);
           i++;
           product.rdate=product.rdate.substr(0,10);
           if(product.imageFiles != null && product.imageFiles.length > 0) {
@@ -132,7 +125,7 @@ fetch(url, {
           }
 
           return `<tr>
-                    <td>${i}</td>
+                    <td>${}</td>
                     <td>${img_url}</td>
                     <td>
                       <select name="product.pstatus" id="productStatus"  onchange="location.href=this.value">
@@ -149,7 +142,7 @@ fetch(url, {
                     <td><a class="updateBtn" href="/products/${product.pnumber}/edit">수정</a></td>
                   </tr>`;
         });
-        document.querySelector('.product_manage-tb tbody').innerHTML=result.join('');
+        document.querySelector('.sell_list-tb tbody').innerHTML=result.join('');
 
     }
   }).catch(err=>console.log(err));
