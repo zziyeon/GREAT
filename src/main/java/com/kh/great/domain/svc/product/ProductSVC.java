@@ -1,9 +1,12 @@
 package com.kh.great.domain.svc.product;
 
 import com.kh.great.domain.dao.product.Product;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+
 public interface ProductSVC {
 
     //상품등록
@@ -13,9 +16,6 @@ public interface ProductSVC {
 
     //상품조회
     Product findByProductNum(Long pNum);
-
-    // 상품 검색
-    List<Product> select(String findStr);
 
     //상품변경
     int update(Long pNum, Product product);
@@ -30,24 +30,27 @@ public interface ProductSVC {
     List<Product> today_deadline();
 
     //상품 관리
-    List<Product> pManage(Long ownerNumber);
-
-//    // 날짜로 상품관리 목록
-//    List <Product> manageByDate();
+    List<Product> manage(Long ownerNumber);
+    List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
 
     //상품 관리
     List<Product> saleList(Long ownerNumber);
 
     //----------------------------------------------
     // 상품 최신순 목록
-    List <Product> recentList();
+//    List <Product> recentList(@RequestParam("zone") String zone);
+    List <Product> recentList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 할인순 목록
-    List <Product> discountListDesc();
+    List <Product> discountListDesc(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 가격순 목록
-    List <Product> priceList();
+    List <Product> priceList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 가격순 목록
-    List <Product> priceListDesc();
+    List <Product> priceListDesc(@RequestParam Map<String, Object> allParameters);
+
+    //--------------------------------------------------------------------------------
+    // 검색 목록
+    List<Product> search(@RequestParam ("searchKeyword") String searchKeyword);
 }

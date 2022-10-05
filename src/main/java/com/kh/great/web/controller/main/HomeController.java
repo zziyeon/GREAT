@@ -1,12 +1,17 @@
-package com.kh.great.web.controller.member;
+package com.kh.great.web.controller.main;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.UploadFileSVC;
+import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.member.MemberSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
+import com.kh.great.web.api.member.FindId;
 import com.kh.great.web.dto.member.*;
 import com.kh.great.web.session.member.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,18 +32,19 @@ public class HomeController {
 
     private final MemberSVC memberSVC;
     final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
     @GetMapping
     public String home(HttpServletRequest request, Model model) {
-
         List<Product> list = productSVC.today_deadline();
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(),
+                                                            list.get(i).getPNumber()));
+        }
+
         model.addAttribute("list", list);
 
-//        String view = null;
-//        HttpSession session = request.getSession(false);
-//        view = (session == null) ? "main/main" : "main/main" ;
-
-//        return view;
         return "main/main";
     }
 
@@ -76,7 +82,6 @@ public class HomeController {
         //    return "join";
         //}
 
-
         Member member = new Member();
         member.setMemType(join.getMemType());
         member.setMemId(join.getMemId());
@@ -109,7 +114,7 @@ public class HomeController {
     //아이디 찾기 화면
     @GetMapping("/findId")
     public String findId(Model model) {
-        model.addAttribute("findId", new findId());
+        model.addAttribute("findId", new FindId());
 
         return "member/findId";
     }
@@ -117,7 +122,7 @@ public class HomeController {
     //비밀번호 찾기 화면
     @GetMapping("/findPw")
     public String findPw(Model model) {
-        model.addAttribute("findPw", new findPw());
+        model.addAttribute("findPw", new FindPw());
 
         return "member/findPw";
     }
@@ -125,7 +130,7 @@ public class HomeController {
     //비밀번호 재설정 화면
     @GetMapping("/resetPw")
     public String resetPw(Model model) {
-        model.addAttribute("resetPw", new resetPw());
+        model.addAttribute("resetPw", new ResetPw());
 
         return "member/resetPw";
     }
@@ -189,4 +194,33 @@ public class HomeController {
         return "redirect:/"; //메인
     }
 
+    // 검색 목록
+    @GetMapping("/searchresult")
+    public  String searchresult(Model model){
+        List<Product> list = productSVC.findAll();
+        model.addAttribute("list", list);
+
+        return "main/search_result";
+
+    }
+
+    //지역별 상품 목록
+    @GetMapping("/zonning")
+    @Nullable
+    public String discountListDesc(Model model) {
+        List<Product> list = productSVC.findAll();
+        model.addAttribute("list", list);
+
+        return "main/zonning_list_csr";
+    }
+
+    // 오늘 마감상품 전체보기
+    @GetMapping("/todayDealine")
+    @Nullable
+    public String todayDealine(Model model) {
+        List<Product> list = productSVC.today_deadline();
+        model.addAttribute("list", list);
+
+        return "main/all_list";
+    }
 }

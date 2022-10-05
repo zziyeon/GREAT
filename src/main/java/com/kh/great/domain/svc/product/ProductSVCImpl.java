@@ -9,9 +9,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -43,12 +46,6 @@ public class ProductSVCImpl implements ProductSVC {
         return productDAO.findByProductNum(pNum);
     }
 
-    // 상품 검색
-    @Override
-    public List<Product> select(String findStr) {
-        return productDAO.select(findStr);
-    }
-
     //상품 수정
     @Override
     public int update(Long pNum, Product product) {
@@ -73,8 +70,12 @@ public class ProductSVCImpl implements ProductSVC {
 
     //상품 관리 목록
     @Override
-    public List<Product> pManage(Long ownerNumber) {
-        return productDAO.pManage(ownerNumber);
+    public List<Product> manage(Long ownerNumber) {
+        return productDAO.manage(ownerNumber);
+    }
+    @Override
+    public List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        return productDAO.pManage(ownerNumber, history_start_date, history_end_date);
     }
 
     //판매 내역 목록
@@ -86,22 +87,29 @@ public class ProductSVCImpl implements ProductSVC {
     //------------------------------------------
     // 상품 최신순 목록
     @Override
-    public List<Product> recentList() {
-        return productDAO.recentList();
+    public List<Product> recentList(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.recentList(allParameters);
     }
     // 상품 높은 할인순 목록
     @Override
-    public List<Product> discountListDesc() {
-        return productDAO.discountListDesc();
+    public List<Product> discountListDesc(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.discountListDesc(allParameters);
     }
     // 상품 높은 가격순 목록
     @Override
-    public List<Product> priceList() {
-        return productDAO.priceList();
+    public List<Product> priceList(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.priceList(allParameters);
     }
     // 상품 높은 가격순 목록
     @Override
-    public List<Product> priceListDesc() {
-        return productDAO.priceListDesc();
+    public List<Product> priceListDesc(@RequestParam Map<String, Object> allParameters) {
+        return productDAO.priceListDesc(allParameters);
+    }
+
+    //------------------------------------------------
+    // 검색 목록
+    @Override
+    public List<Product> search(@RequestParam ("searchKeyword") String searchKeyword) {
+        return productDAO.search(searchKeyword);
     }
 }

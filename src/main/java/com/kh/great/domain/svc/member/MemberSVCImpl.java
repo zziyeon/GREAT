@@ -1,6 +1,6 @@
 package com.kh.great.domain.svc.member;
 
-
+import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.member.MemberDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +23,36 @@ public class MemberSVCImpl implements MemberSVC {
      */
     @Override
     public Member join(Member member) {
+
         //회원 아이디 생성
         Long generateMemberNumber = memberDAO.generateMemberNumber();
         member.setMemNumber(generateMemberNumber);
         memberDAO.join(member);
         return memberDAO.findByMemNumber(generateMemberNumber);
+    }
+
+    /**
+     * 아이디 찾기
+     *
+     * @param memName 이름
+     * @param memEmail 이메일
+     * @return 아이디, 등록일자
+     */
+    @Override
+    public Member findByMemNameAndMemEmail(String memName, String memEmail) {
+        return memberDAO.findByMemNameAndMemEmail(memName, memEmail);
+    }
+
+    /**
+     * 비밀번호 찾기
+     *
+     * @param memId
+     * @param memEmail
+     * @return
+     */
+    @Override
+    public Member findByMemIdAndMemEmail(String memId, String memEmail) {
+        return memberDAO.findByMemNameAndMemEmail(memId, memEmail);
     }
 
     /**
@@ -70,12 +95,12 @@ public class MemberSVCImpl implements MemberSVC {
     /**
      * 탈퇴
      *
-     * @param memNumber 회원아이디
+     * @param memNumber 회원번호
      * @return 삭제건수
      */
     @Override
-    public Long delete(Long memNumber) {
-        Long cnt = memberDAO.delete(memNumber);
+    public Long exit(Long memNumber) {
+        Long cnt = memberDAO.exit(memNumber);
         log.info("삭제건수={}", cnt);
         return cnt;
     }

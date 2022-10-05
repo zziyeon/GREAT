@@ -70,12 +70,11 @@
                                 <td th:case="0">온라인 결제</td>
                                 <td th:case="1">현장 결제</td>
                             </th:block>
-                            <td>
-                                <select name="" id="">
-                                    <option value="픽업 예정">픽업 예정</option>
-                                    <option value="픽업 완료">픽업 완료</option>
-                                </select>
-                            </td>
+<!--                            <td th:text="*{rec.deal.pickupStatus}"></td>-->
+                            <td><select name="*{rec.deal.pickupStatus}" th:id="*{rec.deal.pickupStatus}">
+                                <option value="0">픽업 예정</option>
+                                <option value="1">픽업 완료</option>
+                            </select></td>
                         </tr>
                     </table>
                     <div th:replace="~{layout/common_ui::pagingBtn}"></div>

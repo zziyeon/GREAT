@@ -1,7 +1,8 @@
-package com.kh.great3;
+package com.kh.great.web.config;
 
-import com.kh.great3.web.interceptor.LogInterceptor;
-import com.kh.great3.web.interceptor.LoginInterceptor;
+
+import com.kh.great.web.interceptor.member.LogInterceptor;
+import com.kh.great.web.interceptor.member.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -33,6 +34,9 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/findId");
         whiteList.add("/findPw");
         whiteList.add("/resetPw");
+        whiteList.add("/zonning");
+        whiteList.add("/products");
+
 
         registry.addInterceptor(new LoginInterceptor())
                 .order(2)

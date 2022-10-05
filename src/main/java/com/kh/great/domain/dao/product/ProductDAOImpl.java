@@ -11,12 +11,14 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Repository
@@ -37,7 +39,7 @@ public class ProductDAOImpl implements ProductDAO {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(sql.toString(), new String[]{"p_number"});
-//                pstmt.setLong(2, product.getOwnerNumber());
+//                pstmt.setLong(1, product.getOwnerNumber());
                 pstmt.setString(1, product.getPTitle());
                 pstmt.setString(2, product.getPName());
                 pstmt.setString(3, product.getDeadlineTime());
@@ -50,7 +52,6 @@ public class ProductDAOImpl implements ProductDAO {
                 pstmt.setInt(9, (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice());
                 pstmt.setString(10, product.getPaymentOption());
                 pstmt.setString(11, product.getDetailInfo());
-
                 return pstmt;
             }
         }, keyHolder);
@@ -75,7 +76,7 @@ public class ProductDAOImpl implements ProductDAO {
                     Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
                     Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
                     product.setMember(member);
-                    log.info("product={}", product);
+//                    log.info("product={}", product);
                     return product;
                 }
             },pNum);
@@ -85,18 +86,6 @@ public class ProductDAOImpl implements ProductDAO {
 //            return Optional.empty();
         }
         return product;
-    }
-
-    // 상품 검색
-    @Override
-    public List<Product> select(String findStr) {
-        StringBuffer sql = new StringBuffer();
-        sql.append("select * ");
-        sql.append("from product_info ");
-        sql.append("where p_name like '%?%' or p_title like '%?%' ");
-
-        List<Product> result= jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class), findStr, findStr);
-        return result;
     }
 
     //상품수정
@@ -150,14 +139,42 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     //상품 관리
-    public List<Product> pManage(Long ownerNumber) {
+    public List<Product> manage(Long ownerNumber) {
         StringBuffer sql = new StringBuffer();
 
-        sql.append("select p.P_NUMBER, p.P_STATUS, p.P_NAME, p.SALE_PRICE, p.REMAIN_COUNT, p.TOTAL_COUNT, P.R_DATE ");
+        sql.append("select * ");
         sql.append("from product_info P, member M ");
         sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("and p.r_date between '2022-09-30' and '2022-10-03' ");
         sql.append("order by R_DATE desc " );
 
+        List<Product> result =null;
+        try {
+            result= jt.query(sql.toString(),new RowMapper<Product>(){
+                @Override
+                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
+                    Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
+                    product.setMember(member);
+                    return product;
+                }
+            });
+        } catch (DataAccessException e) {
+            log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
+        }
+        return result;
+    }
+    //상품 관리
+    public List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("and p.r_date between '" + history_start_date + "' and '" + history_end_date+"' ");
+        sql.append("order by R_DATE desc " );
+
+        System.out.println("sql = " + sql);
         List<Product> result =null;
         try {
             result= jt.query(sql.toString(),new RowMapper<Product>(){
@@ -207,25 +224,40 @@ public class ProductDAOImpl implements ProductDAO {
     //------------------------------
     // 상품 최신순 목록
     @Override
-    public List<Product> recentList() {
+    public List<Product> recentList(@RequestParam Map<String, Object> allParameters) {
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
-        sql.append(" from product_info");
-        sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0  ");
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
+        if (!category.equals("전체")) {
+            sql.append("and p.category like '%"+category+"%' ");
+        }
         sql.append(" order by R_DATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
-
+        System.out.println("sql => "+ sql);
+//        System.out.println(result);
         return result;
     }
 
     // 상품 높은 할인순 목록
     @Override
-    public List<Product> discountListDesc() {
+    public List<Product> discountListDesc(@RequestParam Map<String, Object> allParameters) {
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
-        sql.append(" from product_info");
-        sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
+        if (!category.equals("전체")) {
+            sql.append("and p.category like '%"+category+"%' ");
+        }
         sql.append(" order by DISCOUNT_RATE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
@@ -235,11 +267,18 @@ public class ProductDAOImpl implements ProductDAO {
 
     // 상품 낮은 가격순 목록
     @Override
-    public List<Product> priceList() {
+    public List<Product> priceList(@RequestParam Map<String, Object> allParameters) {
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
-        sql.append(" from product_info");
-        sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
+        if (!category.equals("전체")) {
+            sql.append("and p.category like '%"+category+"%' ");
+        }
         sql.append(" order by SALE_PRICE asc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
@@ -249,15 +288,36 @@ public class ProductDAOImpl implements ProductDAO {
 
     // 상품 높은 가격순 목록
     @Override
-    public List<Product> priceListDesc() {
+    public List<Product> priceListDesc(@RequestParam Map<String, Object> allParameters) {
+        String zone = allParameters.get("zone").toString();
+        String category = allParameters.get("category").toString();
+
         StringBuffer sql = new StringBuffer();
-        sql.append("select p_number, p_name, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
-        sql.append(" from product_info");
-        sql.append(" where deadline_time>sysdate and REMAIN_COUNT >0 ");
+        sql.append("select * ");
+        sql.append("from product_info P, member M ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
+        if (!category.equals("전체")) {
+            sql.append("and p.category like '%"+category+"%' ");
+        }
         sql.append(" order by SALE_PRICE desc ");
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
 
+        return result;
+    }
+
+    //-------------------------------------------------------------------------------------
+    // 상품 검색
+    @Override
+    public List<Product> search(@RequestParam ("searchKeyword") String searchKeyword) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * ");
+        sql.append("from product_info ");
+        sql.append("where p_name like '%"+searchKeyword+"%' or p_title like '%"+searchKeyword+"%' ");
+        sql.append(" order by R_DATE desc ");
+
+        List<Product> result= jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
         return result;
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ProductController {
 
     //등록처리
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
         //기본검증
         if(bindingResult.hasErrors()){
@@ -54,6 +55,11 @@ public class ProductController {
         } else if (!saveForm.getFiles().get(0).isEmpty()) {
             pNum = productSVC.save(product, saveForm.getFiles());
         }
+
+//        HttpSession session = request.getSession(false);
+//        Object memNumber = session.getAttribute("memNumber");
+//        System.out.println(memNumber);
+//        product.setOwnerNumber((Long) memNumber);
         redirectAttributes.addAttribute("num", pNum);
         return "redirect:/products/{num}";
     }
@@ -68,13 +74,18 @@ public class ProductController {
         BeanUtils.copyProperties(findedProduct, detailForm);
 
         //2) 첨부파일 조회
+//        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
+//        if(uploadFiles.size() > 0 ){
+//            List<UploadFile> imageFiles = new ArrayList<>();
+//            for (UploadFile file : uploadFiles) {
+//                imageFiles.add(file);
+//            }
+//            detailForm.setImageFiles(imageFiles);
+//        }
+
         List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
         if(uploadFiles.size() > 0 ){
-            List<UploadFile> imageFiles = new ArrayList<>();
-            for (UploadFile file : uploadFiles) {
-                imageFiles.add(file);
-            }
-            detailForm.setImageFiles(imageFiles);
+            detailForm.setImageFiles(uploadFiles);
         }
 
         model.addAttribute("form", detailForm);
@@ -130,9 +141,16 @@ public class ProductController {
     }
 
     //상품관리
+//    @GetMapping("/{ownerNumber}/manage")
+//    public String manage(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
+//        List<Product> list = productSVC.pManage(ownerNumber);
+//        model.addAttribute("list", list);
+//
+//        return "product/manage";
+//    }
     @GetMapping("/{ownerNumber}/manage")
     public String manage(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
-        List<Product> list = productSVC.pManage(ownerNumber);
+        List<Product> list = productSVC.manage(ownerNumber);
         model.addAttribute("list", list);
 
         return "product/manage";

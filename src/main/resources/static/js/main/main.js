@@ -26,7 +26,7 @@ function showSlides(n) {
     setTimeout(showSlides, 6000);
 }
 
-document.querySelector('.heart_Btn').addEventListener('click', heart);
+//document.querySelector('.heart_Btn').addEventListener('click', heart);
 
 // mouse click event
 function heart(e) {
@@ -35,43 +35,4 @@ function heart(e) {
 }
 
 
-// const screenHight = document.body.clientHeight;
-// if(screenHight <=740){
-//   document.querySelector('.topbtn').style.display="none";
-// }
-// else if(screenHight > 800){
-//   document.querySelector('.topbtn').style.display="block";
-// }
 
-// const dm = document.documentElement;
-// const topButton = document.querySelector('.topbtn');
-// const documentHeight = dm.scrollHeight;
-
-// window.addEventListener('scroll', function () {
-//     const scrollToTop = dm.scrollTop;
-
-//     if (documentHeight != 0 ){
-//         const actionHeight = 800;
-
-//         if (scrollToTop > actionHeight) {
-//             topButton.classList.add('action');
-//         } else {
-//             topButton.classList.remove('action');
-//         }
-//     }
-// });
-
-// topButton.addEventListener('click', function (e) {
-//     e.preventDefault();
-//     scrollUp();
-// });
-
-// function scrollUp() {
-//     const upper = setInterval(function () {
-//         if (dm.scrollTo != 0) {
-//             window.scrollBy(0, -55);
-//         } else {
-//             clearInterval(upper);
-//         }
-//     }, 10);
-// }

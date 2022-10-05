@@ -1,6 +1,9 @@
 package com.kh.great.domain.dao.product;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
+import java.util.Map;
 
 public interface ProductDAO {
     //상품등록
@@ -8,9 +11,6 @@ public interface ProductDAO {
 
     //상품조회
     Product findByProductNum(Long pNum);
-
-    // 상품 검색
-    List<Product> select(String findStr);
 
     //상품변경
     int update(Long pNum, Product product);
@@ -25,21 +25,26 @@ public interface ProductDAO {
     List<Product> today_deadline();
 
     //상품관리목록
-    List<Product> pManage(Long ownerNumber);
+    List<Product> manage(Long ownerNumber);
+    List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
 
     //판매 내역
     List<Product> saleList(Long ownerNumber);
 
     //------------------------------------
     // 상품 최신순 목록
-    List <Product> recentList();
+    List <Product> recentList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 할인순 목록
-    List <Product> discountListDesc();
+    List <Product> discountListDesc(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 가격순 목록
-    List <Product> priceList();
+    List <Product> priceList(@RequestParam Map<String, Object> allParameters);
 
     // 상품 높은 가격순 목록
-    List <Product> priceListDesc();
+    List <Product> priceListDesc(@RequestParam Map<String, Object> allParameters);
+
+    //----------------------------------------------------------
+    // 검색 목록
+    List<Product> search(@RequestParam ("searchKeyword") String searchKeyword);
 }

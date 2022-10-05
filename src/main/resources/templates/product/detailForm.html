@@ -7,6 +7,14 @@
     <link rel="stylesheet" th:href="@{/css/product/product_view.css}">
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript" defer th:src="@{/js/product/store_location.js}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+<!--    <script asyn defer th:src="@{/js/product/ckeditor.js}"></script>-->
+    <style>
+        .ck-editor__top{
+            display:none;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -18,21 +26,20 @@
                     <div class="product-img">
                         <th:block th:if="${form.imageFiles}">
                             <th:block th:each="imageFile : ${form.imageFiles[0]}">
-                                <img class="good_Img" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
-                                     th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
                                      alt="이미지를 불러올수 없습니다">
                             </th:block>
                         </th:block>
                         <th:block th:if="!(${form.imageFiles})">
-                            <img th:src="@{/img/main/배너4.png}" />
+                            <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                         </th:block>
 
                     </div>
                     <div class="product-info">
                         <div class="p_store">
-                            <div class="store-profile">
-                                <img class="store-profile_img" src="/image/케이크.PNG" alt="">
-                            </div>
+<!--                            <div class="store-profile">-->
+<!--                                <img class="store-profile_img" src="/image/케이크.PNG" alt="">-->
+<!--                            </div>-->
                             <div class="p_store-info">
                                 <a href="">
                                     <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
@@ -79,9 +86,9 @@
                             <div class="wrapBtn">
                                 <button type="button" class="product-btn--buy"> 구매하기</button>
                             </div>
-                            <div class="wrapBtn" title="신고하기">
-                                <button type="button" class="product-btn--like"><i class="fa-regular fa-bell"></i></button>
-                            </div>
+<!--                            <div class="wrapBtn" title="신고하기">-->
+<!--                                <button type="button" class="product-btn&#45;&#45;like"><i class="fa-regular fa-bell"></i></button>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -99,11 +106,11 @@
                         <span>위치</span>
                     </a>
                 </div>
-                <div class="nav_tab">
-                    <a href="">
-                        <span>댓글</span>
-                    </a>
-                </div>
+<!--                <div class="nav_tab">-->
+<!--                    <a href="">-->
+<!--                        <span>댓글</span>-->
+<!--                    </a>-->
+<!--                </div>-->
             </div>
 
             <!-- 정보 -->
@@ -111,24 +118,15 @@
                 <div class="goods_info" id="s">
                     <h4>상품정보</h4>
                     <hr>
-                    <div th:if="${form.imageFiles}">
-                        <div th:each="imageFile : ${form.imageFiles}">
-                            <img class="good_Img" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
-                                 th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
-                                 alt="이미지를 불러올수 없습니다">
-                        </div>
-                    </div>
-                    <div class="content" >
-                        <p name="detail_info" th:text="${form.detailInfo}">달콤한 달기와 </p>
-                    </div>
+                    <textarea class="board-write__article-content" name="detailInfo" id="detailInfo" cols="30" rows="10"
+                              placeholder="내용을 작성하세요." readonly autofocus th:text="*{detailInfo}"></textarea>
                 </div>
                 <!-- 가게 위치 지도 -->
+                <hr>
                 <div class="store_location" id="ss">
-                    <span > 해당 가게 위치</span>
-                    <hr>
-                    <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
+                    <span name="memStoreName" th:text=" '\''+ ${form.member.memStoreName} +'\'  가게 위치'"> </span>
                     <!-- 가게 위치 지도로 표시-->
-                    <div id="map"> </div>
+                    <div id="map"> 
                     <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
                     <div class="custom_zoomcontrol radius_border">
                         <span onclick="zoomIn()">
@@ -139,8 +137,9 @@
                                 src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
                                 alt="축소"></span>
                     </div>
+                </div>
                     <!-- 가게 위치로 돌아가는 버튼 -->
-                    <button class="storeBtn" onclick="panTo()">가게위치</button>
+                    <button class="storeBtn" type="button" onclick="panTo()">가게위치</button>
                 </div>
                 <div id="reply">
 
@@ -148,10 +147,10 @@
                 <!-- 버튼 -->
                 <div class="product_page_btn">
                     <button type="button" class="btn_list btn">목록</button>
-                    <div>
-                        <button type="button" class="btn_modify btn">수정</button>
-                        <button type="button" class="btn_del btn">삭제</button>
-                    </div>
+                        <div id="edit_btn">
+                            <button type="button" class="btn_modify btn">수정</button>
+                            <button type="button" class="btn_del btn">삭제</button>
+                        </div>
                 </div>
             </div>
         </main>
@@ -159,14 +158,23 @@
     </form>
     <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
+<script asyn th:inline="javascript">
+    document.getElementById("edit_btn").style.display = (
+        console.log([[${session.memType}]]),
+        console.log([[${session.memNumber}]]),
+        console.log([[${form.ownerNumber}]]),
+        console.log([[${session.memType}]]=='owner'&&[[${session.memNumber}]]==[[${form.ownerNumber}]]),
+<!--        ([[${session.memType}]]=='owner'&&[[${session.memNumber}]]==[[${form.ownerNumber}]]) == 'true' ? "block" : "none"-->
+        [[${session.memNumber}]] == [[${form.ownerNumber}]] ? "block" : "none"
+    );
 
-<script th:inline="javascript">
     //<!-- 목록 -->
     document.querySelector('.btn_list').addEventListener('click', e=>{
         console.log('수정');
         location.href = [[@{|/zonning|}]];
     });
     //<!-- 수정 -->
+    console.log([[${session.memType}]]);
     document.querySelector('.btn_modify').addEventListener('click', e=>{
         console.log('수정');
         location.href = [[@{|/products/${form.pNumber}/edit|}]];
@@ -177,8 +185,70 @@
         console.log('삭제');
         location.href = [[@{|/products/${form.pNumber}/del|}]];
     });
+
+    //ckeditor
+    ClassicEditor
+		.create( document.querySelector( '#detailInfo' ), {
+		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
+			toolbar: {
+				items: [
+					'heading',
+					'|',
+					'underline',
+					'bold',
+					'italic',
+					'link',
+					'bulletedList',
+					'numberedList',
+					'todoList',
+					'|',
+					'outdent',
+					'indent',
+					'|',
+					'imageInsert',
+					'imageUpload',
+					'blockQuote',
+					'insertTable',
+					'mediaEmbed',
+					'markdown',
+					'undo',
+					'redo',
+					'|',
+					'highlight',
+					'fontFamily',
+					'fontColor',
+					'fontBackgroundColor',
+					'fontSize',
+					'|',
+					'htmlEmbed',
+					'specialCharacters'
+				]
+			},
+			language: 'en',
+			image: {
+				toolbar: [
+					'imageTextAlternative',
+					'imageStyle:full',
+					'imageStyle:side'
+				]
+			},
+			table: {
+				contentToolbar: [
+					'tableColumn',
+					'tableRow',
+					'mergeTableCells',
+					'tableCellProperties',
+					'tableProperties'
+				]
+			},
+		})
+		.then( editor => {
+			window.editor = editor;
+			editor.isReadOnly = true;  //읽기모드적용
+		} )
+		.catch( error => {
+			console.error( error );
+		} );
 </script>
 </body>
-<script type="text/javascript" th:src="@{/js/product/store_location.js}"></script>
-
 </html>

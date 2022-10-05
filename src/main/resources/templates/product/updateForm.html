@@ -6,6 +6,7 @@
     <title>판매글 수정 | GREAT</title>
     <link rel="stylesheet" th:href="@{/css/product/product_write.css}">
     <script type="text/javascript" defer th:src="@{/js/product/limitDate.js}"></script>
+    <script th:src="@{/js/product/ckeditor.js}"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -57,8 +58,9 @@
                         <td><input type="file" accept="image/jpg, image/jpeg, image/png" th:multiple="multiple"><a href="#">삭제</a></td>
                     </tr>
                     <tr>
-                        <th><label for="detailInfo">상세설명</label></th>
-                        <td colspan="3"><textarea name="detailInfo" th:field="*{detailInfo}" rows="10" autofocusw></textarea></td>
+                        <td colspan="4" class="board-write__article-main">
+                            <textarea class="board-write__article-content" th:field="*{detailInfo}" cols="30" rows="10" placeholder="내용을 작성하세요." autofocus></textarea>
+                        </td>
                     </tr>
                 </table>
                 <div class="write-btn">
@@ -71,8 +73,74 @@
     <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 </form>
-<script th:inline="javascript">
-<!---->
+<script>
+    const form = {
+        articleContents: document.getElementById('detailInfo')
+    };
+
+    //ckeditor
+    ClassicEditor
+		.create( document.querySelector( '#detailInfo' ), {
+		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
+			toolbar: {
+				items: [
+					'heading',
+					'|',
+					'underline',
+					'bold',
+					'italic',
+					'link',
+					'bulletedList',
+					'numberedList',
+					'todoList',
+					'|',
+					'outdent',
+					'indent',
+					'|',
+					'imageInsert',
+					'imageUpload',
+					'blockQuote',
+					'insertTable',
+					'mediaEmbed',
+					'markdown',
+					'undo',
+					'redo',
+					'|',
+					'highlight',
+					'fontFamily',
+					'fontColor',
+					'fontBackgroundColor',
+					'fontSize',
+					'|',
+					'htmlEmbed',
+					'specialCharacters'
+				]
+			},
+			language: 'en',
+			image: {
+				toolbar: [
+					'imageTextAlternative',
+					'imageStyle:full',
+					'imageStyle:side'
+				]
+			},
+			table: {
+				contentToolbar: [
+					'tableColumn',
+					'tableRow',
+					'mergeTableCells',
+					'tableCellProperties',
+					'tableProperties'
+				]
+			},
+		})
+		.then( editor => {
+
+			window.editor = editor;
+		} )
+		.catch( error => {
+			console.error( error );
+		} );
 </script>
 </body>
 </html>
