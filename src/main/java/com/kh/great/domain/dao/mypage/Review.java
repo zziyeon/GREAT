@@ -1,6 +1,5 @@
 package com.kh.great.domain.dao.mypage;
 
-import com.kh.great.domain.dao.member.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

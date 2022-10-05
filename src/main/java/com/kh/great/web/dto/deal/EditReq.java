@@ -1,6 +1,5 @@
 package com.kh.great.web.dto.deal;
 
-import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;

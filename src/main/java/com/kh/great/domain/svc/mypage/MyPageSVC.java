@@ -1,7 +1,6 @@
 package com.kh.great.domain.svc.mypage;
 
 
-import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.mypage.Review;
 

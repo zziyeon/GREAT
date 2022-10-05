@@ -1,8 +1,6 @@
 package com.kh.great.domain.dao.mypage;
 
 
-import com.kh.great.domain.dao.member.Member;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -2,7 +2,6 @@ package com.kh.great.domain.svc.member;
 
 
 import com.kh.great.domain.dao.member.MemberDAO;
-import com.kh.great.domain.dao.member.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

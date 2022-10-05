@@ -1,7 +1,6 @@
 package com.kh.great.web.dto.mypage;
 
 
-import com.kh.great.domain.dao.member.Member;
 import lombok.Data;
 
 import java.time.LocalDateTime;
