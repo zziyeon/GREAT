@@ -173,7 +173,7 @@ public class MyPageController {
     }
 
     //즐겨찾기 양식
-    @GetMapping("/{memNumber}/bookmark")
+    @GetMapping("/bookmark/{memNumber}")
     public String bookmarkForm(@PathVariable("memNumber") Long memNumber, Model model){
 
         BookmarkForm bookmarkForm = new BookmarkForm();
@@ -234,6 +234,23 @@ public class MyPageController {
         return ApiResponse.createApiResMsg("00","성공",null);
 
     }
+
+//    //프로필사진 수정화면
+//    @GetMapping("/profile/add")
+//    public String profileImgAddForm(Model model){
+//        model.addAttribute("form" , new ProfileAddForm());
+//        return "mypage/profileAddForm";
+//    }
+//
+//    @PostMapping("/profile/add")
+//    public String profileImgAdd(@ModelAttribute("form") ProfileAddForm profileAddForm){
+//
+//        ProfileForm profile = new ProfileForm();
+//        BeanUtils.copyProperties(profileAddForm,profile);
+//
+//
+//    }
+
 
 
 
