@@ -34,6 +34,13 @@ public class MyPageController {
     //주문 내역
     @GetMapping("/{id}")
     public String myPage(@PathVariable("id") Long memNumber, Model model){
+
+        Optional<Member> member = myPageSVC.findMember(memNumber);
+        Member member1 = member.get();
+        MemberForm memberForm = new MemberForm();
+        BeanUtils.copyProperties(member1,memberForm);
+
+
         List<Deal> deals = dealSVC.findByMemberNumber(memNumber);
 
         List<Deal> list = new ArrayList<>();
@@ -42,7 +49,10 @@ public class MyPageController {
             list.add(deal);
         });
         log.info("list={}",list);
+        log.info("memberForm={}",memberForm);
+
         model.addAttribute("list",list);
+        model.addAttribute("form",memberForm);
 
         return "mypage/order-history";
     }

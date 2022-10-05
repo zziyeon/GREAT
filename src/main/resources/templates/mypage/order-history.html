@@ -17,22 +17,22 @@
             <!-- //header -->
 
 
-            <main class="order-history container" th:each="order : ${list}">
+            <main class="order-history container" th:object="${form}">
                 <aside class="aside-content">
                     <ul>
                         <li class="aside-content-menu">
                             <h3>
-                                <a href="myReview.html" th:href="@{/mypage/review/{id}(id=${order.buyerNumber})}">내 리뷰</a>
+                                <a href="myReview.html" th:href="@{/mypage/review/{id}(id=${form.memNumber})}">내 리뷰</a>
                             </h3>
                         </li>
                         <li class="aside-content-menu">
                             <h3>
-                                <a href="order-history.html" th:href="@{/mypage/{id}(id=${order.buyerNumber})}">주문내역</a>
+                                <a href="order-history.html" th:href="@{/mypage/{id}(id=${form.memNumber})}">주문내역</a>
                             </h3>
                         </li>
                         <li class="aside-content-menu">
                             <h3>
-                                <a href="bookmark.html" th:href="@{/mypage/bookmark/{memNumber}(memNumber=${order.buyerNumber})}">즐겨찾기</a>
+                                <a href="bookmark.html" th:href="@{/mypage/bookmark/{memNumber}(memNumber=${form.memNumber})}">즐겨찾기</a>
                             </h3>
                         </li>
                         <li class="aside-content-menu">
@@ -50,7 +50,7 @@
                             <h2>주문 내역</h2>
                         </div>
                     </div>
-                <table class="order-history--table" th:object="${form}">
+                <table class="order-history--table" >
                     <thead>
                     <tr>
                         <th>주문번호</th>

@@ -1,12 +1,15 @@
 package com.kh.great.web.dto.deal;
 
+import com.kh.great.domain.common.file.UploadFile;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -40,6 +43,13 @@ public class AddForm {
     private Integer discountRate;   //할인율    DISCOUNT_RATE	NUMBER(2,0)
     private String paymentOption;  //결제방식    PAYMENT_OPTION	VARCHAR2 (32 BYTE)
     private String detailInfo;     //상품설명    DETAIL_INFO	VARCHAR2 (4000 BYTE)
+
+    ///파일 첨부
+    private MultipartFile file; //상품설명 첨부파일(단건)
+    private List<MultipartFile> files; //상품 이미지 첨부(여러건)
+
+    ///파일 참조
+    private List<UploadFile> imageFiles;
 
 
 }

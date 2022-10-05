@@ -89,7 +89,7 @@ public class ProductController {
         if(uploadFiles.size() > 0 ){
             detailForm.setImageFiles(uploadFiles);
         }
-
+        log.info("detailForm={}",detailForm);
         model.addAttribute("form", detailForm);
 
         return "product/detailForm";
