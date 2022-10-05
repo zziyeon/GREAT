@@ -1,55 +1,12 @@
-// 고객/점주 탭
-const $joinCust = document.querySelector('#select--1[type=radio]');
-const $joinOwn = document.querySelector('#select--2[type=radio]');
-const $ownerInput = document.querySelector('.owner-input');
-
-$joinCust.addEventListener('change', e => {
-    $ownerInput.classList.remove('reveal');
-});
-$joinOwn.addEventListener('change', e => {
-    $ownerInput.classList.add('reveal');
-});
-
-//아이디 중복확인 버튼
-const $dupChkId = document.querySelector('.dup-chk-id-btn');
-
-//아이디 중복확인 버튼 클릭시
-$dupChkId.addEventListener('click', e => {
-    console.log('아이디 중복확인 클릭!');
-    const idVal = memId.value;
-    if (idVal.length == 0) {
-        alert('아이디를 입력해주세요.');
-        idVal.focus();
-        return;
-    }
-    dupChkId(idVal);
-});
-
-//아이디 중복확인 함수
-function dupChkId(idVal) {
-    const url = `/api/member/dupChkId`;
-    const data = { "memId" : idVal };
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(res => res.json())
-      .then(res => {
-        console.log(res)
-        if (res.header.rtcd == '00') {
-            alert ('사용가능한 아이디입니다!')
-            $dupChkId.classList.remove('bad');
-            $dupChkId.classList.add('good');
-        } else {
-            alert ('중복된 아이디가 존재합니다.')
-            $dupChkId.classList.remove('good');
-            $dupChkId.classList.add('bad');
-        }
-      })
-      .catch(err => console.log(err));
+//모달팝업 열기
+function show() {
+    document.querySelector(".background").className = "background show";
 }
+//모달팝업 닫기
+function close() {
+    document.querySelector(".background").className = "background";
+}
+
 
 //닉네임 중복확인 버튼
 const $dupChkNn = document.querySelector('.dup-chk-nn-btn');
@@ -163,17 +120,25 @@ function confirmCode(mailVal, codeVal) {
             .catch(err => console.log(err));
 }
 
-////공공데이터 encoding 인증키
-//const enKey = rWGHLB92x6jWBuF2Vi7vGCyIOqWUR5A7otp6POH1Nh9ZrU5Z%2FPg0ebD8OFZz2%2Fvx5XFDgH7o%2BKaOoIG9IVDYNw%3D%3D;
-////공공데이터 decoding 인증키
-//const deKey = rWGHLB92x6jWBuF2Vi7vGCyIOqWUR5A7otp6POH1Nh9ZrU5Z/Pg0ebD8OFZz2/vx5XFDgH7o+KaOoIG9IVDYNw==;
-
 
 //카카오 geocoder(주소-좌표간 변환 서비스 객체) 생성
 const geocoder = new kakao.maps.services.Geocoder();
 
 //주소 검색 버튼
 $addrSearchBtn = document.querySelector('.addr-search-btn');
+//주소 입력창
+$address = document.querySelector('.address');
+//상세주소 입력창
+$detailedAddress = document.querySelector('.detailed-address');
+//감춰둔 상세주소
+const $detailAddr = document.querySelector('.hidden-addr');
+
+//주소 검색 버튼 클릭시 상세주소 입력창 보여주기
+$addrSearchBtn.addEventListener('click', e => {
+    $address.value='';
+    $detailedAddress.value='';
+    $detailAddr.classList.add('show-addr');
+});
 
 //주소 검색 버튼 클릭시
 $addrSearchBtn.addEventListener('click', e => {
@@ -237,24 +202,15 @@ const callback = function(result, status) {
     }
 };
 
-// 약관 전체선택
-//1) 전체 동의 클릭시
-function checkAllTerms(checkAllTerms) {
-    const $checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-    $checkboxes.forEach(e => {
-        e.checked = checkAllTerms.checked
-    });
-}
+//회원탈퇴 버튼
+const $exitBtn = document.querySelector('.exit-btn');
 
-//2) 약관 동의 클릭시
-function checkTerms() {
-    // 전체 동의 체크박스
-    const $termsAll = document.querySelector('input[name="agreeAllTerms"]');
-    // 약관 체크박스
-    const $terms = document.querySelectorAll('input[name="agreeTerms"]');
-    // 선택된 약관 체크박스
-    const $checkedTerms = document.querySelectorAll('input[name="agreeTerms"]:checked');
+//회원탈퇴 버튼 클릭시
+$exitBtn.addEventListener('click', e => {
+    //회원탈퇴
+    exit(memNumber);
 
-    $termsAll.checked = ($terms.length === $checkedTerms.length);
-}
+    //회원탈퇴 완료 후 메인화면으로 이동
+    window.location.href = 'http://localhost:8080/';
+});

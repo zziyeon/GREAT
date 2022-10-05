@@ -3,6 +3,7 @@ package com.kh.great.domain.dao.member;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,12 +38,12 @@ public class MemberDAOImpl implements MemberDAO {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("insert into member (mem_number, mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email, ");
-        sql.append(" mem_businessnumber, mem_store_name, mem_store_phonenumber, mem_store_location, mem_store_introduce, mem_store_sns) ");
+        sql.append(" mem_businessnumber, mem_store_name, mem_store_phonenumber, mem_store_location, mem_store_latitude, mem_store_longitude, mem_store_introduce, mem_store_sns) ");
         sql.append("values (?, ?, ?, ?, ?, ?, ?, ");
-        sql.append(" ?, ?, ?, ?, ?, ?) ");
+        sql.append(" ?, ?, ?, ?, ?, ?, ?, ?) ");
 
         result = jt.update(sql.toString(), member.getMemNumber(), member.getMemType(), member.getMemId(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(),
-                member.getMemBusinessnumber(), member.getMemStoreName(), member.getMemStorePhonenumber(), member.getMemStoreLocation(), member.getMemStoreIntroduce(), member.getMemStoreSns());
+                member.getMemBusinessnumber(), member.getMemStoreName(), member.getMemStorePhonenumber(), member.getMemStoreLocation(), member.getMemStoreLatitude(), member.getMemStoreLongitude(), member.getMemStoreIntroduce(), member.getMemStoreSns());
 
         return Long.valueOf(result);
     }
@@ -104,6 +105,25 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     /**
+     * 비밀번호 재설정
+     *
+     * @param memNumber 회원번호
+     * @param newPassword    수정할 정보
+     * @return 재설정건수
+     */
+    @Override
+    public Long resetPw(Long memNumber, String newPassword) {
+        int result = 0;
+        StringBuffer sql = new StringBuffer();
+        sql.append("update member ");
+        sql.append("   set mem_password = ? ");
+        sql.append(" where mem_number = ? ");
+
+        result = jt.update(sql.toString(), newPassword, memNumber);
+        return Long.valueOf(result);
+    }
+
+    /**
      * 로그인
      *
      * @param memId 아이디
@@ -127,9 +147,9 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     /**
-     * 조회 by 회원아이디
+     * 조회 by 회원번호
      *
-     * @param memNumber 회원아이디
+     * @param memNumber 회원번호
      * @return 회원정보
      */
     @Override
@@ -154,6 +174,31 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     /**
+     * 조회 by 아이디
+     *
+     * @param memId 아이디
+     * @return 회원정보
+     */
+    @Override
+    public Member findByMemId(String memId) {
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("select * ");
+        sql.append("  from member ");
+        sql.append(" where mem_id = ? ");
+
+        Member findedMember = null;
+        try {
+            findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memId);
+        } catch (EmptyResultDataAccessException e) {
+            log.info("찾고자하는 아이디가 없습니다");
+            return findedMember;
+        }
+
+        return findedMember;
+    }
+
+    /**
      * 수정
      *
      * @param memNumber 회원아이디
@@ -164,8 +209,7 @@ public class MemberDAOImpl implements MemberDAO {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("update member ");
-        sql.append("   set mem_id = ?, ");
-        sql.append("       mem_password = ?, ");
+        sql.append("   set mem_password = ?, ");
         sql.append("       mem_name = ?, ");
         sql.append("       mem_nickname = ?, ");
         sql.append("       mem_email = ?, ");
@@ -173,13 +217,16 @@ public class MemberDAOImpl implements MemberDAO {
         sql.append("       mem_store_name = ?, ");
         sql.append("       mem_store_phonenumber = ?, ");
         sql.append("       mem_store_location = ?, ");
+        sql.append("       mem_store_latitude = ?, ");
+        sql.append("       mem_store_longitude = ?, ");
         sql.append("       mem_store_introduce = ?, ");
         sql.append("       mem_store_sns = ? ");
         sql.append(" where mem_number = ? ");
 
-        result = jt.update(sql.toString(), member.getMemId(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(),
+        result = jt.update(sql.toString(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(),
                 member.getMemBusinessnumber(), member.getMemStoreName(), member.getMemStorePhonenumber(),
-                member.getMemStoreLocation(), member.getMemStoreIntroduce(), member.getMemStoreSns(), memNumber);
+                member.getMemStoreLocation(), member.getMemStoreLatitude(), member.getMemStoreLongitude(),
+                member.getMemStoreIntroduce(), member.getMemStoreSns(), memNumber);
         return Long.valueOf(result);
     }
 
@@ -217,15 +264,28 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     /**
-     * 이메일 중복체크
+     * 아이디 중복체크
      *
-     * @param email 이메일
+     * @param memId 아이디
      * @return 존재하면 true
      */
     @Override
-    public Boolean dupChkOfMemberEmail(String email) {
-        String sql = "select count(email) from member where email = ? ";
-        Long rowCount = jt.queryForObject(sql, Long.class, email);
+    public Boolean dupChkOfMemId(String memId) {
+        String sql = "select count(mem_id) from member where mem_id = ? ";
+        Long rowCount = jt.queryForObject(sql, Long.class, memId);
+        return rowCount == 1 ? true : false;
+    }
+
+    /**
+     * 닉네임 중복체크
+     *
+     * @param memNickname 닉네임
+     * @return 존재하면 true
+     */
+    @Override
+    public Boolean dupChkOfMemNickname(String memNickname) {
+        String sql = "select count(mem_nickname) from member where mem_nickname = ? ";
+        Long rowCount = jt.queryForObject(sql, Long.class, memNickname);
         return rowCount == 1 ? true : false;
     }
 }

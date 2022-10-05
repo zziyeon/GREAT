@@ -4,7 +4,7 @@ import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
-import com.kh.great.web.ApiResponse;
+import com.kh.great.web.api.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
