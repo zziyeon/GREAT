@@ -28,8 +28,8 @@
                 <li th:class="top-menu__member"><a th:href="@{/member/infoChk}" th:text="${session.memNickname} + 님">회원님</a>
                     <ul>
                         <li><a href="#">내 리뷰</a></li>
-                        <li><a href="#">주문 내역</a></li>
-                        <li><a href="#">즐겨찾기</a></li>
+                        <li><a th:href="@{/mypage/}+${session.memNumber}">주문 내역</a></li>
+                        <li><a th:href="@{/mypage/}+${session.memNumber}+@{/bookmark}"}>즐겨찾기</a></li>
                         <li><a href="#">좋아요</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a></li>
                     </ul>
@@ -41,7 +41,7 @@
                         <li><a th:href="@{/products/add}">판매글 작성</a></li>
                         <li><a th:href="@{/products/}+${session.memNumber}+@{/manage}">상품 관리</a></li>
                         <li><a th:href="@{/products/}+${session.memNumber}+@{/saleList}">판매 내역</a></li>
-                        <li><a href="#">내 프로필</a></li>
+                        <li><a th:href="@{/mypage/profile/}+${session.memNumber}">내 프로필</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a></li>
                     </ul>
                 </li>
