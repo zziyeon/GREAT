@@ -35,7 +35,7 @@ public class MyPageDAOImpl implements MyPageDAO {
         StringBuffer sql = new StringBuffer();
 
         sql.append("insert into review(review_number,buyer_number,seller_number,content,grade) ");
-        sql.append(" values(review_review_number_seq.nextval,?,5,?,?) ");
+        sql.append(" values(review_review_number_seq.nextval,?,?,?,?) ");
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jt.update(new PreparedStatementCreator() {
@@ -43,8 +43,9 @@ public class MyPageDAOImpl implements MyPageDAO {
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"review_number"});
                 pstmt.setLong(1,review.getBuyerNumber());
-                pstmt.setString(2,review.getContent());
-                pstmt.setLong(3,review.getGrade());
+                pstmt.setLong(2,review.getSellerNumber());
+                pstmt.setString(3,review.getContent());
+                pstmt.setLong(4,review.getGrade());
                 return pstmt;
             }
         },keyHolder);

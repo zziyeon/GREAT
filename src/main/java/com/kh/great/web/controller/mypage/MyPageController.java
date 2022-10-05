@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,9 +63,9 @@ public class MyPageController {
     @GetMapping("/review/add")
     public String saveForm(Model model){
 
+
         ReviewAddForm reviewAddForm = new ReviewAddForm();
 
-        reviewAddForm.setBuyerNumber(1l);
         log.info("reviewAddForm={}",reviewAddForm);
         model.addAttribute("form",reviewAddForm);
         return "mypage/reviewAdd";
@@ -71,10 +73,19 @@ public class MyPageController {
 
     //리뷰 등록 처리
     @PostMapping("/review/add")
-    public String save(@ModelAttribute("form") ReviewAddForm reviewAddForm, RedirectAttributes redirectAttributes){
+    public String save(@ModelAttribute("form") ReviewAddForm reviewAddForm,
+                       RedirectAttributes redirectAttributes,
+                       HttpServletRequest request){
+
         Review review = new Review();
         BeanUtils.copyProperties(reviewAddForm, review);
-        review.setBuyerNumber(1l);
+        log.info("reviewAddForm={}",reviewAddForm);
+
+        HttpSession session = request.getSession(false);
+        Object memNumber = session.getAttribute("memNumber");
+        review.setBuyerNumber((Long)memNumber);
+        review.setSellerNumber(5l);
+
         Review save = myPageSVC.save(review);
         log.info("reviewAddForm={}",reviewAddForm);
 
@@ -89,6 +100,12 @@ public class MyPageController {
     //리뷰 목록
     @GetMapping("/review/{id}")
     public String myReview(@PathVariable("id") Long memNumber, Model model){
+
+        Optional<Member> member = myPageSVC.findMember(memNumber);
+        Member member1 = member.get();
+        MemberForm memberForm = new MemberForm();
+        BeanUtils.copyProperties(member1,memberForm);
+
         List<Review> reviews = myPageSVC.findByMemNumber(memNumber);
 
         List<Review> list = new ArrayList<>();
@@ -98,6 +115,7 @@ public class MyPageController {
         });
         log.info("list={}",list);
         model.addAttribute("list",list);
+        model.addAttribute("form",memberForm);
 
         return "mypage/myReview";
     }
@@ -186,6 +204,11 @@ public class MyPageController {
     @GetMapping("/bookmark/{memNumber}")
     public String bookmarkForm(@PathVariable("memNumber") Long memNumber, Model model){
 
+        Optional<Member> member = myPageSVC.findMember(memNumber);
+        Member member1 = member.get();
+        MemberForm memberForm = new MemberForm();
+        BeanUtils.copyProperties(member1,memberForm);
+
         BookmarkForm bookmarkForm = new BookmarkForm();
 
         List<Bookmark> bookmarks = myPageSVC.findBookmark(memNumber);
@@ -198,6 +221,7 @@ public class MyPageController {
         });
 
         model.addAttribute("list",list);
+        model.addAttribute("form",memberForm);
         log.info("list={}",list);
 
         return "mypage/bookmark";
