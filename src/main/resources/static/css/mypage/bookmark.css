@@ -1,0 +1,162 @@
+@charset "utf-8";
+
+.bookmark  {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 1100px;
+    padding: 16px 0  24px 0;
+}
+
+/* 메인 (왼쪽) */
+.bookmark .aside-content {
+    flex: 1;    
+    border-right: 1px solid rgb(189, 189, 189);
+    margin: 0 20px 0 10px;
+    font-size: 15px;
+    height: 900px;
+}
+
+.bookmark .aside-content .aside-content-menu {
+    width: 155px;
+    height: 40px;
+    padding: 10px 15px;
+    margin-right: 5px;
+}
+
+.bookmark .aside-content .aside-content-menu:hover{
+    border-radius: 8px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.664);
+}
+
+/* 메인 (오른쪽) */
+.bookmark .main-content {
+    flex: 6;
+    display: block;
+}
+
+.bar {
+    display: flex;
+    width: 4px;
+    height: 36px;
+    background-color: var(--main-color-yel);
+    margin-right: 10px;
+}
+
+.bookmark .main-content .bookmark-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+
+.bookmark .main-content .main-head {
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bookmark .main-content .main-head .main-title {
+    display: flex;
+    height: 50px;
+    margin: 20px 10px;
+}
+
+.bookmark .main-content .bookmark-content .bookmark-on {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    background-color: var(--main-color-gre);
+}
+
+.bookmark .main-content .bookmark-content .bookmark-on .item {
+    backface-visibility: hidden;
+    transition: 1s;
+}
+
+/* 카드 앞면 */
+.bookmark .main-content .bookmark-content .bookmark-on .item.front {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 210px;
+    height: 280px;
+    background-color: var(--main-color-gre);
+    position: absolute;
+    border-radius: 20px;
+    transform: rotateY(0deg);
+}
+.bookmark .main-content .bookmark-content .bookmark-on:hover .item.front {
+    transition: all 1s;
+    transform: rotateY(180deg);
+}
+
+/* 카드 뒷면 */
+.bookmark .main-content .bookmark-content .bookmark-on .item.back{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 210px;
+    height: 280px;
+    background-color: var(--main-color-gre) ;
+    border-radius: 20px;
+    transform: rotateY(-180deg);
+}
+
+.bookmark .main-content .bookmark-content .bookmark-on:hover .item.back {
+    transform: rotateY(0deg);
+}
+
+.bookmark .main-content .bookmark-content img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+.bookmark .main-content .bookmark-content .shopNm {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.bookmark .main-content .bookmark-content i {
+    position: absolute;
+    bottom: 13px;
+    right: 13px;
+    font-size: 1.5em;
+    color: var(--main-color-yel);
+
+}
+
+/* 하단 버튼 */
+.btn-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.btn-page li {
+    margin-right: 10px;
+    font-size: 13px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.btn-page li:nth-child(1),
+.btn-page li:nth-child(12) {
+    font-size: 1em;
+}
+
+
+
+
+
