@@ -198,7 +198,7 @@
 
             //즐겨찾기 추가
             function bookmarkAdd(memNumber,bookmark){
-                const url = `http://localhost:9081/mypage/profile/${memNumber}`;
+                const url = `http://localhost:9080/mypage/profile/${memNumber}`;
                 fetch( url, {
                     method:'POST',
                     headers: {
@@ -213,7 +213,7 @@
 
             //즐겨 찾기 삭제
             function bookmarkDel(memNumber){
-                const url = `http://localhost:9081/mypage/profile/del/${memNumber}`;
+                const url = `http://localhost:9080/mypage/profile/del/${memNumber}`;
                 fetch(url, {
                     method:'DELETE',
                     headers: {

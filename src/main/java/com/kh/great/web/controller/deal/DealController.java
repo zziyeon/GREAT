@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Slf4j
@@ -45,10 +46,12 @@ public class DealController {
     //등록 처리
     @PostMapping("/add/{pNumber}")
     public String add(@PathVariable("pNumber") Long pNumber,
-            @ModelAttribute("form") AddForm addForm, RedirectAttributes redirectAttributes){
+                      @ModelAttribute("form") AddForm addForm, RedirectAttributes redirectAttributes, HttpServletRequest request){
         Deal deal = new Deal();
         Product findedProduct = productSVC.findByProductNum(pNumber);
         BeanUtils.copyProperties(addForm, deal);
+
+
         deal.setSellerNumber(findedProduct.getMember().getMemNumber());
             dealSVC.add(deal);
         BeanUtils.copyProperties(findedProduct.getPNumber(),addForm);

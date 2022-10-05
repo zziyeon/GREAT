@@ -36,7 +36,7 @@ public class DealDAOImpl implements DealDAO{
 
         sql.append("insert into deal(order_number,buyer_number,seller_number,p_number, ");
         sql.append(" p_count,price,visittime, buy_type) ");
-        sql.append(" values(deal_order_number_seq.nextval,1,?,?,?,?,TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI:SS'),?) ");
+        sql.append(" values(deal_order_number_seq.nextval,?,?,?,?,?,TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI:SS'),?) ");
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -44,13 +44,13 @@ public class DealDAOImpl implements DealDAO{
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"order_number"});
-//                pstmt.setLong(1,deal.getBuyerNumber());
-                pstmt.setLong(1,deal.getSellerNumber());
-                pstmt.setLong(2,deal.getPNumber());
-                pstmt.setLong(3,deal.getPCount());
-                pstmt.setLong(4,deal.getPrice());
-                pstmt.setString(5,deal.getVisittime());
-                pstmt.setLong(6,deal.getBuyType());
+                pstmt.setLong(1,deal.getBuyerNumber());
+                pstmt.setLong(2,deal.getSellerNumber());
+                pstmt.setLong(3,deal.getPNumber());
+                pstmt.setLong(4,deal.getPCount());
+                pstmt.setLong(5,deal.getPrice());
+                pstmt.setString(6,deal.getVisittime());
+                pstmt.setLong(7,deal.getBuyType());
                 return pstmt;
             }
         },keyHolder);

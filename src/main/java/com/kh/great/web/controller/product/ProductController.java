@@ -56,10 +56,6 @@ public class ProductController {
             pNum = productSVC.save(product, saveForm.getFiles());
         }
 
-//        HttpSession session = request.getSession(false);
-//        Object memNumber = session.getAttribute("memNumber");
-//        System.out.println(memNumber);
-//        product.setOwnerNumber((Long) memNumber);
         redirectAttributes.addAttribute("num", pNum);
         return "redirect:/products/{num}";
     }
