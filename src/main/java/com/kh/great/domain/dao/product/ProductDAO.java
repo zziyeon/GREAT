@@ -33,6 +33,7 @@ public interface ProductDAO {
     //판매 내역
     List<Product> saleList(Long ownerNumber);
     List<Product> pSaleList(@PathVariable("ownerNumber") Long ownerNumber,  @RequestParam ("pickUp_status") Integer pickUp_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
+    int pickUP_status_update(Long pNum, Integer pickStatus);
 
     //------------------------------------
     // 상품 최신순 목록

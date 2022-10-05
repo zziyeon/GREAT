@@ -140,9 +140,9 @@ fetch(url, {
                     <p>${product.deal.buyType==0? '온라인 결제':'현장 결제'}</p>
                     </td>
                     <td>
-                      <select name="" id="">
-                       <option value="" ${product.deal.pickupStatus == 0 ? 'selected' : ''}  >픽업 예정</option>
-                       <option value="" ${product.deal.pickupStatus == 1 ? 'selected' : ''}  >픽업 완료</option>
+                      <select name="" id="" onchange="javascript:each_pickUp_status(this, ${product.pnumber}, ${product.deal.pickupStatus})">
+                       <option value="0" ${product.deal.pickupStatus == 0 ? 'selected' : ''}  >픽업 예정</option>
+                       <option value="1" ${product.deal.pickupStatus == 1 ? 'selected' : ''}  >픽업 완료</option>
                       </select>
                     </td>
                   </tr>`;
@@ -153,3 +153,36 @@ fetch(url, {
   }).catch(err=>console.log(err));
 }
 
+// 상품별 픽업 상태 선택
+function each_pickUp_status(obj, pNumber, pickStatus){
+    console.log("pNumber -> " + pNumber);
+
+    if(obj.value=='0'){
+        pickUp_st_uf(pNumber, obj.value);
+    }
+    if(obj.value=='1'){
+        pickUp_st_uf(pNumber, obj.value);
+    }
+}
+
+// 픽업 상태 변경
+function pickUp_st_uf(pNumber, pickStatus){
+  const url = 'http://localhost:9080/api/saleList/' + pNumber +'/'+ pickStatus;
+  fetch( url,{            //url
+    method:'PATCH',        //http method
+    headers:{             //http header
+      'Content-Type':'application/json',
+      'Accept':'application/json'
+    },
+    body: JSON.stringify(
+    ),  //http body
+
+  }).then(res=>res.json())
+    .then(data=>{
+      // 1) 입력데이터 가져오기
+      const inputDate = getInputData();
+      // 2) 날짜 조회 처리
+      search(inputDate);
+    })
+    .catch(err=>console.log(err));
+}

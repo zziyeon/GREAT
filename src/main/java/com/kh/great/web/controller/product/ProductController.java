@@ -152,6 +152,7 @@ public class ProductController {
 //    }
     @GetMapping("/{ownerNumber}/manage")
     public String manage(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
+
         List<Product> list = productSVC.manage(ownerNumber);
         model.addAttribute("list", list);
 

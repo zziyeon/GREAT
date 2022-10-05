@@ -5,12 +5,10 @@ import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.ApiResponse;
-import com.kh.great.web.api.product.EditReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -124,15 +122,32 @@ public class ApiProductController {
         return ApiResponse.createApiResMsg("00", "성공", list);
     }
 
-    // 상품관리 페이지에서 각 판매 상태 변경
-    @PatchMapping("/manage/{pNumber}")
-    public ApiResponse<Object> pManage_status_update(@PathVariable("pNumber") Long pNumber, @Valid @RequestBody EditReq editReq){
+//    // 상품관리 페이지에서 각 판매 상태 변경
+//    @PatchMapping("/manage/{pNumber}")
+//    public ApiResponse<Object> pManage_status_update(@PathVariable("pNumber") Long pNumber, @Valid @RequestBody EditReq editReq, BindingResult bindingResult){
+//        log.info("editReq=>{}", editReq);
+//        if (editReq.getPStatus() == null) {
+//            log.info("editReq.getPStatus={}", editReq.getPStatus());
+//        }
+//
+//        Product byProductNum = productSVC.findByProductNum(pNumber);
+//        log.info("byProductNum={}", byProductNum);
+//
 //        Product product = new Product();
+//
+//        editReq.setPStatus( product.getPStatus() );
 //        BeanUtils.copyProperties(editReq, product);
-//        editReq.setPStatus();
-        productSVC.pManage_status_update(pNumber, editReq.getPStatus());
+//        productSVC.pManage_status_update(pNumber, product.getPStatus());
+//
+//        return ApiResponse.createApiResMsg("00", "성공", byProductNum);
+//    }
 
-        return ApiResponse.createApiResMsg("00", "성공", productSVC.findByProductNum(pNumber));
+    // 상품관리 페이지에서 각 판매 상태 변경
+    @PatchMapping("/manage/{pNumber}/{pStatus}")
+    public ApiResponse<Object> pManage_status_update(@PathVariable("pNumber") Long pNumber, @PathVariable("pStatus") Integer pStatus){
+        int status = productSVC.pManage_status_update(pNumber, pStatus);
+
+        return ApiResponse.createApiResMsg("00", "성공", status);
     }
 
     // 판매내역
@@ -151,6 +166,14 @@ public class ApiProductController {
         //api 응답 메시지
         System.out.println("ownerNumber = " + ownerNumber + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
         return ApiResponse.createApiResMsg("00", "성공", list);
+    }
+
+    // 상품관리 페이지에서 각 판매 상태 변경
+    @PatchMapping("/saleList/{pNumber}/{pickStatus}")
+    public ApiResponse<Object> pickUP_status_update(@PathVariable("pNumber") Long pNumber, @PathVariable("pickStatus") Integer pickStatus){
+        int status = productSVC.pickUP_status_update(pNumber, pickStatus);
+
+        return ApiResponse.createApiResMsg("00", "성공", status);
     }
 
 }

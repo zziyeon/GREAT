@@ -278,6 +278,20 @@ public class ProductDAOImpl implements ProductDAO {
         }
         return result;
     }
+    // 판매 내역 화면에서 각 상품 픽업 상태 변경하기
+    @Override
+    public int pickUP_status_update(Long pNum, Integer pickStatus) {
+        int result = 0;
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("update deal ");
+        sql.append("   SET pickup_status=? ");
+        sql.append("WHERE p_number = ? ");
+
+        result=jt.update(sql.toString(), pickStatus, pNum );
+
+        return result;
+    }
 
 
 

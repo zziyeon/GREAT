@@ -103,8 +103,6 @@ function search(searchData){
 // 해당 점주 전체 상품 목록 조회
 manageList(sell_status_selected,$startDate.value, $finishDate.value);
 
-// sample
-//let get_pNumber;
 // 상품관리 목록
 function manageList(sell_status,startDate, endDate) {
 
@@ -130,7 +128,6 @@ fetch(url, {
           } else {
             img_url = `<img src="/img/product/등록된 사진이 없습니다.png" alt="">`;
           }
-//          get_pNumber = product.pnumber;
           return `<tr>
                     <td>${i}</td>
                     <td>${img_url}</td>
@@ -158,15 +155,12 @@ function each_sell_status(obj, pNumber, pstatus){
     console.log("pNumber -> " + pNumber);
 
     if(obj.value=='0'){
-        console.log("판매중으로 변경?");
         sell_st_uf(pNumber, obj.value);
     }
     if(obj.value=='1'){
-        console.log("판매완료로 변경?");
         sell_st_uf(pNumber, obj.value);
     }
     if(obj.value=='del'){
-        const check = confirm("판매글을 삭제하시겠습니까?");
         if(check){
             window.location.href = "/products/" + pNumber + "/del";
         }
@@ -179,21 +173,18 @@ function each_sell_status(obj, pNumber, pstatus){
 
 // 상품 상태 변경
 function sell_st_uf(pNumber, pstatus){
-    console.log("sell_st_uf 함수 안");
-  const url = 'http://localhost:9080/api/manage/' + pNumber;
+  const url = 'http://localhost:9080/api/manage/' + pNumber +'/'+ pstatus;
   fetch( url,{            //url
     method:'PATCH',        //http method
     headers:{             //http header
       'Content-Type':'application/json',
       'Accept':'application/json'
     },
-    body: JSON.stringify({
-            "pStatus" : pstatus
-        }),  //http body
+    body: JSON.stringify(
+    ),  //http body
 
   }).then(res=>res.json())
     .then(data=>{
-      console.log(data);
       // 1) 입력데이터 가져오기
       const inputDate = getInputData();
       // 2) 날짜 조회 처리
