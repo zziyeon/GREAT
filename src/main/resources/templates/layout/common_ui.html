@@ -39,8 +39,8 @@
                 <li th:class="top-menu__member"><a th:href="@{/member/infoChk}" th:text="${session.memNickname} + 님">회원님</a>
                     <ul>
                         <li><a th:href="@{/products/add}">판매글 작성</a></li>
-                        <li><a th:href="@{/products/9/manage}">상품 관리</a></li>
-                        <li><a th:href="@{/products/9/saleList}">판매 내역</a></li>
+                        <li><a th:href="@{/products/}+${session.memNumber}+@{/manage}">상품 관리</a></li>
+                        <li><a th:href="@{/products/}+${session.memNumber}+@{/saleList}">판매 내역</a></li>
                         <li><a href="#">내 프로필</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a></li>
                     </ul>

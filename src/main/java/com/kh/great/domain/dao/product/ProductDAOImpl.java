@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Connection;
@@ -33,26 +34,27 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
 
         sql.append("insert into product_info(p_number, owner_number, p_title, p_name, DEADLINE_TIME, CATEGORY, TOTAL_COUNT, REMAIN_COUNT ,NORMAL_PRICE, SALE_PRICE, DISCOUNT_RATE, PAYMENT_OPTION, DETAIL_INFO ) ");
-        sql.append("values(product_p_number_seq.nextval, 9, ?, ?, TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), ?, ?, ?, ?, ?, ?, ?, ?) ");
+        sql.append("values(product_p_number_seq.nextval, ?, ?, ?, TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), ?, ?, ?, ?, ?, ?, ?, ?) ");
 
+        log.info("sql={}", sql);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jt.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(sql.toString(), new String[]{"p_number"});
-//                pstmt.setLong(1, product.getOwnerNumber());
-                pstmt.setString(1, product.getPTitle());
-                pstmt.setString(2, product.getPName());
-                pstmt.setString(3, product.getDeadlineTime());
-                log.info("product.getDeadline_time()=>{}", product.getDeadlineTime());
-                pstmt.setString(4, product.getCategory());
-                pstmt.setInt(5, product.getTotalCount());
+                log.info("product.getOwnerNumber()={}", product.getOwnerNumber());
+                pstmt.setLong(1, product.getOwnerNumber());
+                pstmt.setString(2, product.getPTitle());
+                pstmt.setString(3, product.getPName());
+                pstmt.setString(4, product.getDeadlineTime());
+                pstmt.setString(5, product.getCategory());
                 pstmt.setInt(6, product.getTotalCount());
-                pstmt.setInt(7, product.getNormalPrice());
-                pstmt.setInt(8, product.getSalePrice());
-                pstmt.setInt(9, (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice());
-                pstmt.setString(10, product.getPaymentOption());
-                pstmt.setString(11, product.getDetailInfo());
+                pstmt.setInt(7, product.getTotalCount());
+                pstmt.setInt(8, product.getNormalPrice());
+                pstmt.setInt(9, product.getSalePrice());
+                pstmt.setInt(10, (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice());
+                pstmt.setString(11, product.getPaymentOption());
+                pstmt.setString(12, product.getDetailInfo());
                 return pstmt;
             }
         }, keyHolder);
@@ -96,7 +98,7 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
 
         sql.append("update product_info ");
-        sql.append("SET p_title = ?, P_NAME=?, DEADLINE_TIME = TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), CATEGORY=?, REMAIN_COUNT=?, NORMAL_PRICE = ?, SALE_PRICE = ?, DISCOUNT_RATE=?, PAYMENT_OPTION=?, detail_info=? ");
+        sql.append("SET p_title = ?, P_NAME=?, DEADLINE_TIME = TO_DATE(?,'YYYY-MM-DD\"T\"HH24:MI'), CATEGORY=?, REMAIN_COUNT=?, NORMAL_PRICE = ?, SALE_PRICE = ?, DISCOUNT_RATE=?, PAYMENT_OPTION=?, detail_info=?, u_date=sysdate ");
         sql.append("WHERE p_number = ? ");
 
         result=jt.update(sql.toString(), product.getPTitle(), product.getPName(), product.getDeadlineTime(), product.getCategory(), product.getRemainCount(), product.getNormalPrice(), product.getSalePrice(), (product.getNormalPrice()-product.getSalePrice())*100/product.getNormalPrice(), product.getPaymentOption(), product.getDetailInfo(), pNum );
@@ -145,7 +147,7 @@ public class ProductDAOImpl implements ProductDAO {
 
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
+        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=? ");
         sql.append("and p.r_date between '2022-09-30' and '2022-10-03' ");
         sql.append("order by R_DATE desc " );
 
@@ -159,20 +161,25 @@ public class ProductDAOImpl implements ProductDAO {
                     product.setMember(member);
                     return product;
                 }
-            });
+            },ownerNumber);
         } catch (DataAccessException e) {
             log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
         }
         return result;
     }
-    //상품 관리
-    public List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
-        StringBuffer sql = new StringBuffer();
 
+    //상품 관리
+    public List<Product> pManage(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("sell_status") Integer sell_status,  @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        StringBuffer sql = new StringBuffer();
+        System.out.println("ownerNumber = " + ownerNumber + ", sell_status = " + sell_status + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number=9 ");
-        sql.append("and p.r_date between '" + history_start_date + "' and '" + history_end_date+"' ");
+        sql.append("where p.owner_number = m.mem_number and m.mem_type='owner' and p.owner_number="+ownerNumber+"  ");
+        sql.append("and p.r_date between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
+
+        if(sell_status==0||sell_status==1) {
+            sql.append("and p_status=" + sell_status + " ");
+        }
         sql.append("order by R_DATE desc " );
 
         System.out.println("sql = " + sql);
@@ -190,6 +197,21 @@ public class ProductDAOImpl implements ProductDAO {
         } catch (DataAccessException e) {
             log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
         }
+        return result;
+    }
+
+    // 판매관리화면에서 각 상품 판매 상태 변경하기
+    @Override
+    public int pManage_status_update(Long pNum, Integer pStatus) {
+        int result = 0;
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("update product_info ");
+        sql.append("   SET p_status=? ");
+        sql.append("WHERE p_number = ? ");
+
+        result=jt.update(sql.toString(), pStatus, pNum );
+
         return result;
     }
 
@@ -212,6 +234,41 @@ public class ProductDAOImpl implements ProductDAO {
                     product.setMember(member);
                     product.setDeal(deal);
 
+                    return product;
+                }
+            });
+        } catch (DataAccessException e) {
+            log.info("조회할 회원이 없습니다. 회원번호={}", ownerNumber);
+        }
+        return result;
+    }
+
+    //판매내역 csr
+    public List<Product> pSaleList(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("pickUp_status") Integer pickUp_status,  @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        StringBuffer sql = new StringBuffer();
+        System.out.println("ownerNumber = " + ownerNumber + ", pickUp_status = " + pickUp_status + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
+        sql.append("select * ");
+        sql.append("from product_info P, member M, Deal D ");
+        sql.append("where p.owner_number = m.mem_number and d.p_Number=p.p_Number and m.mem_type='owner' and p.owner_number="+ownerNumber+" ");
+        sql.append("and d.orderdate between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
+
+        if(pickUp_status==0||pickUp_status==1) {
+            sql.append("and d.pickup_status=" + pickUp_status + " ");
+        }
+        sql.append("order by d.orderdate desc " );
+
+        System.out.println("sql = " + sql);
+        List<Product> result =null;
+        try {
+            result= jt.query(sql.toString(),new RowMapper<Product>(){
+                @Override
+                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
+                    Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs,rowNum);
+                    Deal deal = (new BeanPropertyRowMapper<>(Deal.class)).mapRow(rs,rowNum);
+                    product.setMember(member);
+                    product.setDeal(deal);
+
                     log.info("product={}", product);
                     return product;
                 }
@@ -221,6 +278,22 @@ public class ProductDAOImpl implements ProductDAO {
         }
         return result;
     }
+    // 판매 내역 화면에서 각 상품 픽업 상태 변경하기
+    @Override
+    public int pickUP_status_update(Long pNum, Integer pickStatus) {
+        int result = 0;
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("update deal ");
+        sql.append("   SET pickup_status=? ");
+        sql.append("WHERE p_number = ? ");
+
+        result=jt.update(sql.toString(), pickStatus, pNum );
+
+        return result;
+    }
+
+
 
     //------------------------------
     // 상품 최신순 목록

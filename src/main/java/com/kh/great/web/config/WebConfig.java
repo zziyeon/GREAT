@@ -34,8 +34,9 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/findId");
         whiteList.add("/findPw");
         whiteList.add("/resetPw");
-        whiteList.add("/zonning");
-        whiteList.add("/products");
+        whiteList.add("/zonning/**");
+        whiteList.add("/zonning?**");
+//        whiteList.add("/products/**");
 
 
         registry.addInterceptor(new LoginInterceptor())

@@ -5,12 +5,13 @@ import com.kh.great.domain.dao.member.Member;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 public class UpdateForm {
     private Long pNumber;           //상품번호    P_NUMBER	NUMBER(6,0)
-//    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
+    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
 //    private String storeName;       //가게명    STORE_NAME	VARCHAR2(60 BYTE)
     private String pTitle;          //상품 제목    P_TITLE	VARCHAR2(90 BYTE)
     private String pName;           //상품명    P_NAME	VARCHAR2(60 BYTE)
@@ -24,7 +25,7 @@ public class UpdateForm {
     private String paymentOption;  //결제방식    PAYMENT_OPTION	VARCHAR2 (32 BYTE)
     private String detailInfo;     //상품설명    DETAIL_INFO	VARCHAR2 (4000 BYTE)
 //    private LocalDateTime rDate;    //등록일    R_DATE DATE DEFAULT SYSDATE
-//    private LocalDateTime uDate;    //수정일    U_DATE	DATE DEFAULT SYSDATE
+    private LocalDateTime uDate;    //수정일    U_DATE	DATE DEFAULT SYSDATE
 //    private Integer pStatus;        //판매상태    P_STATUS	NUMBER(1,0)
 
     private Member member;

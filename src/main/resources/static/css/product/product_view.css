@@ -151,12 +151,17 @@ dl > dt {
 }
 
 /* 지도 */
-.goods_wrap>.goods_info > .store_location {
+.goods_wrap>.store_location {
     width: 700px;
     height: 640px;
     position: relative;
     overflow: hidden;
 }
+.goods_wrap>.store_location > .lat,
+.goods_wrap>.store_location > .lng  {
+    display:none;
+}
+
 
 #map {
     width: 100%;
