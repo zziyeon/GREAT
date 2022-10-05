@@ -1,0 +1,118 @@
+@charset "uft-8";
+
+.review-container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 1100px;
+    padding: 16px 0  24px 0;
+}
+
+/*메인 (왼쪽) */
+.review-container .aside-content {
+    flex: 1;
+    border-right: 1px solid rgb(189, 189, 189);
+    margin: 0 20px 0 10px;
+    font-size: 15px;
+    height: 900px;
+}
+
+.review-container  .aside-content .aside-content-menu {
+    width: 155px;
+    height: 40px;
+    padding: 10px 15px;
+    margin-right: 5px;
+   
+}
+.review-container  .aside-content .aside-content-menu:hover{
+    border-radius: 8px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.664);
+}
+
+/* 메인 (오른쪽) */
+.review-container .main-content {
+    flex: 6;
+    height: 900px;
+}
+
+.bar {
+    display: flex;
+    width: 4px;
+    height: 36px;
+    background-color: var(--main-color-yel);
+    margin-right: 10px;
+}
+
+.review-container .main-content .main-head {
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-container .main-content .main-head .main-title{
+    display: flex;
+    height: 50px;
+    margin: 20px 10px;
+}
+
+.review-container .main-content .review-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.review-container .main-content .review {
+    width: 100%;
+    margin-left: 30px;
+    padding: 10px;
+    display: flex;
+    outline: 1px solid black;
+    position: relative;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+.review img {
+    width: 120px;
+    height: 100px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.review .updateReview {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.review  .delReview {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    
+}
+
+/* 하단 버튼 */
+.btn-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.btn-page li {
+    margin-right: 10px;
+    font-size: 13px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 8px;
+}
+.btn-page li:nth-child(1),
+.btn-page li:nth-child(12) {
+    font-size: 1em;
+}
+
+label{
+    display: block;
+}
+

@@ -1,0 +1,48 @@
+    <!DOCTYPE html>
+    <html lang="ko"
+          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="~{fragments/layout}">
+    <head layout:fragment="head">
+        <th:block th:replace="fragments/layout :: commonHead"></th:block>
+        <title>GREAT 리뷰작성</title>
+
+        <link rel="stylesheet" href="/css/mypage/review.css" />
+    </head>
+    <body>
+    <div layout:fragment="wrapper" class="wrapper">
+        <header th:replace="fragments/layout ::fragNonHeader">
+
+        </header>
+        <main class="main-reivew">
+        <h1 class="title">리뷰 작성</h1>
+        <form class="review" action="" method="post">
+            <fieldset>
+            <span class="text-bold">별점을 선택해주세요</span>
+
+            <input type="radio" name="grade" value="5" id="rate5"/>
+                <label for="rate5">★</label>
+            <input type="radio" name="grade" value="4" id="rate4"/>
+                <label for="rate4">★</label>
+            <input type="radio" name="grade" value="3" id="rate3"/>
+                <label for="rate3">★</label>
+            <input type="radio" name="grade" value="2" id="rate2"/>
+                <label for="rate2">★</label>
+            <input type="radio" name="grade" value="1" id="rate1"/>
+                <label for="rate1">★</label>
+
+            </fieldset>
+
+            <textarea id="content" type="text" name="content" cols="50" rows="30">
+            </textarea>
+            <button id="addBtn" class="btn btnReview">작성 완료</button>
+        
+        </form>
+        </main>
+        <script>
+
+        </script>
+        </div>
+    </body>
+    </html>
