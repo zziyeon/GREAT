@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,14 +75,27 @@ public class ProductSVCImpl implements ProductSVC {
         return productDAO.manage(ownerNumber);
     }
     @Override
-    public List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
-        return productDAO.pManage(ownerNumber, history_start_date, history_end_date);
+    public List<Product> pManage(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("sell_status") Integer sell_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        return productDAO.pManage(ownerNumber, sell_status, history_start_date, history_end_date);
     }
+    @Override
+    public int pManage_status_update(Long pNum, Integer pStatus) {
+        return productDAO.pManage_status_update(pNum, pStatus);
+    }
+
 
     //판매 내역 목록
     @Override
     public List<Product> saleList(Long ownerNumber) {
         return productDAO.saleList(ownerNumber);
+    }
+    @Override
+    public List<Product> pSaleList(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("pickUp_status") Integer pickUp_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date) {
+        return productDAO.pSaleList(ownerNumber, pickUp_status, history_start_date, history_end_date);
+    }
+    @Override
+    public int pickUP_status_update(Long pNum, Integer pickStatus) {
+        return productDAO.pickUP_status_update(pNum, pickStatus);
     }
 
     //------------------------------------------

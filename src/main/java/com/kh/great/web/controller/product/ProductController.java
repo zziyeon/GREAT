@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,11 @@ public class ProductController {
         Product product = new Product();
         BeanUtils.copyProperties(saveForm, product);
         Long pNum = 0l;
+
+        HttpSession session = request.getSession(false);
+        Object memNumber = session.getAttribute("memNumber");
+        product.setOwnerNumber((Long)memNumber);
+
         //상품 메타정보 저장
         if (saveForm.getFiles().get(0).isEmpty()) {
             pNum = productSVC.save(product);
@@ -146,6 +152,7 @@ public class ProductController {
 //    }
     @GetMapping("/{ownerNumber}/manage")
     public String manage(@PathVariable("ownerNumber") Long ownerNumber, Model model) {
+
         List<Product> list = productSVC.manage(ownerNumber);
         model.addAttribute("list", list);
 

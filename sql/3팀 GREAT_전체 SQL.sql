@@ -1,10 +1,8 @@
 --drop table
-drop table withdrawal_member;
 drop table deal;
 drop table good;
 drop table review;
 drop table bookmark;
-drop table profile;
 drop table product_info;
 drop table comments;
 drop table article;
@@ -22,51 +20,10 @@ drop sequence comments_comment_num_seq;
 drop sequence uploadfile_uploadfile_id_seq;
 drop sequence good_good_number_seq;
 drop sequence review_review_number_seq;
-drop sequence profile_profile_number_seq;
 drop sequence PRODUCT_P_NUMBER_SEQ;
 drop sequence bookmark_bookmark_number_seq;
 
 --===========================================회원================================================================
---탈퇴회원 테이블
-create table withdrawal_member (
-mem_number number(9),
-mem_type varchar2(15),
-mem_id varchar2(30),
-mem_password varchar2(18),
-mem_name varchar2(18),
-mem_nickname varchar2(18),
-mem_email varchar2(30),
-mem_businessnumber varchar2(10),
-mem_store_name varchar2(45),
-mem_store_phonenumber varchar2(15),
-mem_store_location varchar2(150),
-mem_store_latitude number(15, 9),
-mem_store_longitude number(15, 9),
-mem_store_introduce varchar2(150),
-mem_store_sns varchar2(150),
-mem_regtime date,
-mem_lock_expiration date,
-mem_admin varchar2(3)
-);
---primary key
-alter table withdrawal_member add constraint withdrawal_member_mem_number_pk primary key (mem_number);
---unique
-alter table withdrawal_member add constraint withdrawal_member_mem_id_un unique (mem_id);
-alter table withdrawal_member add constraint withdrawal_member_mem_nickname_un unique (mem_nickname);
-alter table withdrawal_member add constraint withdrawal_member_mem_email_un unique (mem_email);
-alter table withdrawal_member add constraint withdrawal_member_mem_businessnumber_un unique (mem_businessnumber);
-alter table withdrawal_member add constraint withdrawal_member_mem_store_location_un unique (mem_store_location);
-alter table withdrawal_member add constraint withdrawal_member_mem_store_latitude_un unique (mem_store_latitude);
-alter table withdrawal_member add constraint withdrawal_member_mem_store_longitude_un unique (mem_store_longitude);
---not null
-alter table withdrawal_member modify mem_number constraint withdrawal_member_mem_number_nn not null;
-alter table withdrawal_member modify mem_type constraint withdrawal_member_mem_type_nn not null;
-alter table withdrawal_member modify mem_id constraint withdrawal_member_mem_id_nn not null;
-alter table withdrawal_member modify mem_password constraint withdrawal_member_mem_password_nn not null;
-alter table withdrawal_member modify mem_name constraint withdrawal_member_mem_name_nn not null;
-alter table withdrawal_member modify mem_nickname constraint withdrawal_member_mem_nickname_nn not null;
-alter table withdrawal_member modify mem_email constraint withdrawal_member_mem_email_nn not null;
-alter table withdrawal_member modify mem_regtime constraint withdrawal_member_mem_regtime_nn not null;
 
 --회원번호 시퀀스
 create sequence mem_num
@@ -138,8 +95,8 @@ create table product_info(
 ,    DISCOUNT_RATE NUMBER(2, 0) not null
 ,    PAYMENT_OPTION VARCHAR2(32 BYTE) not null
 ,    DETAIL_INFO clob
-,    R_DATE DATE default sysdate not null
-,    U_DATE DATE default sysdate not null
+,    R_DATE DATE not null
+,    U_DATE DATE not null
 ,    P_STATUS NUMBER(1, 0) default 0
 );
 
@@ -193,25 +150,6 @@ ALTER TABLE deal ADD CONSTRAINT deal_o_status_ck CHECK (o_status ='0' OR o_statu
 -- 픽업상태
 ALTER TABLE deal ADD CONSTRAINT deal_pickup_status_ck CHECK (pickup_status ='0' OR pickup_status ='1'); 
   
-    
-create table profile (  --프로필 테이블
-profile_number number(5),  --프로필 번호
-mem_number number (6),-- 유저 번호
-p_number number(5)--상품 번호
-);
-
---프로필번호 시퀀스 생성
-create sequence  profile_profile_number_seq;
-
---기본키설정
-alter table profile add constraint profile_profile_number_pk primary key (profile_number);--프로필 번호 pk
---외래키설정
-alter table profile add constraint profile_mem_number_fk
-    foreign key (mem_number) references member (mem_number) on delete cascade;-- 유저번호 회원테이블 fk 참조
-alter table profile add constraint profile_p_number_fk
-    foreign key (p_number) references product_info (p_number) on delete cascade; --판매글 번호 판매테이블 fk 참조
-
-
 create table review (   --리뷰테이블
 review_number number(10),  --리뷰 번호
 buyer_number number (6),-- 작성자 번호
@@ -311,7 +249,7 @@ create table comments (
   comment_num          number(6),       -- 댓글 번호
   p_comment_num        number(6),       -- 부모 댓글 번호
   mem_number           number(6),       -- 회원 번호
-  comment_contents     varchar2(300),   -- 댓글 내용
+  comment_contents     clob,   -- 댓글 내용
   create_date          date,            -- 댓글 생성일
   comment_indent       number(3)        -- 대댓글 들여쓰기
 );

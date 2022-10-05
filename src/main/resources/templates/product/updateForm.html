@@ -3,7 +3,7 @@
       xmlns:th="https://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
-    <title>판매글 수정 | GREAT</title>
+    <title>GREAT | 판매글 수정</title>
     <link rel="stylesheet" th:href="@{/css/product/product_write.css}">
     <script type="text/javascript" defer th:src="@{/js/product/limitDate.js}"></script>
     <script th:src="@{/js/product/ckeditor.js}"></script>
@@ -16,6 +16,7 @@
             <h2>판매글 수정</h2>
             <div class="p-write-info">
                 <table class="write_tb">
+                    <tr class="pNumber"><th><input type="text" th:field="*{pNumber}"></th></tr>
                     <tr>
                         <th ><label for="pTitle">글제목</label></th>
                         <td colspan="3"><input class="title" type="text" th:field="*{pTitle}" placeholder="제목을 입력하세요(30자 이내)"></td>
@@ -74,6 +75,13 @@
 </div>
 </form>
 <script>
+    //<!-- 취소 버튼 -->
+    const $cancelBtn = document.getElementById('cancelBtn');
+    $cancelBtn.addEventListener('click', evt=>{
+        const pNumber= document.getElementById('form').pNumber.value;
+        location.href=`/products/${pNumber}`;
+    });
+
     const form = {
         articleContents: document.getElementById('detailInfo')
     };

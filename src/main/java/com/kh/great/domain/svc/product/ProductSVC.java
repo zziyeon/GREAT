@@ -1,6 +1,7 @@
 package com.kh.great.domain.svc.product;
 
 import com.kh.great.domain.dao.product.Product;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,10 +32,13 @@ public interface ProductSVC {
 
     //상품 관리
     List<Product> manage(Long ownerNumber);
-    List<Product> pManage(Long ownerNumber, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
+    List<Product> pManage(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("sell_status") Integer sell_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
+    int pManage_status_update(Long pNum, Integer pStatus);
 
     //상품 관리
     List<Product> saleList(Long ownerNumber);
+    List<Product> pSaleList(@PathVariable("ownerNumber") Long ownerNumber, @RequestParam ("pickUp_status") Integer pickUp_status, @RequestParam ("history_start_date") String history_start_date, @RequestParam ("history_end_date") String history_end_date);
+    int pickUP_status_update(Long pNum, Integer pickStatus);
 
     //----------------------------------------------
     // 상품 최신순 목록

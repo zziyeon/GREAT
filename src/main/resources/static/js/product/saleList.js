@@ -1,41 +1,39 @@
+// 상품별 판매 선택
+//const $each_pickUp_status = document.querySelector('#each_pickUp_status');
+
 // 판매 상태별 조회할 목록 키워드
-const $sell_status_keyword = document.querySelector(".drop__status select ");
+const $pickUp_status_keyword = document.querySelector(".drop__status select ");
 
-// 판매 상태별 조회할 목록 클릭
-$sell_status_keyword.addEventListener('change', sell_status_keyword_h);
+// 판매 상태별 조회할 목록
+$pickUp_status_keyword.addEventListener('change', pickUp_status_keyword_h);
 
-let sell_status_selected="3";
-function sell_status_keyword_h(){
-    if($sell_status_keyword.value == '전체'){
-        sell_status_selected = "3";
+let pickUp_status_selected="3";
+function pickUp_status_keyword_h(){
+    if($pickUp_status_keyword.value == '전체'){
+        pickUp_status_selected = "3";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
         // 2) 날짜 조회 처리
         search(inputDate);
     }
-    if($sell_status_keyword.value == '판매중'){
-        sell_status_selected ="0";
+    if($pickUp_status_keyword.value == '픽업 예정'){
+        console.log("픽업 예정");
+        pickUp_status_selected ="0";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
         // 2) 날짜 조회 처리
         search(inputDate);
     }
-    if($sell_status_keyword.value=='판매완료'){
-        sell_status_selected = "1";
+    if($pickUp_status_keyword.value=='픽업 완료'){
+        console.log("픽업 완료");
+        pickUp_status_selected = "1";
         // 1) 입력데이터 가져오기
         const inputDate = getInputData();
         // 2) 날짜 조회 처리
         search(inputDate);
     }
-    return sell_status_selected;
+    return pickUp_status_selected;
 }
-//
-//$each_sell_status.addEventListener('change',e=>{
-//    if($each_sell_status.value == '삭제'){
-//        alert("판매글을 삭제 하시겠습니까?");
-//    }
-//});
-
 
 //----------------------------------------------------------
 // 날짜 선택
@@ -78,12 +76,12 @@ const $period = document.querySelector('.drop__period #searchBtn');
 function getInputData(){
     const startDateData = $startDate.value;
     const finishDateData = $finishDate.value;
-    const sell_status= sell_status_selected;
+    const pickUp_status= pickUp_status_selected;
 
     return {
         "startDate" : startDateData,
         "endDate" : finishDateData,
-        "sell_status" : sell_status
+        "pickUp_status" : pickUp_status
     };
 }
 
@@ -96,20 +94,18 @@ $period.addEventListener('click', e=>{
 });
 
 function search(searchData){
-    manageList(searchData.sell_status, searchData.startDate, searchData.endDate);
+    manageList(searchData.pickUp_status, searchData.startDate, searchData.endDate);
 }
 
 //-------------------------------------------
 // 해당 점주 전체 상품 목록 조회
-manageList(sell_status_selected,$startDate.value, $finishDate.value);
+manageList(pickUp_status_selected,$startDate.value, $finishDate.value);
 
 // 상품관리 목록
-function manageList(sell_status,startDate, endDate) {
+function manageList(pickUp_status,startDate, endDate) {
 
-//sell_status=sell_status_keyword_h();
 const ownerNumber= document.querySelector('.memNum').textContent;
-const url = 'http://localhost:9080/api/manage/'+ownerNumber+'?sell_status='+sell_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
-
+const url = 'http://localhost:9080/api/saleList/'+ownerNumber+'?pickUp_status='+pickUp_status+'&history_start_date=' + startDate + '&history_end_date=' + endDate;
 fetch(url, {
   methode: 'GET',
   headers:{
@@ -121,59 +117,57 @@ fetch(url, {
       let i =0;
       const result =
         res.data.map(product =>{
+            console.log(product);
           i++;
-          product.rdate=product.rdate.substr(0,10);
+          product.deal.orderdate = product.deal.orderdate.substr(0,10);
+          product.deal.visittime = product.deal.visittime.substr(0,10);
+//          product.rdate=product.rdate.substr(0,10);
           if(product.imageFiles != null && product.imageFiles.length > 0) {
             img_url = `<img class="good_Img" src="/api/attach/img/${product.imageFiles[0].code}/${product.imageFiles[0].storeFilename}" alt="이미지를 불러올수 없습니다">`;
           } else {
             img_url = `<img src="/img/product/등록된 사진이 없습니다.png" alt="">`;
           }
+
           return `<tr>
-                    <td>${i}</td>
-                    <td>${img_url}</td>
+                    <td>${product.deal.orderNumber}</td>
+                    <td>${product.deal.orderdate}</td>
+                    <td>${product.member.memNickname}</td>
+                    <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
+                    <td>${product.deal.pcount}</td>
+                    <td>${product.deal.price}</td>
+                    <td>${product.deal.visittime}</td>
                     <td>
-                      <select name="" id="productStatus"  onchange="javascript:each_sell_status(this, ${product.pnumber}, ${product.pstatus})">
-                       <option value="0" ${product.pstatus == 0 ? 'selected' : ''}  >판매중</option>
-                       <option value="1" ${product.pstatus == 1 ? 'selected' : ''}  >판매완료</option>
-                       <option value="del">삭제</option>
+                    <p>${product.deal.buyType==0? '온라인 결제':'현장 결제'}</p>
+                    </td>
+                    <td>
+                      <select name="" id="" onchange="javascript:each_pickUp_status(this, ${product.pnumber}, ${product.deal.pickupStatus})">
+                       <option value="0" ${product.deal.pickupStatus == 0 ? 'selected' : ''}  >픽업 예정</option>
+                       <option value="1" ${product.deal.pickupStatus == 1 ? 'selected' : ''}  >픽업 완료</option>
                       </select>
                     </td>
-                    <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
-                    <td>${product.salePrice}/ ${product.normalPrice}원</td>
-                    <td>${product.remainCount}/${product.totalCount}개</td>
-                    <td>${product.rdate}</td>
-                    <td><a class="updateBtn" href="/products/${product.pnumber}/edit">수정</a></td>
                   </tr>`;
         });
-        document.querySelector('.product_manage-tb tbody').innerHTML=result.join('');
+        document.querySelector('.sell_list-tb tbody').innerHTML=result.join('');
 
     }
   }).catch(err=>console.log(err));
 }
-// 상품별 판매 선택
-function each_sell_status(obj, pNumber, pstatus){
+
+// 상품별 픽업 상태 선택
+function each_pickUp_status(obj, pNumber, pickStatus){
     console.log("pNumber -> " + pNumber);
 
     if(obj.value=='0'){
-        sell_st_uf(pNumber, obj.value);
+        pickUp_st_uf(pNumber, obj.value);
     }
     if(obj.value=='1'){
-        sell_st_uf(pNumber, obj.value);
-    }
-    if(obj.value=='del'){
-        if(check){
-            window.location.href = "/products/" + pNumber + "/del";
-        }
-        else{
-            obj.value=pstatus;
-        }
-
+        pickUp_st_uf(pNumber, obj.value);
     }
 }
 
-// 상품 상태 변경
-function sell_st_uf(pNumber, pstatus){
-  const url = 'http://localhost:9080/api/manage/' + pNumber +'/'+ pstatus;
+// 픽업 상태 변경
+function pickUp_st_uf(pNumber, pickStatus){
+  const url = 'http://localhost:9080/api/saleList/' + pNumber +'/'+ pickStatus;
   fetch( url,{            //url
     method:'PATCH',        //http method
     headers:{             //http header

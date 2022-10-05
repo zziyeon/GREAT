@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class SaveForm {
     private Long pNumber;           //상품번호    P_NUMBER	NUMBER(6,0)
-//    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
+    private Long ownerNumber;       //점주고객번호    OWNER_NUMBER	NUMBER(6,0)
     private String pTitle;          //상품 제목    P_TITLE	VARCHAR2(90 BYTE)
     private String pName;           //상품명    P_NAME	VARCHAR2(60 BYTE)
     private String deadlineTime;    //마감일자    DEADLINE_TIME	DATE

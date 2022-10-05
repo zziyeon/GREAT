@@ -1,16 +1,17 @@
 package com.kh.great.web.controller.main;
 
-import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
+import com.kh.great.domain.svc.member.EmailSVCImpl;
 import com.kh.great.domain.svc.member.MemberSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
 import com.kh.great.web.api.member.FindId;
 import com.kh.great.web.dto.member.*;
-import com.kh.great.web.session.member.LoginMember;
+import com.kh.great.web.session.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,15 +34,11 @@ public class HomeController {
     private final MemberSVC memberSVC;
     final ProductSVC productSVC;
     private final UploadFileSVC uploadFileSVC;
+    private final EmailSVCImpl emailSVCImpl;
 
     @GetMapping
     public String home(HttpServletRequest request, Model model) {
         List<Product> list = productSVC.today_deadline();
-
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(),
-                                                            list.get(i).getPNumber()));
-        }
 
         model.addAttribute("list", list);
 
@@ -63,24 +60,27 @@ public class HomeController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
+        log.info("mempw {}", join.getMemPassword());
+        log.info("mempwc {}", join.getMemPasswordCheck());
         //기본 검증
-        //if (bindingResult.hasErrors()) {
-        //    log.info("errors = {}", bindingResult);
-        //    return "join";
-        //}
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "member/join";
+        }
 
         //필드 검증(field error)
-        //if (join.getMemId().length() > 15) {
-        //    bindingResult.rejectValue("memId", null, "아이디 길이는 15자 이하까지 가능합니다.");
-        //    return "join";
-        //}
+        //아이디 길이 8~15자
+        if (join.getMemId().length() < 8 || join.getMemId().length() > 15) {
+            bindingResult.rejectValue("memId", null, "아이디 길이는 8~15자입니다.");
+            return "member/join";
+        }
 
         //오브젝트 검증(object error)
         //비밀번호-비밀번호 확인 일치
-        //if (join.getMemPassword() == join.getMemPasswordCheck()) {
-        //    bindingResult.reject(null, "비밀번호 일치합니다");
-        //    return "join";
-        //}
+        if (!(join.getMemPassword().equals(join.getMemPasswordCheck()))) {
+            bindingResult.reject(null, "비밀번호가 일치하지 않습니다.");
+            return "member/join";
+        }
 
         Member member = new Member();
         member.setMemType(join.getMemType());
@@ -93,22 +93,29 @@ public class HomeController {
         member.setMemStoreName(join.getMemStoreName());
         member.setMemStorePhonenumber(join.getMemStorePhonenumber());
         member.setMemStoreLocation(join.getMemStoreLocation());
+        member.setMemStoreLatitude(join.getMemStoreLatitude());
+        member.setMemStoreLongitude(join.getMemStoreLongitude());
         member.setMemStoreIntroduce(join.getMemStoreIntroduce());
         member.setMemStoreSns(join.getMemStoreSns());
         Member joinedMember = memberSVC.join(member);
 
         Long id = joinedMember.getMemNumber();
-        redirectAttributes.addAttribute("id", id);
-        return "redirect:/joinComplete";  //가입완료화면
+        redirectAttributes.addAttribute("memNumber", id);
+        return "redirect:/joinComplete/{memNumber}";  //가입완료화면
     }
 
     //회원가입 완료 화면
-    @GetMapping("/joinComplete")
-    public String joinComplete(
-            @ModelAttribute("join") JoinComplete joinComplete
-    ) {
+    @GetMapping("/joinComplete/{memNumber}")
+    public String joinComplete(@PathVariable("memNumber") Long memNumber, Model model) {
 
-        return "member/joinComplete";    //회원가입 화면
+        Member findedMember = memberSVC.findByMemNumber(memNumber);
+
+        JoinComplete joinComplete = new JoinComplete();
+        BeanUtils.copyProperties(findedMember, joinComplete);
+
+        model.addAttribute("joinComplete", joinComplete);
+
+        return "member/joinComplete";
     }
 
     //아이디 찾기 화면
@@ -127,10 +134,37 @@ public class HomeController {
         return "member/findPw";
     }
 
+    //비밀번호 찾기 처리
+    @PostMapping("/findPw")
+    public String findPw(
+            @Valid @ModelAttribute("findPw") FindPw findPw,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        //기본 검증
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "/findPw";
+        }
+
+        Member findedMember = memberSVC.findByMemIdAndMemEmail(findPw.getMemId(), findPw.getMemEmail());
+        log.info("findedMember = {}", findedMember);
+        log.info("findedMember.getMemNumber = {}", findedMember.getMemNumber());
+
+        redirectAttributes.addAttribute("memNumber", findedMember.getMemNumber());
+        return "redirect:/resetPw/{memNumber}";
+    }
+
     //비밀번호 재설정 화면
-    @GetMapping("/resetPw")
-    public String resetPw(Model model) {
-        model.addAttribute("resetPw", new ResetPw());
+    @GetMapping("/resetPw/{memNumber}")
+    public String resetPw(@PathVariable("memNumber") Long memNumber, Model model) {
+
+        Member findedMember = memberSVC.findByMemNumber(memNumber);
+
+        ResetPw resetPw = new ResetPw();
+        resetPw.setMemId(findedMember.getMemId());
+
+        model.addAttribute("resetPw", resetPw);
 
         return "member/resetPw";
     }
@@ -175,10 +209,6 @@ public class HomeController {
         session.setAttribute("memType", member.get().getMemType());
         session.setAttribute("memNickname", member.get().getMemNickname());
 
-//        if(requestURI.equals("/")){
-//            return "mainMember";
-//        }
-
         return "redirect:" + redirectUrl;
     }
 
@@ -201,7 +231,6 @@ public class HomeController {
         model.addAttribute("list", list);
 
         return "main/search_result";
-
     }
 
     //지역별 상품 목록
