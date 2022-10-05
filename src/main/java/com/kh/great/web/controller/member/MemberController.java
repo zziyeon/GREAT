@@ -39,7 +39,6 @@ public class MemberController {
             BindingResult bindingResult,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes
-//            HttpSession session
     ) {
         HttpSession session = request.getSession(false);
         Object memNum = session.getAttribute("memNumber");
@@ -47,6 +46,21 @@ public class MemberController {
 
         redirectAttributes.addAttribute("memNum", memNum);
         redirectAttributes.addAttribute("memType", memType);
+
+        //기본 검증
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "member/infoChk";
+        }
+
+        Member findedMember = memberSVC.findByMemNumber((Long) memNum);
+
+        //필드 검증(field error)
+        //비밀번호 일치해야 개인정보 조회 가능
+        if (!(infoChk.getMemPassword().equals(findedMember.getMemPassword()))) {
+            bindingResult.rejectValue("memPassword",null, "비밀번호가 일치하지 않습니다.");
+            return "member/infoChk";
+        }
 
         return "redirect:/member/{memType}/{memNum}";
     }
@@ -92,9 +106,11 @@ public class MemberController {
         info.setMemStoreName(findedMember.getMemStoreName());
         info.setMemStorePhonenumber(findedMember.getMemStorePhonenumber());
         info.setMemStoreLocation(findedMember.getMemStoreLocation());
+        info.setMemStoreLatitude(findedMember.getMemStoreLatitude());
+        info.setMemStoreLongitude(findedMember.getMemStoreLongitude());
         info.setMemStoreIntroduce(findedMember.getMemStoreIntroduce());
         info.setMemStoreSns(findedMember.getMemStoreSns());
-
+        log.info("확인 : {}",info);
 
         model.addAttribute("info", info);
         return "member/infoOwn"; //회원 수정화면
@@ -140,7 +156,7 @@ public class MemberController {
     }
 
     //점주회원정보 수정 처리
-    @PostMapping("/owner/{memNumber}")
+    @PostMapping("/owner/{memNum}")
     public String editOwn(
             @Valid @ModelAttribute("info") Info info,
             BindingResult bindingResult,
@@ -163,6 +179,8 @@ public class MemberController {
         member.setMemStoreName(info.getMemStoreName());
         member.setMemStorePhonenumber(info.getMemStorePhonenumber());
         member.setMemStoreLocation(info.getMemStoreLocation());
+        member.setMemStoreLatitude(info.getMemStoreLatitude());
+        member.setMemStoreLongitude(info.getMemStoreLongitude());
         member.setMemStoreIntroduce(info.getMemStoreIntroduce());
         member.setMemStoreSns(info.getMemStoreSns());
 

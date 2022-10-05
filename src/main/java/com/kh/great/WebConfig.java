@@ -1,5 +1,4 @@
-package com.kh.great.web.config;
-
+package com.kh.great;
 
 import com.kh.great.web.interceptor.member.LogInterceptor;
 import com.kh.great.web.interceptor.member.LoginInterceptor;
@@ -30,14 +29,12 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/logout");
         whiteList.add("/");
         whiteList.add("/join");
-        whiteList.add("/joinComplete");
+        whiteList.add("/joinComplete/**");
         whiteList.add("/findId");
         whiteList.add("/findPw");
-        whiteList.add("/resetPw");
-        whiteList.add("/zonning/**");
-        whiteList.add("/zonning?**");
-//        whiteList.add("/products/**");
-
+        whiteList.add("/resetPw/**");
+        whiteList.add("/api/member/**");
+        whiteList.add("/error");
 
         registry.addInterceptor(new LoginInterceptor())
                 .order(2)
