@@ -1,0 +1,88 @@
+    <!DOCTYPE html>
+    <html lang="ko"
+          xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GREAT 리뷰작성</title>
+        <link rel="stylesheet" href="/css/common/common.css" />
+        <link rel="stylesheet" href="/member/css/review_popup.css" />
+    </head>
+    <body>
+        <main class="main-reivew">
+        <h1 class="title">리뷰 작성</h1>
+        <form class="review" id="reviewForm" action="">
+            <fieldset>
+            <span class="text-bold">별점을 선택해주세요</span>
+
+
+
+            <input type="radio" name="grade" value="1" th:classappend="checked ? grade : grade1" id="rate5"/>
+                <label for="rate5">★</label>
+            <input type="radio" name="grade" value="2" th:classappend="checked ? grade : grade1" id="rate4"/>
+                <label for="rate4">★</label>
+            <input type="radio" name="grade" value="3" th:classappend="checked ? grade : grade1" id="rate3"/>
+                <label for="rate3">★</label>
+            <input type="radio" name="grade" value="4" th:classappend="checked ? grade : grade1" id="rate2"/>
+                <label for="rate2">★</label>
+            <input type="radio" name="grade" value="5" th:classappend="checked ? grade : grade1" id="rate1"/>
+                <label for="rate1">★</label>
+
+            </fieldset>
+            <!-- <textarea
+                class="reviewContents"
+                type="text"
+                placeholder="리뷰를 작성해 주세요~!">
+            </textarea> -->
+            <textarea id="content" type="text" name="content" cols="50" rows="30">
+            </textarea>
+            <button type="button" id="addBtn" class="btn btnReview">작성 완료</button>
+        
+        </form>
+        </main>
+        <script>
+
+        const form = {
+            grade:document.querySelector('.grade'),
+            content:document.getElementById('content')
+        }
+
+        //입력데이터 가져오기
+        function getInputData(){
+            const grade = form.grade.value;
+            const content = form.content.value;
+
+                return {grade, content};
+            }
+
+            addBtn.addEventListener('click',e=>{
+                const review = getInputData();
+                addReview(review);
+
+            });
+
+            function addReview(review){
+                const url = `http://localhost:9081/review/add/reviews`;
+                fetch(url, {
+                    method : 'POST',
+                    headers : {
+                        'Content-Type':'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body : JSON.stringify(review)
+                    }).then(res=>res.json())
+                      .then(data=>{
+
+                      console.log(data);
+                      window.close();}
+
+                        )
+                      .catch(err=>console.log(err));
+              }
+
+
+
+        </script>
+    </body>
+    </html>

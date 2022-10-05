@@ -1,0 +1,176 @@
+@charset "utf-8";
+
+/* .main {
+    display: inline;
+} */
+.main-profile i, .review-box i {
+    color: var(--main-color-yel);
+}
+.main-profile {
+    background-color: var(--main-color-gre);
+    width: 50%;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    overflow-x: auto;
+    overflow-y: auto;
+    border-radius: 8px;
+    
+}
+.main-profile > div {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 30px 0px 60px 0px;
+}
+.profile {
+    display: flex;
+    width: 80%;
+   
+}
+
+.profile .user__profile {
+    margin: 0px 30px;
+    width: 100%;
+    text-align: center;
+}
+.profile .user__profile .profile__image {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+}
+
+.profile .user__profile .profile__name {
+    /* text-align: center; */
+    font-size: 1.3em;
+    font-weight: bold;
+}
+.main-profile form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+ 
+
+}
+.main-profile form label {
+    display: inline-block;
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+/* 상단 메뉴 버튼 */
+.tabs {
+    /* border-bottom: 1px solid black; */
+    border-radius: 8px;
+}
+
+
+/* 리뷰 박스 */
+.review-box {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.review-box input[type='radio'] {
+    display: none;
+}
+
+.tabs .tab-menu input:checked + label{
+	background: rgba(249, 216, 174, 0.85);
+
+}
+
+.review-box .tabs .tab-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+.review-box .tabs .tab-menu > label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 4px ;
+    outline: 1px solid grey;
+    height: 44px;
+    width: 100px;
+    margin-right: 3px;
+    text-align: center;
+	color: #222;
+    cursor: pointer;
+}
+
+.review-content, .tab-content--sell {
+
+    background-color: rgb(255, 247, 247);
+	display: none;
+	padding: 15px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.tab-content--sell .sell a{
+    display: flex;
+}
+
+.tab-content--sell .sell a .sell-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.tab-content--sell .sell a img {
+    width: 120px;
+    height: 100px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.review-content  > li,
+.tab-content--sell .sell {
+    width: 90%;
+    margin: 10px;
+    padding: 10px;
+    outline: 1px solid grey;
+    border-bottom-right-radius: 18px;
+}
+
+#tab-1:checked ~ .review-content,
+#tab-2:checked ~ .tab-content--sell {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+
+
+/* 신고 하기 */
+.review {
+    position: relative;
+}
+.sell {
+    position: relative;
+}
+.review--report {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#imgBtn {
+    visibility: hidden;
+}
+
+.star {
+    color: var(--main-color-yel);
+    font-size:25px;
+}
+#starIcon {
+    margin-left: 5px;
+    font-size:23px;
+}
+
+
+
+
+
