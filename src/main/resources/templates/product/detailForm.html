@@ -41,7 +41,7 @@
 <!--                                <img class="store-profile_img" src="/image/케이크.PNG" alt="">-->
 <!--                            </div>-->
                             <div class="p_store-info">
-                                <a href="">
+                                <a href="" th:href="@{/mypage/profile/{memNumber}(memNumber=${form.ownerNumber})}">
                                     <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
                                     <i class="fa-solid fa-angle-right"></i>
                                 </a>
@@ -181,6 +181,12 @@
         console.log('삭제');
         location.href = [[@{|/products/${form.pNumber}/del|}]];
     });
+    //구매하기 이동
+    document.querySelector('.product-btn--buy').addEventListener('click',e=>{
+        console.log('클릭');
+        location.href = [[@{|/buy/add/${form.pNumber}|}]];
+    });
+
 
     //ckeditor
     ClassicEditor
