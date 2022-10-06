@@ -13,9 +13,11 @@
         <th:block th:if="${i.count}<9">
             <a th:href="@{/products/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image">
                 <th:block th:if="${#lists.size(rec.imageFiles)}>0">
-                    <th:block th:each="imageFile : ${rec.imageFiles}">
-                        <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
-                             alt="이미지를 불러올수 없습니다">
+                    <th:block th:with="one=${#lists.size(rec.imageFiles)}-1">
+                        <th:block th:each="imageFile : ${rec.imageFiles[one]}">
+                            <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                 alt="이미지를 불러올수 없습니다">
+                        </th:block>
                     </th:block>
                 </th:block>
                 <th:block th:if="${#lists.size(rec.imageFiles)}==0">
