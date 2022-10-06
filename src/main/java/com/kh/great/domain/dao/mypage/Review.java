@@ -1,6 +1,8 @@
 package com.kh.great.domain.dao.mypage;
 
+import com.kh.great.domain.dao.deal.Deal;
 import com.kh.great.domain.dao.member.Member;
+import com.kh.great.domain.dao.product.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +19,8 @@ public class Review {
     private Long grade;
     private Long profileNumber;
     private Member member;
+    private Product product;
+    private Deal deal;
 
 
 

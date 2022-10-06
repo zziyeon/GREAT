@@ -1,6 +1,7 @@
 package com.kh.great.domain.dao.mypage;
 
 
+import com.kh.great.domain.dao.deal.Deal;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import lombok.RequiredArgsConstructor;
@@ -63,12 +64,13 @@ public class MyPageDAOImpl implements MyPageDAO {
         StringBuffer sql = new StringBuffer();
 
 
-        sql.append("select * ");
-        sql.append("      from (select * ");
-        sql.append("              from product_info p, member m ");
-        sql.append("             where p.owner_number = m.mem_number) t1, review r ");
-        sql.append("where r.seller_number = t1.mem_number ");
-        sql.append("and r.buyer_number = ? ");
+        sql.append(" select * ");
+        sql.append("  from review r, deal d, product_info p, member m");
+        sql.append(" where d.p_number = p.p_number ");
+        sql.append("  and r.buyer_number = d.buyer_number ");
+        sql.append("  and m.mem_number = p.owner_number ");
+        sql.append("   and d.seller_number = r.seller_number ");
+        sql.append(" and r.buyer_number = ? ");
 
         List<Review> reviews = null;
 
@@ -78,8 +80,11 @@ public class MyPageDAOImpl implements MyPageDAO {
                 public Review mapRow(ResultSet rs, int rowNum) throws SQLException {
                     Review review = (new BeanPropertyRowMapper<>(Review.class)).mapRow(rs, rowNum);
                     Product product =(new BeanPropertyRowMapper<>(Product.class)).mapRow(rs,rowNum);
+                    Deal deal = (new BeanPropertyRowMapper<>(Deal.class)).mapRow(rs,rowNum);
                     Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs, rowNum);
-                    member.setProduct(product);
+//                    member.setProduct(product);
+                    deal.setProduct(product);
+                    review.setDeal(deal);
                     review.setMember(member);
                     return review;
                 }
@@ -313,4 +318,75 @@ public class MyPageDAOImpl implements MyPageDAO {
         int affectedRow = jt.update(sql.toString(),bookmarkNumber);
         return affectedRow;
     }
+
+    //좋아요 추가
+    @Override
+    public Good addGood(Good good) {
+        StringBuffer sql = new StringBuffer();
+        sql.append(" insert into good (good_number, mem_number, p_number) ");
+        sql.append(" values(good_good_number_seq.nextval, ?, ? ) ");
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jt.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"good_number"});
+                pstmt.setLong(1, good.getMemNumber());
+                pstmt.setLong(2,good.getPNumber());
+
+                return pstmt;
+            }
+        },keyHolder);
+
+        Long good_number = Long.valueOf(keyHolder.getKeys().get("good_number").toString());
+
+        good.setGoodNumber(good_number);
+
+        return good;
+    }
+
+    //좋아요 삭제
+    @Override
+    public int delGood(Long pNumber) {
+        String sql = "delete from good where p_number = ? ";
+
+        int affectedRow = jt.update(sql.toString(),pNumber);
+        return affectedRow;
+    }
+    //좋아요 삭제 내 좋아요화면에서
+    @Override
+    public int delGoodInMyPage(Long goodNumber) {
+        String sql = "delete from good where good_number = ? ";
+
+        int affectedRow = jt.update(sql.toString(),goodNumber);
+        return affectedRow;
+    }
+
+    //좋아요 회원 조회
+    @Override
+    public List<Good> findGoods(Long memNumber) {
+
+            StringBuffer sql = new StringBuffer();
+            sql.append(" select * from good g, product_info p ");
+            sql.append(" where g.p_number = p.p_number and g.mem_number = ? ");
+
+            List<Good> goods = null;
+            try{
+                goods = jt.query(sql.toString(), new RowMapper<Good>() {
+                    @Override
+                    public Good mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Good good = (new BeanPropertyRowMapper<>(Good.class)).mapRow(rs,rowNum);
+                        Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs,rowNum);
+
+                        good.setProduct(product);
+                        return good;
+                    }
+                },memNumber);
+
+            }catch (DataAccessException e) {
+                log.info("찾을수 없습니다");
+            }
+            return  goods;
+        }
 }

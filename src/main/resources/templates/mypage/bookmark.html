@@ -34,7 +34,7 @@
                     </li>
                     <li class="aside-content-menu">
                         <h3>
-                            <a href="good.html">좋아요</a>
+                            <a href="good.html" th:href="@{/mypage/good/{memNumber}(memNumber=${form.memNumber})}">좋아요</a>
                         </h3>
                     </li>
                     </ul>
@@ -115,8 +115,9 @@
                     icons[idx].classList.toggle('fas');
                     let id = e.target.parentElement.dataset.bookmarkId;
                     let bookmarkNumber = parseInt(id);
-                    console.log('클릭');
                     bookmarkDelInMyPage(bookmarkNumber);
+                    window.location.reload();
+
                 })
             });
 

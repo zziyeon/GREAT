@@ -36,7 +36,7 @@
                 </li>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="good.html">좋아요</a>
+                        <a href="good.html" th:href="@{/mypage/good/{memNumber}(memNumber=${form.memNumber})}">좋아요</a>
                     </h3>
                 </li>
             </ul>
@@ -49,10 +49,10 @@
                 </div>
             </div>
             <ul class="review-content">
-                <li class="review" th:each="review:${list}">
+                <li class="review"th:each="review:${list}" >
                     <div >
                         <div><span>가게명 : </span><span th:text="${review.member.memStoreName}"></span></div>
-                        <div><span>상품명 : </span><span th:text="${review.member.product.pName}"></span></div>
+                        <div><span>상품명 : </span><span th:text="${review.deal.product.pName}"></span></div>
                         <span>리뷰 내용 : </span><span th:text="${review.content}"></span>
                         <th:block th:switch="${review.grade}">
                             <div>

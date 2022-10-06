@@ -40,13 +40,25 @@ public interface MyPageDAO {
     Optional<Bookmark> findBookmarkNumber(Long bookmarkNumber);
 
     //즐겨찾기 삭제 -프로필에서
-    int delBookmark(Long memNUmber);
+    int delBookmark(Long memNumber);
 
     //즐겨찾기 삭제 - 내 즐겨찾기에서
     int delBookmarkInMyPage(Long bookmarkNumber);
 
     //즐겨찾기 회원 조회
     List<Bookmark> findBookmark(Long memNumber);
+
+    //좋아요 추가
+    Good addGood(Good good);
+
+    //좋아요 삭제 -판매글에서
+    int delGood(Long pNumber);
+
+    //좋아요 삭제 내 좋아요화면에서
+    int delGoodInMyPage(Long goodNumber);
+
+    //좋아요 회원 조회
+    List<Good> findGoods(Long memNumber);
 
 
 }

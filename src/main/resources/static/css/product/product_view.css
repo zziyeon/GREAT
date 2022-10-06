@@ -217,3 +217,7 @@ dl > dt {
     border: none;
     margin: 0 3px;
 }
+/* 좋아요 버튼 */
+#goodBtn {
+    color:red;
+}

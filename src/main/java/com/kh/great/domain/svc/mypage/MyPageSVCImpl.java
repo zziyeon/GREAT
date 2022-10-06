@@ -2,6 +2,7 @@ package com.kh.great.domain.svc.mypage;
 
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.mypage.Bookmark;
+import com.kh.great.domain.dao.mypage.Good;
 import com.kh.great.domain.dao.mypage.MyPageDAO;
 import com.kh.great.domain.dao.mypage.Review;
 import com.kh.great.domain.dao.product.Product;
@@ -65,15 +66,12 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //회원 조회
-
     @Override
     public Optional<Member> findMember(Long memNumber) {
         return myPageDAO.findMember(memNumber);
     }
 
     //즐겨찾기 추가
-
-
     @Override
     public Bookmark addBookmark(Bookmark bookmark) {
         return myPageDAO.addBookmark(bookmark);
@@ -98,9 +96,32 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //즐겨찾기 삭제 - 내 즐겨찾기에서 삭제
-
     @Override
     public int delBookmarkInMyPage(Long bookmarkNumber) {
         return myPageDAO.delBookmarkInMyPage(bookmarkNumber);
+    }
+
+    //좋아요 추가
+    @Override
+    public Good addGood(Good good) {
+        return myPageDAO.addGood(good);
+    }
+
+    //좋아요 삭제 -판매 화면에서 삭제
+    @Override
+    public int delGood(Long pNumber) {
+        return myPageDAO.delGood(pNumber);
+    }
+
+    //좋아요 삭제 - 내 좋아요 화면에서 삭제
+    @Override
+    public int delGoodInMyPage(Long goodNumber) {
+        return myPageDAO.delGoodInMyPage(goodNumber);
+    }
+
+    //좋아요 회원 조회
+    @Override
+    public List<Good> findGoods(Long memNumber) {
+        return myPageDAO.findGoods(memNumber);
     }
 }

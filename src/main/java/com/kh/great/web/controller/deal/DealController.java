@@ -60,7 +60,9 @@ public class DealController {
     //등록 처리
     @PostMapping("/add/{pNumber}")
     public String add(@PathVariable("pNumber") Long pNumber,
-                      @ModelAttribute("form") AddForm addForm, RedirectAttributes redirectAttributes, HttpServletRequest request){
+                      @ModelAttribute("form") AddForm addForm,
+                      RedirectAttributes redirectAttributes,
+                      HttpServletRequest request){
         Deal deal = new Deal();
         Product findedProduct = productSVC.findByProductNum(pNumber);
         BeanUtils.copyProperties(addForm, deal);
