@@ -20,6 +20,7 @@ public interface ProductSVC {
 
     //상품변경
     int update(Long pNum, Product product);
+    int update(Long pNum, Product product, List<MultipartFile> files);
 
     //상품목록
     List<Product> findAll();
