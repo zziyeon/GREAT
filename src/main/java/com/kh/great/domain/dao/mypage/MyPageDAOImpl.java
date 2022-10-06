@@ -89,13 +89,12 @@ public class MyPageDAOImpl implements MyPageDAO {
         }
 
         return reviews;
-
     }
 
     //리뷰 조회 - 판매자 프로필에서 보이는 리뷰
 
     @Override
-    public List<Review> findByBuyerNumber(Long memNumber) {
+    public List<Review> findBySellerNumber(Long memNumber) {
 
         StringBuffer sql = new StringBuffer();
 
@@ -124,10 +123,36 @@ public class MyPageDAOImpl implements MyPageDAO {
         }
 
         return reviews;
-
     }
+    //판매글 조회
+    @Override
+    public List<Product> findByOwnerNumber(Long ownerNumber) {
+        StringBuffer sql = new StringBuffer();
 
+        sql.append("select * ");
+        sql.append("  from product_info p, member m ");
+        sql.append(" where p.owner_number = m.mem_number ");
+        sql.append("   and p.owner_number = ? ");
 
+        List<Product> products = null;
+
+        try {
+            products = jt.query(sql.toString(), new RowMapper<Product>() {
+                @Override
+                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Product product = (new BeanPropertyRowMapper<>(Product.class)).mapRow(rs, rowNum);
+                    Member member = (new BeanPropertyRowMapper<>(Member.class)).mapRow(rs, rowNum);
+                    product.setMember(member);
+
+                    return product;
+                }
+            }, ownerNumber);
+        } catch (DataAccessException e) {
+            log.info("회원번호가 없습니다.");
+        }
+
+        return products;
+    }
 
     //리뷰조회 - 리뷰번호
     @Override

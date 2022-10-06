@@ -3,49 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/common/common.css">
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <link rel="stylesheet" href="/css/mypage/profile.css">
     <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/cb64776e64.js" crossorigin="anonymous"></script>
-    <title>GREAT 개인프로필</title>
+    <title>GREAT | 개인프로필</title>
 </head>
 
 <body>
     <div class="wrapper">
-        <header class="header container">
-            <nav class="top-menu content">
-                <a href="" class="top-menu__join">회원가입</a>
-                <a href="" class="top-menu__login">로그인</a>
-                <a href="" class="top-menu__cs">고객센터</a>
-            </nav>
-            <div class="logo content"><a href="#">GR<span>EAT</span></a></div>
-            <nav class="bottom-menu content">
-                <div class="category">
-                    <ul>
-                        <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
-                            <ul>
-                                <li><a href="">남구</a></li>
-                                <li><a href="">중구</a></li>
-                                <li><a href="">북구</a></li>
-                                <li><a href="">동구</a></li>
-                                <li><a href="">울주군</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="search">
-                    <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
-                    <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
-                </div>
-            </nav>
-            <!-- top버튼 페이지 오른쪽 하단에 위치함 -->
-            <div class="topbtn">
-                <a href="#top"><i class="fa-solid fa-angles-up"></i></a>
-            </div>
-        </header>
+        <header th:replace="~{layout/common_ui::choose_header}"></header>
         <!-- //header -->
 
         <main class="main main-profile" th:object="${form}">
@@ -112,36 +79,24 @@
                             
                         
                             <ul class="tab-content--sell">
-                                <li class="sell">
+                                <li class="sell" th:each="product:${list2}">
                                     <a href="http://www.naver.com" target="_blank">
-                                    <img src="https://cdn.pixabay.com/photo/2014/01/03/03/02/spaghetti-237907__340.jpg" alt="">
-                                        <div class="sell-text">
-                                            <div> 2022.07.30</div>
-                                            <div>파스타 팔아요~</div>
-                                        </div>
-                                        <a href="#"><label for="" class="review--report">리뷰 신고하기</label></a>
-                                    </a>
-                                </li>
-                                <li class="sell">
-                                    <a href="http://www.naver.com" target="_blank">
-                                        
-                                        <img src="https://cdn.pixabay.com/photo/2015/04/08/13/13/pasta-712664__480.jpg" alt="">
-                                        <div class="sell-text">
-                                            <div> 2022.07.27</div>
-                                            <div>까르보나라 팔아요~</div>
-                                        </div>
-                                        <a href="#"><label for="" class="review--report">리뷰 신고하기</label></a>
-                                    </a>
-                                </li>
-                                <li class="sell">
-                                    <a href="http://www.naver.com" target="_blank">
+                                        <div class="product-img">
+                                            <th:block th:if="${form.imageFiles}">
+                                                <th:block th:each="imageFile : ${form.imageFiles[0]}">
+                                                    <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                                         alt="이미지를 불러올수 없습니다">
+                                                </th:block>
+                                            </th:block>
+                                            <th:block th:if="!(${form.imageFiles})">
+                                                <img src="/img/product/등록된 사진이 없습니다.png" alt="">
+                                            </th:block>
 
-                                        <img src="https://cdn.pixabay.com/photo/2020/09/24/23/21/risotto-5600121__340.jpg" alt="">
-                                        <div class="sell-text">
-                                            <div> 2022.07.20</div>
-                                            <div>리조또 팔아요~</div>
                                         </div>
-                                        <a href="#"><label for="" class="review--report">리뷰 신고하기</label></a>
+                                        <div class="sell-text">
+                                            <div th:text="${product.deadlineTime}"> 2022.07.30</div>
+                                            <div th:text="${product.pTitle}">파스타 팔아요~</div>
+                                        </div>
                                     </a>
                                 </li>
                             </ul>
@@ -150,9 +105,7 @@
                 </div>
             
             </div>
-        <footer class="footer container">
-                <p class="content">FOOTER</p>
-        </footer>
+        <footer th:replace="~{layout/common_ui::footer}"></footer>
             
         </div>
         <script>

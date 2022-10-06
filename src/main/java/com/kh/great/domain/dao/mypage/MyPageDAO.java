@@ -2,6 +2,7 @@ package com.kh.great.domain.dao.mypage;
 
 
 import com.kh.great.domain.dao.member.Member;
+import com.kh.great.domain.dao.product.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +16,13 @@ public interface MyPageDAO {
     List<Review> findByMemNumber(Long memNumber);
 
     //리뷰조회 - 프로필에서 조회
-    List<Review> findByBuyerNumber(Long memNumber);
+    List<Review> findBySellerNumber(Long memNumber);
 
     //리뷰조회 - 리뷰번호
     Optional<Review> findByReviewNumber(Long reviewNumber);
+
+    //판매글조회 - 프로필에서
+    List<Product> findByOwnerNumber(Long ownerNumber);
 
     //리뷰변경
     int update(Long reviewNumber,Review review);
@@ -43,4 +47,6 @@ public interface MyPageDAO {
 
     //즐겨찾기 회원 조회
     List<Bookmark> findBookmark(Long memNumber);
+
+
 }

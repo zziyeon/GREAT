@@ -4,6 +4,7 @@ import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.mypage.MyPageDAO;
 import com.kh.great.domain.dao.mypage.Review;
+import com.kh.great.domain.dao.product.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,11 +39,17 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //리뷰조회 - 프로필에서 조회
+    @Override
+    public List<Review> findBySellerNumber(Long memNumber) {
+        return myPageDAO.findBySellerNumber(memNumber);
+    }
+
+    //판매글조회 - 프로필에서
 
 
     @Override
-    public List<Review> findByBuyerNumber(Long memNumber) {
-        return myPageDAO.findByBuyerNumber(memNumber);
+    public List<Product> findByOwnerNumber(Long ownerNumber) {
+        return myPageDAO.findByOwnerNumber(ownerNumber);
     }
 
     //리뷰 수정

@@ -1,9 +1,13 @@
 package com.kh.great.web.controller.mypage;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.deal.Deal;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.mypage.Review;
+import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.deal.DealSVC;
 import com.kh.great.domain.svc.mypage.MyPageSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
@@ -32,6 +36,7 @@ public class MyPageController {
     private final DealSVC dealSVC;
     private final MyPageSVC myPageSVC;
     private final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
     //주문 내역
     @GetMapping("/{id}")
@@ -178,11 +183,12 @@ public class MyPageController {
     public String profileForm(@PathVariable("memNumber") Long memNumber, Model model){
 
         ProfileForm profileForm = new ProfileForm();
-
+        //회원 조회
         Optional<Member> member = myPageSVC.findMember(memNumber);
         Member member1 = member.get();
 
-        List<Review> reviews = myPageSVC.findByBuyerNumber(memNumber);
+        //리뷰조회
+        List<Review> reviews = myPageSVC.findBySellerNumber(memNumber);
 
         List<Review> list = new ArrayList<>();
         reviews.stream().forEach(review -> {
@@ -190,12 +196,33 @@ public class MyPageController {
             list.add(review);
         });
 
+        //판매글 조회
+        List<Product> products = myPageSVC.findByOwnerNumber(memNumber);
+
+        List<Product> list2 = new ArrayList<>();
+        products.stream().forEach(product -> {
+            BeanUtils.copyProperties(product,profileForm);
+            list2.add(product);
+        });
+
+        //판매번호 조회
+
+
+        //첨부파일 조회
+        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), profileForm.getPNumber());
+        if(uploadFiles.size() > 0 ){
+            profileForm.setImageFiles(uploadFiles);
+        }
+
         BeanUtils.copyProperties(member1,profileForm);
 
+
         model.addAttribute("list",list);
+        model.addAttribute("list2",list2);
         model.addAttribute("form",profileForm);
         log.info("profileForm={}",profileForm);
         log.info("list={}",list);
+        log.info("list2={}",list2);
 
         return "mypage/profile";
     }
