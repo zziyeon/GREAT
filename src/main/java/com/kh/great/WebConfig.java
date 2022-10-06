@@ -1,4 +1,4 @@
-package com.kh.great.web.config;
+package com.kh.great;
 
 
 import com.kh.great.web.interceptor.member.LogInterceptor;
