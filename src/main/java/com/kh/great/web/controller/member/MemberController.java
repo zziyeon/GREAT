@@ -1,5 +1,6 @@
 package com.kh.great.web.controller.member;
 
+import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.svc.member.MemberSVC;
 import com.kh.great.web.dto.member.Info;
 import com.kh.great.web.dto.member.InfoChk;
