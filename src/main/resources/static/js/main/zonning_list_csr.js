@@ -72,7 +72,8 @@ function arrayType(requestUrl) {
                 res.data.map(product=>{
                     product.deadlineTime = product.deadlineTime.substr(10,6);
                     if(product.imageFiles != null && product.imageFiles.length > 0) {
-                        img_url = `<img class="good_Img" src="/api/attach/img/${product.imageFiles[0].code}/${product.imageFiles[0].storeFilename}" alt="이미지를 불러올수 없습니다">`;
+                        const one=product.imageFiles.length -1;
+                        img_url = `<img class="good_Img" src="/api/attach/img/${product.imageFiles[one].code}/${product.imageFiles[one].storeFilename}" alt="이미지를 불러올수 없습니다">`;
                     } else {
                         img_url = `<img src="/img/product/등록된 사진이 없습니다.png" alt="">`;
                     }
