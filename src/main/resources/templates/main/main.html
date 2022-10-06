@@ -16,7 +16,7 @@
     <figure class="figure container">
         <div class="slideshow-container">
             <div class="banner fade">
-                <img th:src="@{/img/main/bnr_1.png}" />
+                <img th:src="@{/img/main/bnr_01.png}" />
             </div>
             <div class="banner fade">
                 <img th:src="@{/img/main/bnr_2.png}" />
@@ -25,7 +25,7 @@
                 <img th:src="@{/img/main/bnr_3.png}" />
             </div>
             <div class="banner fade">
-                <img th:src="@{/img/main/bnr_4.png}" />
+                <img th:src="@{/img/main/bnr_04.png}" />
             </div>
 
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -46,7 +46,7 @@
     <main class="main container">
         <section class="title content">오늘의 마감 할인!</section>
         <section th:replace="~{layout/product_ui::each_product}"></section>
-        <section class="view-all content"><a th:href="@{/todayDealine}">전체보기</a></section>
+<!--        <section class="view-all content"><a th:href="@{/todayDealine}">전체보기</a></section>-->
     </main>
     <!-- //main -->
 

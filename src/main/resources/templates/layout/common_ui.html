@@ -46,7 +46,8 @@
                     </ul>
                 </li>
             </th:block>
-            <a href="" class="top-menu__cs">고객센터</a>
+            <a href="" class="top-menu__cs">커뮤니티</a>
+            <a href="" class="top-menu__cs">공지사항</a>
         </nav>
         <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
         <div th:replace="~{layout/common_ui::topBtn}"></div>
@@ -99,9 +100,33 @@
 
     <!-- footer -->
     <footer class="footer container" th:fragment="footer">
-        <p class="content">
-            footer부분
-        </p>
+        <div class="footer-content">
+<!--            <a href="">GR<span>EAT</span></a>-->
+            <ul class="socials">
+                <li><a href="#"><i class="fa-brands fa-github"></i></a></li>
+                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+            </ul>
+            <p>저희 GREAT는 울산지역의 한정으로 만들어진 홈페이지입니다.</p>
+            <p>서비스를 이용하시는 모든 회원분들 이용에 감사드립니다. </p>
+            <p>더더욱 발전하는 GREAT이 되겠습니다. </p>
+            <!--Footer's social icon-->
+        </div>
+        <!--Copyright Area-->
+        <div class="footer-bottom">
+            <div class="cs_center">
+                <p>== &nbsp;&nbsp;CS 센터&nbsp;&nbsp;== </p>
+                <p>월요일 - 금요일 / 09:00 AM- 06:00 PM</p>
+                <p>점심시간/12:00PM-1:00PM</p>
+                <p>토요일, 일요일, 공휴일 휴무</p>
+            </div>
+            <div>
+                <p>Design By - <a href="#">365 Team Project</a></p>
+                <p>tell :<a href="">1501-1501</a></p>
+            </div>
+        </div>
+        <div class="company">
+            Copyrightⓒ2022-2022 회사명: GREAT
+        </div>
     </footer>
 </div>
 </body>
