@@ -11,7 +11,7 @@
 <body>
 <div class="wrapper">
     <header th:replace="~{layout/common_ui::choose_header}"></header>
-    <form id="form" action="" method="post" th:object="${form}">
+    <form id="form" action="" method="post" th:object="${form}" enctype="multipart/form-data">
         <main class="main container">
             <h2>판매글 수정</h2>
             <div class="p-write-info">
@@ -55,8 +55,8 @@
                             <option value="온라인 결제">온라인 결제</option>
                             <option value="현장 결제">현장 결제</option>
                         </select></td>
-                        <th><label for="">첨부파일</label></th>
-                        <td><input type="file" accept="image/jpg, image/jpeg, image/png" th:multiple="multiple"><a href="#">삭제</a></td>
+                        <th><label for="">대표 사진 변경</label></th>
+                        <td><input type="file" accept="image/jpg, image/jpeg, image/png" th:field="*{files}"></td>
                     </tr>
                     <tr>
                         <td colspan="4" class="board-write__article-main">

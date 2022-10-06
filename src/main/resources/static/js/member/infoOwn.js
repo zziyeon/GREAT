@@ -17,7 +17,7 @@ $dupChkNn.addEventListener('click', e => {
     const nnVal = memNickname.value;
     if (nnVal.length == 0) {
         alert('닉네임을 입력해주세요.');
-        nnVal.focus();
+        memNickname.focus();
         return;
     }
     dupChkNn(nnVal);
@@ -54,8 +54,13 @@ $sendCodeBtn = document.querySelector('.send-code-btn');
 
 //인증코드 발송 버튼 클릭시
 $sendCodeBtn.addEventListener('click', e => {
+    console.log('인증코드 발송 버튼 클릭!');
     const mailVal = memEmail.value;
-    if (mailVal == null) {alert('인증코드를 받을 이메일을 입력하세요.');}
+    if (mailVal.length == 0) {
+        alert('인증코드를 받을 이메일을 입력하세요.');
+        memEmail.focus();
+        return;
+    }
     sendCode(mailVal);
 
     console.log(mailVal);
@@ -74,12 +79,14 @@ function sendCode(mailVal) {
       }).then(res => res)
         .then(res => {
             console.log(res)
-            console.log(res.body)
-            console.log(res.headers)
             if (res.ok == true) {
                 alert ('발송되었습니다! 메일을 확인해주세요.')
+                $sendCodeBtn.classList.remove('bad');
+                $sendCodeBtn.classList.add('good');
             } else {
                 alert ('메일주소를 다시 확인해주세요.')
+                $sendCodeBtn.classList.remove('good');
+                $sendCodeBtn.classList.add('bad');
             }
         })
         .catch(err => console.log(err));
@@ -90,11 +97,17 @@ $confirmCodeBtn = document.querySelector('.confirm-code-btn');
 
 //인증코드 확인 버튼 클릭시
 $confirmCodeBtn.addEventListener('click', e => {
-    console.log('인증코드 확인 버튼 클릭');
+    console.log('인증코드 확인 버튼 클릭!');
     const mailVal = memEmail.value;
     const codeVal = memCode.value;
-
+    if (codeVal.length == 0) {
+        alert('인증코드를 입력하세요.');
+        memCode.focus();
+        return;
+    }
     confirmCode(mailVal, codeVal);
+
+    console.log(mailVal, codeVal);
 });
 
 //인증코드 확인 함수
@@ -111,13 +124,69 @@ function confirmCode(mailVal, codeVal) {
           }).then(res => res.json())
             .then(res => {
                 console.log(res)
-                if (res.header.rtcd = '00') {
+                if (res.header.rtcd == '00') {
                     alert ('인증번호 확인되었습니다!')
+                    $confirmCodeBtn.classList.remove('bad');
+                    $confirmCodeBtn.classList.add('good');
                 } else {
                     alert ('인증번호를 다시 확인해주세요.')
+                    $confirmCodeBtn.classList.remove('good');
+                    $confirmCodeBtn.classList.add('bad');
                 }
             })
             .catch(err => console.log(err));
+}
+
+
+//사업자번호 인증 버튼
+const $bnConfirmBtn = document.querySelector('.bn-confirm-btn');
+
+//사업자번호 인증 버튼 클릭시
+$bnConfirmBtn.addEventListener('click', e => {
+    //사업자번호 입력값
+    const bNoVal = memBusinessnumber.value;
+
+    //사업자번호 미입력시 알림
+    if (bNoVal.length == 0) {
+        alert('사업자번호를 입력하세요.');
+        memBusinessnumber.focus();
+        return;
+    }
+
+    //사업자번호 인증
+    bnConfirm(bNoVal);
+});
+
+//사업자번호 인증 함수
+function bnConfirm(bNoVal) {
+    const url = `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=rWGHLB92x6jWBuF2Vi7vGCyIOqWUR5A7otp6POH1Nh9ZrU5Z%2FPg0ebD8OFZz2%2Fvx5XFDgH7o%2BKaOoIG9IVDYNw%3D%3D`;
+    const data = { "b_no": [bNoVal] };
+
+    console.log(url, JSON.stringify(data));
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept':'application/json',
+          'Content-type': 'application/json'
+        },
+          body: JSON.stringify(data)
+    }).then(res => res.json())
+      .then(res => {
+        console.log(res)
+        console.log(res.data[0].b_stt_cd)
+        if (res.data[0].b_stt_cd == '01') {
+            alert('인증되었습니다!')
+            $bnConfirmBtn.classList.remove('bad');
+            $bnConfirmBtn.classList.add('good');
+        } else {
+            alert('사업자번호를 다시 확인해주세요.')
+            memBusinessnumber.value=''
+            memBusinessnumber.focus();
+            $bnConfirmBtn.classList.remove('good');
+            $bnConfirmBtn.classList.add('bad');
+        }
+      })
+      .catch(err => console.log(err));
 }
 
 
@@ -203,14 +272,110 @@ const callback = function(result, status) {
 };
 
 
+//수정완료 버튼
+$modifyBtn = document.querySelector('.modify-btn');
+//점주회원정보 수정 폼
+$infoForm = document.querySelector('.info');
+
+//가입하기 버튼 클릭시 호출되는 함수
+function btnClick() {
+
+    //유효성 검사
+    if (!isValidChk()) {
+        return;
+    }
+
+    //회원가입
+    $infoForm.submit();
+}
+
+
+//유효성 검사 함수
+function isValidChk() {
+    console.log(memNumber);
+//    if ($dupChkId.classList[2] != 'good') {
+//        alert('아이디 중복확인이 필요합니다.');
+//        return false;
+//    } else if ($dupChkNn.classList[2] != 'good') {
+//        alert('닉네임 중복확인이 필요합니다.');
+//        return false;
+//    } else if ($sendCodeBtn.classList[2] == 'bad') {        //나중에 바꿀 거 바꾸고 !=good으로 바꿔줘야함
+//        alert ('메일주소를 다시 확인해주세요.');
+//        return false;
+//    } else if ($confirmCodeBtn.classList[2] == 'bad') {     //나중에 바꿀 거 바꾸고 !=good으로 바꿔줘야함
+//        alert('인증번호 확인이 필요합니다.');
+//        return false;
+//    } else if (!($termsAll.checked)) {
+//        alert('약관 전체동의가 필요합니다.');
+//        return false;
+//    }
+//
+//    //점주회원가입이면 유효성 검사
+//    //고객회원이 아니면
+//    else if (!($joinCust.checked)) {
+//        if ($bnConfirmBtn.classList[2] != 'good') {
+//            alert('사업자번호 인증이 필요합니다.');
+//            return false;
+//        }
+//        if (memStoreName.value == '') {
+//            alert('가게명은 필수입력사항입니다.');
+//            return false;
+//        }
+//        if (memStorePhonenumber.value == '') {
+//            alert('가게 연락처는 필수입력사항입니다.');
+//            return false;
+//        }
+//        if (memStoreLocation.value == '') {
+//            alert('가게 주소는 필수입력사항입니다.');
+//            return false;
+//        }
+//        const $detailedAddress = document.querySelector(".detailed-address");
+//        if ($detailedAddress.value == '') {
+//            alert('가게 상세주소를 입력해주세요.');
+//            return false;
+//        }
+//        return true;
+//    }
+
+    return true;
+}
+
+
 //회원탈퇴 버튼
 const $exitBtn = document.querySelector('.exit-btn');
 
 //회원탈퇴 버튼 클릭시
 $exitBtn.addEventListener('click', e => {
-    //회원탈퇴
-    exit(memNumber);
+    //탈퇴 시도시 비밀번호 확인창에 입력한 값
+    const $exitPwc = exitPwc.value;
 
-    //회원탈퇴 완료 후 메인화면으로 이동
-    window.location.href = 'http://localhost:8080/';
+    //회원탈퇴
+    exit(memNumber, $exitPwc);
 });
+
+//회원탈퇴 AJAX
+function exit(memNumber, $exitPwc) {
+  const url = `/api/member/exit`;
+  const data = { "memNumber" : memNumber,
+                 "exitPwc" : $exitPwc };
+  fetch(url, {
+    method:'DELETE',
+    headers: {
+      'Accept':'application/json',
+      'Content-type': 'application/json'
+    },
+    body:JSON.stringify(data)
+  }).then(res => res.json())
+    .then(res => {
+        console.log(res);
+        if (res.header.rtcd == '00') {
+            alert ('탈퇴되었습니다!')
+            window.location.href = 'http://localhost:9080/';
+        } else {
+            alert ('비밀번호를 다시 확인해주세요.')
+            exitPwc.value = '';
+            exitPwc.focus();
+        }
+    })
+    .catch(err => console.log(err));
+}

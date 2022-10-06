@@ -52,6 +52,12 @@ public class ProductSVCImpl implements ProductSVC {
     public int update(Long pNum, Product product) {
         return productDAO.update(pNum, product);
     }
+    @Override
+    public int update(Long pNum, Product product, List<MultipartFile> files){
+        int affectedRow = update(pNum, product);
+        uploadFileSVC.addFile(files,AttachCode.P0102, pNum);
+        return affectedRow;
+    }
     //상품 목록
     @Override
     public List<Product> findAll() {
