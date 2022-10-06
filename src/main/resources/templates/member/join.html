@@ -199,29 +199,27 @@
                     <div class="terms">
                         <h3>이용약관</h3>
                         <div class="terms-ele">
-                            <div class="terms-ele--1"><input type="checkbox" name="agreeAllTerms" id="terms--all" onclick='checkAllTerms(this)'></div>
+                            <div class="terms-ele--1"><input type="checkbox" name="agreeAllTerms" id="terms--all" value="checkedAll" onclick='checkAllTerms(this)'></div>
                             <div class="terms-ele--2"><label for="terms--all">전체 동의</label></div>
                             <div class="terms-ele--3"><a href="" class="view-terms">약관 보기</a></div>
                         </div>
                         <div class="terms-ele">
-                            <div class="terms-ele--1"><input type="checkbox" name="agreeTerms" id="terms--1" onclick='checkTerms()'></div>
+                            <div class="terms-ele--1"><input type="checkbox" name="agreeTerms" id="terms--1" value="checked--1" onclick='checkTerms()'></div>
                             <div class="terms-ele--2"><label for="terms--1">이용약관 동의</label></div>
                             <div class="terms-ele--3"><a href="" class="view-terms">약관 보기</a></div>
                         </div>
                         <div class="terms-ele">
-                            <div class="terms-ele--1"><input type="checkbox" name="agreeTerms" id="terms--2" onclick='checkTerms()'></div>
+                            <div class="terms-ele--1"><input type="checkbox" name="agreeTerms" id="terms--2" value="checked--2" onclick='checkTerms()'></div>
                             <div class="terms-ele--2"><label for="terms--2">개인정보 수집 동의</label></div>
                             <div class="terms-ele--3"><a href="" class="view-terms">약관 보기</a></div>
                         </div>
                         <div class="terms-ele">
-                            <div class="terms-ele--1"><input type="checkbox" name="agreeTerms" id="terms--3" onclick='checkTerms()'></div>
+                            <div class="terms-ele--1"><input type="checkbox" name="agreeTerms" id="terms--3" value="checked--3" onclick='checkTerms()'></div>
                             <div class="terms-ele--2"><label for="terms--3">개인정보 이용 동의</label></div>
                             <div class="terms-ele--3"><a href="" class="view-terms">약관 보기</a></div>
                         </div>
                     </div>
-                    <button type="submit" class="btn join-btn">
-                        <label for="">가입하기</label>
-                    </button>
+                    <button type="button" class="btn join-btn" onclick='btnClick()'>가입하기</button>
                 </form>
             </div>
         </main>
@@ -237,10 +235,15 @@
 
         //사업자번호 인증 버튼 클릭시
         $bnConfirmBtn.addEventListener('click', e => {
-            if(!confirm('조회하시겠습니까?')) return;
-
             //사업자번호 입력값
             const bNoVal = memBusinessnumber.value;
+
+            //사업자번호 미입력시 알림
+            if (bNoVal.length == 0) {
+                alert('사업자번호를 입력하세요.');
+                memBusinessnumber.focus();
+                return;
+            }
 
             //사업자번호 인증
             bnConfirm(bNoVal);
@@ -265,10 +268,14 @@
                 console.log(res.data[0].b_stt_cd)
                 if (res.data[0].b_stt_cd == '01') {
                     alert('인증되었습니다!')
+                    $bnConfirmBtn.classList.remove('bad');
+                    $bnConfirmBtn.classList.add('good');
                 } else {
                     alert('사업자번호를 다시 확인해주세요.')
                     memBusinessnumber.value=''
                     memBusinessnumber.focus();
+                    $bnConfirmBtn.classList.remove('good');
+                    $bnConfirmBtn.classList.add('bad');
                 }
               })
               .catch(err => console.log(err));
