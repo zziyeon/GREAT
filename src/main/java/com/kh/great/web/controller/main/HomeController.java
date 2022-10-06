@@ -1,5 +1,6 @@
 package com.kh.great.web.controller.main;
 
+import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
@@ -37,9 +38,12 @@ public class HomeController {
     private final EmailSVCImpl emailSVCImpl;
 
     @GetMapping
-    public String home(HttpServletRequest request, Model model) {
+    public String home(Model model) {
         List<Product> list = productSVC.today_deadline();
-
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(),
+                    list.get(i).getPNumber()));
+        }
         model.addAttribute("list", list);
 
         return "main/main";
