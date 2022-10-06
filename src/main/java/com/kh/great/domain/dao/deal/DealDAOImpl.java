@@ -103,7 +103,7 @@ public class DealDAOImpl implements DealDAO{
     public Optional<Deal> findByOrderNumber(Long orderNumber) {
         StringBuffer sql = new StringBuffer();
 
-        sql.append(" select d.order_number, m.mem_store_location,d.p_count, p.p_name, d.price, d.visittime,d.orderdate,m.mem_nickname, p.p_number, d.buyer_number ");
+        sql.append(" select d.order_number, m.mem_store_location,d.p_count, p.p_name, d.price, d.visittime,d.orderdate,m.mem_nickname, p.p_number, d.buyer_number, d.seller_number ");
         sql.append(" from member m, deal d, product_info p ");
         sql.append(" where m.mem_number = p.owner_number ");
         sql.append("  and p.p_number = d.p_number ");

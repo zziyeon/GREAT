@@ -27,10 +27,10 @@
             <th:block th:if="${session.memType}=='customer'">
                 <li th:class="top-menu__member"><a th:href="@{/member/infoChk}" th:text="${session.memNickname} + 님">회원님</a>
                     <ul>
-                        <li><a href="#">내 리뷰</a></li>
+                        <li><a th:href="@{/mypage/}+@{review/}+${session.memNumber}">내 리뷰</a></li>
                         <li><a th:href="@{/mypage/}+${session.memNumber}">주문 내역</a></li>
-                        <li><a th:href="@{/mypage/}+@{bookmark/}+${session.memNumber}"}>즐겨찾기</a></li>
-                        <li><a href="#">좋아요</a></li>
+                        <li><a th:href="@{/mypage/}+@{bookmark/}+${session.memNumber}">즐겨찾기</a></li>
+                        <li><a th:href="@{/mypage/}+@{good/}+${session.memNumber}">좋아요</a></li>
                         <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a></li>
                     </ul>
                 </li>

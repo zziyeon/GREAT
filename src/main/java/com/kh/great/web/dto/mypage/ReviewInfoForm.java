@@ -13,7 +13,7 @@ public class ReviewInfoForm {
     private String content;
     private Long grade;
     private LocalDateTime writeDate;
-    private Long profileNumber;
     private Member member;
+    private Long memNumber;
 
 }

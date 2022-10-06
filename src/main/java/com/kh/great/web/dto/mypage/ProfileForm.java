@@ -1,10 +1,13 @@
 package com.kh.great.web.dto.mypage;
 
+import com.kh.great.domain.common.file.UploadFile;
 import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.product.Product;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class ProfileForm {
@@ -28,4 +31,16 @@ public class ProfileForm {
     private String memAdmin;                    //varchar2(3)
     private Product product;
     private Bookmark bookmark;
+    private Long pNumber;
+    private Long ownerNumber;
+    private String deadlineTime;
+    private String pTitle;
+    private String detailInfo;
+
+    ///파일 첨부
+    private MultipartFile file; //상품설명 첨부파일(단건)
+    private List<MultipartFile> files; //상품 이미지 첨부(여러건)
+
+    ///파일 참조
+    private List<UploadFile> imageFiles;
 }

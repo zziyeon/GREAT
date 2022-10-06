@@ -1,69 +1,41 @@
     <!DOCTYPE html>
-    <html lang="ko">
+    <html lang="ko"
+          xmlns:th="http://www.thymeleaf.org">
     <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/common/common.css">
-    <link rel="stylesheet" href="/member/css/good.css">
+        <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+    <link rel="stylesheet" href="/css/mypage/good.css">
     <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
-    <title>GREAT 좋아요</title>
+    <title>GREAT | 좋아요</title>
     </head>
     <body>
     <div class="wrapper">
-        <header class="header container">
-        <nav class="top-menu content">
-            <a href="" class="top-menu__join">회원가입</a>
-            <a href="" class="top-menu__login">로그인</a>
-            <a href="" class="top-menu__cs">고객센터</a>
-        </nav>
-        <div class="logo content"><a href="#">GR<span>EAT</span></a></div>
-        <nav class="bottom-menu content">
-            <div class="category">
-                <ul>
-                    <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
-                        <ul>
-                            <li><a href="">남구</a></li>
-                            <li><a href="">중구</a></li>
-                            <li><a href="">북구</a></li>
-                            <li><a href="">동구</a></li>
-                            <li><a href="">울주군</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="search">
-                <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
-                <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
-            </div>
-        </nav>
-        <!-- top버튼 페이지 오른쪽 하단에 위치함 -->
-        <div class="topbtn">
-            <a href="#top"><i class="fa-solid fa-angles-up"></i></a>
-        </div>
-    </header>
+        <header th:replace="~{layout/common_ui::choose_header}"></header>
     <!-- //header -->
 
 
-        <main class="good-container">
+        <main class="good-container" th:object="${form}">
             <aside class="aside-content">
             <ul>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="myReview.html">내 리뷰</a></li>
+                        <a href="myReview.html" th:href="@{/mypage/review/{id}(id=${form.memNumber})}">내 리뷰</a>
                     </h3>
+                </li>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="order-history.html">주문내역</a></li>
+                        <a href="order-history.html" th:href="@{/mypage/{id}(id=${form.memNumber})}">주문내역</a>
                     </h3>
+                </li>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="bookmark.html">즐겨찾기</a></li>
+                        <a href="bookmark.html" th:href="@{/mypage/bookmark/{memNumber}(memNumber=${form.memNumber})}">즐겨찾기</a>
                     </h3>
+                </li>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="good.html">좋아요</a></li>
+                        <a href="good.html" th:href="@{/mypage/good/{memNumber}(memNumber=${form.memNumber})}">좋아요</a>
                     </h3>
+                </li>
                 </ul>
             </aside>
 
@@ -74,86 +46,34 @@
                         <h2>좋아요</h2>
                     </div>
                 </div>
-                <section class="items content">
-                <div class="item">
-                    <a href="" class = "item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg" alt=""></a>
-                    <a href="" class = "item__title">딸기 케이크</a>
+                <section class="items content" th:object="${goods}">
+                <div class="item" th:each="good:${list}" th:data-good-id="${good.goodNumber}">
+
+                    <a href="" class = "item__image">
+                        <div class="product-img">
+                            <th:block th:if="${goods.imageFiles}">
+                                <th:block th:each="imageFile : ${goods.imageFiles[0]}">
+                                    <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                         alt="이미지를 불러올수 없습니다">
+                                </th:block>
+                            </th:block>
+                            <th:block th:if="!(${goods.imageFiles})">
+                                <img src="/img/product/등록된 사진이 없습니다.png" alt="">
+                            </th:block>
+
+                        </div>
+                    <a href="#" class = "item__title" th:text="${good.product.pName}">딸기 케이크</a>
                     <div class="item__price-box">
-                        <div class = "item__discount-rate">33%</div>
-                        <div class = "item__price">15,000원</div>
+                        <div class = "item__discount-rate" th:text="${good.product.discountRate}+'%'">33%</div>
+                        <div class = "item__price" th:text="${good.product.salePrice}+'원'">15,000원</div>
                     </div>
                     <div class="item__time-box">
                         <div class = "item__magam">마감시간</div>
-                        <div class = "item__time">06:00 P.M.</div>
+                        <div class = "item__time" th:text="${#strings.substring(good.product.deadlineTime,0,16)}">06:00 P.M.</div>
                     </div>
                     <i class="heartIcon far fa-heart fas"></i>
                 </div>
-                <div class="item">
-                    <a href="" class = "item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg" alt=""></a>
-                    <a href="" class = "item__title">딸기 케이크</a>
-                    <div class="item__price-box">
-                        <div class = "item__discount-rate">33%</div>
-                        <div class = "item__price">15,000원</div>
-                    </div>
-                    <div class="item__time-box">
-                        <div class = "item__magam">마감시간</div>
-                        <div class = "item__time">06:00 P.M.</div>
-                    </div>
-                    <i class="heartIcon far fa-heart fas"></i>
-                </div>
-                <div class="item">
-                    <a href="" class = "item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg" alt=""></a>
-                    <a href="" class = "item__title">딸기 케이크</a>
-                    <div class="item__price-box">
-                        <div class = "item__discount-rate">33%</div>
-                        <div class = "item__price">15,000원</div>
-                    </div>
-                    <div class="item__time-box">
-                        <div class = "item__magam">마감시간</div>
-                        <div class = "item__time">06:00 P.M.</div>
-                    </div>
-                    <i class="heartIcon far fa-heart fas"></i>
-                </div>
-                <div class="item">
-                    <a href="" class = "item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg" alt=""></a>
-                    <a href="" class = "item__title">딸기 케이크</a>
-                    <div class="item__price-box">
-                        <div class = "item__discount-rate">33%</div>
-                        <div class = "item__price">15,000원</div>
-                    </div>
-                    <div class="item__time-box">
-                        <div class = "item__magam">마감시간</div>
-                        <div class = "item__time">06:00 P.M.</div>
-                    </div>
-                    <i class="heartIcon far fa-heart fas"></i>
-                </div>
-                <div class="item">
-                    <a href="" class = "item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg" alt=""></a>
-                    <a href="" class = "item__title">딸기 케이크</a>
-                    <div class="item__price-box">
-                        <div class = "item__discount-rate">33%</div>
-                        <div class = "item__price">15,000원</div>
-                    </div>
-                    <div class="item__time-box">
-                        <div class = "item__magam">마감시간</div>
-                        <div class = "item__time">06:00 P.M.</div>
-                    </div>
-                    <i class="heartIcon far fa-heart fas"></i>
-                </div>
-                <div class="item">
-                    <a href="" class = "item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg" alt=""></a>
-                    <a href="" class = "item__title">딸기 케이크</a>
-                    <div class="item__price-box">
-                        <div class = "item__discount-rate">33%</div>
-                        <div class = "item__price">15,000원</div>
-                    </div>
-                    <div class="item__time-box">
-                        <div class = "item__magam">마감시간</div>
-                        <div class = "item__time">06:00 P.M.</div>
-                    </div>
-                    <i class="heartIcon far fa-heart fas"></i>
-                </div>
-                
+
                 </section>
                 <ul class="btn-page">
                     <li>
@@ -195,7 +115,7 @@
                 </ul>
     </article>
 </main>
-<footer class="footer container"><p class="content">footer</p></footer>
+        <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 
     <script>
@@ -203,10 +123,14 @@
             const $heart = document.querySelectorAll('.item');
 
         icons.forEach((item,idx)=>{
-            icons[idx].addEventListener('click',()=>{
+            icons[idx].addEventListener('click',e=>{
                 icons[idx].classList.toggle('fas');
+                    let id = e.target.parentElement.dataset.goodId;
+                    let goodNumber = parseInt(id);
+                    goodDelInMyPage(goodNumber);
+                    window.location.reload();
             })
-        })
+        });
         window.addEventListener('load',()=>{
             icons.forEach((item,idx)=>{
                 if(icons[idx].className!=='heartIcon far fa-heart fas'){
@@ -214,6 +138,18 @@
                     }
                 })
             });
+
+            function goodDelInMyPage(goodNumber){
+                const url = `http://localhost:9080/mypage/mygood/del/${goodNumber}`;
+                fetch(url, {
+                    method:'DELETE',
+                    headers: {
+                        'Accept':'application/json'
+                        },
+                    }).then(res=>res.json())
+                      .then(data=>console.log(data))
+                      .catch(err=>console.log(err));
+            }
     </script>
     </body>
     </html>

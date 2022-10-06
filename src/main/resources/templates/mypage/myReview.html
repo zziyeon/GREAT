@@ -2,12 +2,12 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>ㅋ
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <link rel="stylesheet" href="/css/mypage/myReview.css">
     <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
 
 
-    <title>GREAT 내 리뷰</title>
+    <title>GREAT | 내 리뷰</title>
 </head>
 <body>
 <div class="wrapper">
@@ -16,27 +16,27 @@
     <!-- //header -->
 
 
-    <main class="review-container" th:each="review:${list}">
+    <main class="review-container" th:object="${form}">
         <aside class="aside-content">
             <ul>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="myReview.html" th:href="@{/mypage/review/{id}(id=${review.buyerNumber})}">내 리뷰</a>
+                        <a href="myReview.html" th:href="@{/mypage/review/{id}(id=${form.memNumber})}">내 리뷰</a>
                     </h3>
                 </li>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="order-history.html" th:href="@{/mypage/{id}(id=${review.buyerNumber})}">주문내역</a>
+                        <a href="order-history.html" th:href="@{/mypage/{id}(id=${form.memNumber})}">주문내역</a>
                     </h3>
                 </li>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="bookmark.html" th:href="@{/mypage/bookmark/{memNumber}(memNumber=${review.buyerNumber})}">즐겨찾기</a>
+                        <a href="bookmark.html" th:href="@{/mypage/bookmark/{memNumber}(memNumber=${form.memNumber})}">즐겨찾기</a>
                     </h3>
                 </li>
                 <li class="aside-content-menu">
                     <h3>
-                        <a href="good.html">좋아요</a>
+                        <a href="good.html" th:href="@{/mypage/good/{memNumber}(memNumber=${form.memNumber})}">좋아요</a>
                     </h3>
                 </li>
             </ul>
@@ -49,10 +49,10 @@
                 </div>
             </div>
             <ul class="review-content">
-                <li class="review" >
+                <li class="review"th:each="review:${list}" >
                     <div >
                         <div><span>가게명 : </span><span th:text="${review.member.memStoreName}"></span></div>
-                        <div><span>상품명 : </span><span th:text="${review.member.product.pName}"></span></div>
+                        <div><span>상품명 : </span><span th:text="${review.deal.product.pName}"></span></div>
                         <span>리뷰 내용 : </span><span th:text="${review.content}"></span>
                         <th:block th:switch="${review.grade}">
                             <div>

@@ -2,8 +2,10 @@ package com.kh.great.domain.svc.mypage;
 
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.mypage.Bookmark;
+import com.kh.great.domain.dao.mypage.Good;
 import com.kh.great.domain.dao.mypage.MyPageDAO;
 import com.kh.great.domain.dao.mypage.Review;
+import com.kh.great.domain.dao.product.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,11 +40,17 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //리뷰조회 - 프로필에서 조회
+    @Override
+    public List<Review> findBySellerNumber(Long memNumber) {
+        return myPageDAO.findBySellerNumber(memNumber);
+    }
+
+    //판매글조회 - 프로필에서
 
 
     @Override
-    public List<Review> findByBuyerNumber(Long memNumber) {
-        return myPageDAO.findByBuyerNumber(memNumber);
+    public List<Product> findByOwnerNumber(Long ownerNumber) {
+        return myPageDAO.findByOwnerNumber(ownerNumber);
     }
 
     //리뷰 수정
@@ -58,15 +66,12 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //회원 조회
-
     @Override
     public Optional<Member> findMember(Long memNumber) {
         return myPageDAO.findMember(memNumber);
     }
 
     //즐겨찾기 추가
-
-
     @Override
     public Bookmark addBookmark(Bookmark bookmark) {
         return myPageDAO.addBookmark(bookmark);
@@ -91,9 +96,32 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //즐겨찾기 삭제 - 내 즐겨찾기에서 삭제
-
     @Override
     public int delBookmarkInMyPage(Long bookmarkNumber) {
         return myPageDAO.delBookmarkInMyPage(bookmarkNumber);
+    }
+
+    //좋아요 추가
+    @Override
+    public Good addGood(Good good) {
+        return myPageDAO.addGood(good);
+    }
+
+    //좋아요 삭제 -판매 화면에서 삭제
+    @Override
+    public int delGood(Long pNumber) {
+        return myPageDAO.delGood(pNumber);
+    }
+
+    //좋아요 삭제 - 내 좋아요 화면에서 삭제
+    @Override
+    public int delGoodInMyPage(Long goodNumber) {
+        return myPageDAO.delGoodInMyPage(goodNumber);
+    }
+
+    //좋아요 회원 조회
+    @Override
+    public List<Good> findGoods(Long memNumber) {
+        return myPageDAO.findGoods(memNumber);
     }
 }

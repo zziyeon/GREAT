@@ -1,4 +1,4 @@
-package com.kh.great;
+package com.kh.great.web.config;
 
 
 import com.kh.great.web.interceptor.member.LogInterceptor;
@@ -40,7 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/products/**");
         whiteList.add("/mypage/**");
         whiteList.add("/buy/**");
-        whiteList.add("/buy/**");
+        whiteList.add("/api/**");
 
 
         registry.addInterceptor(new LoginInterceptor())
