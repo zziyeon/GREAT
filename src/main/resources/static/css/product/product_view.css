@@ -19,13 +19,18 @@
 
 /* 상품사진(왼쪽) */
 .product-img {
-    width: 350px;
-    height: 400px;
+    width: 330px;
+    /* height: 400px; */
     overflow: hidden;
     justify-content: center;
     align-items: center;
     display: flex;
-    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-img > .good_Img {
+    width: 100%;
+    height: 350px;
 }
 
 /* 판매 정보(오른쪽) */
@@ -146,7 +151,11 @@ dl > dt {
     margin-bottom: 40px;
 }
 
-.good_Img {
+.goods._info .board-write__article-content {
+    width: 600px;
+}
+
+.ck-editor__main {
     width: 600px;
 }
 

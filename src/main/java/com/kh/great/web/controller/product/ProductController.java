@@ -41,7 +41,7 @@ public class ProductController {
     //등록처리
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-
+        log.info("savdForm={}", saveForm);
         //기본검증
         if(bindingResult.hasErrors()){
             log.info("bindingResult={}", bindingResult);
@@ -120,15 +120,22 @@ public class ProductController {
 
     //수정 처리
     @PostMapping("/{num}/edit")
-    public String edit(@PathVariable("num") Long num, @Valid @ModelAttribute("form") UpdateForm updateForm, BindingResult bindingResult) {
+    public String edit(@PathVariable("num") Long num, @Valid @ModelAttribute("form") UpdateForm updateForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         Product product = new Product();
         BeanUtils.copyProperties(updateForm, product);
 
-        int updatedRow = productSVC.update(num, product);
-        if (updatedRow == 0) {
-
-            return  "redirect:/products/{num}";
+        //상품 메타정보 수정
+        if (updateForm.getFiles().get(0).isEmpty()) {
+            productSVC.update(num, product);
+        } else if (!updateForm.getFiles().get(0).isEmpty()) {
+            productSVC.update(num, product, updateForm.getFiles());
         }
+//        int updatedRow = productSVC.update(num, product);
+//        if (updatedRow == 0) {
+//            return  "redirect:/products/{num}";
+//        }
+
+        redirectAttributes.addAttribute("num", num);
         return "redirect:/products/{num}";
     }
 
