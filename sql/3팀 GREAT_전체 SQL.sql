@@ -3,13 +3,12 @@ drop table deal;
 drop table good;
 drop table review;
 drop table bookmark;
-drop table product_info;
 drop table comments;
 drop table article;
 drop table uploadfile;
-drop table member;
 drop table notice;
-drop table uploadfile;
+drop table product_info;
+drop table member;
 
 --drop sequence
 drop sequence mem_num;
@@ -24,7 +23,6 @@ drop sequence PRODUCT_P_NUMBER_SEQ;
 drop sequence bookmark_bookmark_number_seq;
 
 --===========================================회원================================================================
-
 --회원번호 시퀀스
 create sequence mem_num
     increment by 1
@@ -95,8 +93,8 @@ create table product_info(
 ,    DISCOUNT_RATE NUMBER(2, 0) not null
 ,    PAYMENT_OPTION VARCHAR2(32 BYTE) not null
 ,    DETAIL_INFO clob
-,    R_DATE DATE not null
-,    U_DATE DATE not null
+,    R_DATE DATE default sysdate not null
+,    U_DATE DATE default sysdate not null
 ,    P_STATUS NUMBER(1, 0) default 0
 );
 
@@ -104,7 +102,6 @@ create table product_info(
 ALTER TABLE PRODUCT_INFO ADD CONSTRAINT product_info_p_id_pk PRIMARY key(p_NUMBER);
  --외래키 설정
  alter table PRODUCT_INFO ADD CONSTRAINT product_info_p_num_fk FOREIGN key(OWNER_NUMBER) REFERENCES member(mem_number) on delete cascade;
-
 
 -- 상품번호 시퀀스 생성
 create sequence PRODUCT_P_NUMBER_SEQ;
@@ -170,8 +167,6 @@ alter table review add constraint review_buyer_number_fk
     foreign key (buyer_number) references member (mem_number) on delete cascade;-- 작성자번호 회원테이블 fk 참조
 alter table review add constraint review_seller_number_fk   
     foreign key (seller_number) references member (mem_number) on delete cascade;--판매자번호 회원테이블 fk 참조
-alter table review add constraint review_profile_number_fk
-    foreign key (profile_number) references profile (profile_number)on delete cascade; --프로필번호 프로필테이블 fk참조
   
 create table good ( --좋아요 테이블
 good_number number(10),  --좋아요 번호
@@ -204,20 +199,18 @@ alter table bookmark add constraint bookmark_bookmark_number_pk primary key (boo
 --외래키설정
 alter table bookmark add constraint bookmark_mem_number_fk
     foreign key (mem_number) references member (mem_number) on delete cascade;-- 회원번호 회원테이블 fk 참조    
-alter table bookmark add constraint bookmark_profile_number_fk
-    foreign key (profile_number) references profile (profile_number) on delete cascade;-- 프로필번호 프로필테이블 fk 참조    
 --===========================================게시판================================================================
-
 --커뮤니티 테이블 생성
 create table article (
-  article_num           number(6),        -- 게시글 번호
-  mem_number            number(6),        -- 회원 번호
-  article_category      varchar2(10),     -- 게시글 카테고리
-  article_title         varchar2(90),     -- 게시글 제목
-  article_contents      clob,   -- 게시글 내용
-  attachment            varchar2(1),      -- 첨부파일 유무
-  create_date           date,             -- 게시글 작성일
-  views                 number(5)         -- 조회수
+  article_num           number(6),
+  mem_number            number(6),
+  article_category      varchar2(30),
+  article_title         varchar2(90),
+  article_contents      clob,
+  attachment            varchar2(1),
+  create_date           date,
+  views                 number(5),
+  comments              number(5)
 );
 --primary key
 alter table article add constraint article_article_num_pk primary key(article_num);
@@ -226,6 +219,7 @@ alter table article add constraint article_mem_number_fk foreign key(mem_number)
 --default
 alter table article modify create_date date default sysdate;
 alter table article modify views number(5) default 0;
+alter table article modify comments number(5) default 0;
 --not null
 alter table article modify article_category constraint article_article_category_nn not null;
 alter table article modify article_title constraint article_article_title_nn not null;
@@ -235,23 +229,26 @@ alter table article modify attachment constraint article_attachment_nn not null;
 --게시글 번호 시퀀스 생성
 create sequence article_article_num_seq
 increment by 1
-    start with 1
-    minvalue 1
-    maxvalue 999999
-    nocycle
-    nocache
-    noorder;
+start with 1
+minvalue 1
+maxvalue 999999
+nocycle
+nocache
+noorder;
 
 --댓글 테이블 생성
 create table comments (
-  article_num          number(6),       -- 게시글 번호
-  comment_group        number(6),       -- 댓글 그룹
-  comment_num          number(6),       -- 댓글 번호
-  p_comment_num        number(6),       -- 부모 댓글 번호
-  mem_number           number(6),       -- 회원 번호
-  comment_contents     clob,   -- 댓글 내용
-  create_date          date,            -- 댓글 생성일
-  comment_indent       number(3)        -- 대댓글 들여쓰기
+  article_num          number(6),    -- 게시글 번호
+  comment_group        number(6),    -- 댓글 그룹
+  comment_num          number(6),    -- 댓글 번호
+  p_comment_num        number(6),    -- 부모 댓글 번호
+  step                 number(3),    -- 댓글 스텝(깊이)
+  comment_order        number(3),    -- 댓글 순서
+  p_comment_nickname   varchar2(18), -- 부모 댓글 닉네임
+  mem_number           number(6),    -- 회원 번호
+  comment_contents     clob,         -- 댓글 내용
+  create_date          date,         -- 댓글 생성일
+  reply                varchar2(1)   -- 답글 여부
 );
 
 --primary key
@@ -262,19 +259,19 @@ alter table comments add constraint comments_mem_number_fk foreign key(mem_numbe
 alter table comments add constraint comments_p_comment_num_fk foreign key(p_comment_num) references comments(comment_num) on delete set null;
 --default
 alter table comments modify create_date date default sysdate;
-alter table comments modify comment_indent number default 0;
+--alter table comments modify comment_indent number(3) default 0;
 --not null
 alter table comments modify comment_contents constraint comments_comment_contents_nn not null;
 
 --댓글 번호 시퀀스 생성
 create sequence comments_comment_num_seq
 increment by 1
-    start with 1
-    minvalue 1
-    maxvalue 999999
-    nocycle
-    nocache
-    noorder;
+start with 1
+minvalue 1
+maxvalue 999999
+nocycle
+nocache
+noorder;
 
 --===========================================공지사항================================================================
 create table notice(
@@ -282,19 +279,14 @@ create table notice(
     title          varchar2(150),
     content     Varchar2(1500),
     write         varchar2(30),
+    attachments  varchar2(1),
     count        number(5) default 0,
     udate       timestamp default systimestamp
 );
 --기본키생성
 alter table notice add Constraint notice_notice_id_pk primary key (notice_id);
 
---제약조건 not null
-alter table notice modify title constraint notice_title_nn not null;
-alter table notice modify content constraint notice_content_nn not null;
-alter table notice modify write constraint notice_write_nn not null;
-
 --시퀀스
-
 create sequence notice_notice_id_seq;
 
 --======================첨부파일==============================================================================
@@ -311,10 +303,6 @@ create table uploadfile(
 );
 --기본키
 alter table uploadfile add constraint uploadfile_uploadfile_id_pk primary key(uploadfile_id);
-
---외래키
-alter table uploadfile add constraint uploadfile_uploadfile_id_fk
-    foreign key(code) references code(code_id);
 
 --제약조건
 alter table uploadfile modify code constraint uploadfile_code_nn not null;

@@ -132,10 +132,10 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> today_deadline() {
         StringBuffer sql = new StringBuffer();
 
-        sql.append("select P_NUMBER, P_NAME, DISCOUNT_RATE, SALE_PRICE, NORMAL_PRICE, DEADLINE_TIME ");
+        sql.append("select * ");
         sql.append("from product_info ");
         sql.append("where to_char(deadline_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and deadline_time>sysdate and REMAIN_COUNT >0 ");
-        sql.append("order by R_DATE desc " );
+        sql.append("order by deadline_time asc " );
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
         return result;
