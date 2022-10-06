@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layout}">
+      xmlns:th="http://www.thymeleaf.org">
 
-<head layout:fragment="head">
-    <th:block th:replace="fragments/layout :: commonHead"></th:block>
+<head>
+    <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>ㅋ
     <link rel="stylesheet" href="/css/buy/buy-complete.css">
     <title>주문완료</title>
 </head>
 <body>
-<div layout:fragment="wrapper" class="wrapper">
-    <header th:replace="fragments/layout ::fragNonHeader">
-
-    </header>
+<div class="wrapper">
+    <header th:replace="~{layout/common_ui::choose_header}"></header>
     <!-- //header -->
 
         <div class="buy-complete--container" th:object="${form}">
@@ -61,10 +57,7 @@
     </div>
         </div>
 
-
-    <footer class="footer container">
-        <p class="content">FOOTER</p>
-    </footer>
+    <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 </body>
 </html>

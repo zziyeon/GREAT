@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     ) throws Exception {
         String redirectUrl = null;
         String requestURI = request.getRequestURI();
-//        log.info("인증체크 = {}", requestURI);
+        log.info("인증체크 = {}", requestURI);
 
         //세션 조회
 //        HttpSession session = request.getSession(false);
@@ -38,9 +38,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             String queryString = URLEncoder.encode(request.getQueryString(), "UTF-8");
             StringBuffer str = new StringBuffer();
             redirectUrl = str.append(requestURI)
-                    .append("&")
-                    .append(queryString)
-                    .toString();
+                             .append("&")
+                             .append(queryString)
+                             .toString();
         } else {
             redirectUrl = requestURI;
         }

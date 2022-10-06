@@ -3,7 +3,7 @@
       xmlns:th="https://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
-    <title>판매글 보기 | GREAT</title>
+    <title>GREAT | 판매글 보기</title>
     <link rel="stylesheet" th:href="@{/css/product/product_view.css}">
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
@@ -41,7 +41,7 @@
 <!--                                <img class="store-profile_img" src="/image/케이크.PNG" alt="">-->
 <!--                            </div>-->
                             <div class="p_store-info">
-                                <a href="">
+                                <a href="" th:href="@{/mypage/profile/{memNumber}(memNumber=${form.ownerNumber})}">
                                     <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
                                     <i class="fa-solid fa-angle-right"></i>
                                 </a>
@@ -181,6 +181,12 @@
         console.log('삭제');
         location.href = [[@{|/products/${form.pNumber}/del|}]];
     });
+    //구매하기 이동
+    document.querySelector('.product-btn--buy').addEventListener('click',e=>{
+        console.log('클릭');
+        location.href = [[@{|/buy/add/${form.pNumber}|}]];
+    });
+
 
     //ckeditor
     ClassicEditor

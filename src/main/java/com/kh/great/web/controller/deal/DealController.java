@@ -1,6 +1,9 @@
 package com.kh.great.web.controller.deal;
 
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.deal.Deal;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.deal.DealSVC;
@@ -15,6 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -25,6 +31,7 @@ public class DealController {
 
     private final DealSVC dealSVC;
     private final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
 
     //구매등록 양식
@@ -36,6 +43,14 @@ public class DealController {
         Product findedProduct = productSVC.findByProductNum(pNumber);
         BeanUtils.copyProperties(findedProduct,addForm);
         addForm.setSellerNumber(findedProduct.getMember().getMemNumber());
+
+        //첨부파일 조회
+        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), pNumber);
+        if(uploadFiles.size() > 0 ){
+            addForm.setImageFiles(uploadFiles);
+        }
+
+
         model.addAttribute("form", addForm);
         log.info("addForm={}",addForm);
 
@@ -45,12 +60,17 @@ public class DealController {
     //등록 처리
     @PostMapping("/add/{pNumber}")
     public String add(@PathVariable("pNumber") Long pNumber,
-            @ModelAttribute("form") AddForm addForm, RedirectAttributes redirectAttributes){
+                      @ModelAttribute("form") AddForm addForm, RedirectAttributes redirectAttributes, HttpServletRequest request){
         Deal deal = new Deal();
         Product findedProduct = productSVC.findByProductNum(pNumber);
         BeanUtils.copyProperties(addForm, deal);
+
+        HttpSession session = request.getSession(false);
+        Object memNumber = session.getAttribute("memNumber");
+        deal.setBuyerNumber((Long)memNumber);
         deal.setSellerNumber(findedProduct.getMember().getMemNumber());
             dealSVC.add(deal);
+
         BeanUtils.copyProperties(findedProduct.getPNumber(),addForm);
             dealSVC.update(pNumber, deal);
 

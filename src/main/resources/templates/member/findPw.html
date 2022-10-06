@@ -5,7 +5,7 @@
     <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/member/findPw.css}">
     <script type="text/javascript" defer th:src="@{/js/member/findPw.js}"></script>
-    <title>비밀번호 찾기</title>
+    <title>GREAT | 비밀번호 찾기</title>
 </head>
 <body>
     <div class="wrapper">
@@ -26,7 +26,7 @@
                             <div class="id">
                                 <i class="icon__id fa-regular fa-user"></i>
                                 <i class="bar__id"></i>
-                                <input type="text" placeholder="아이디를 입력하세요." />
+                                <input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요." />
                             </div>
                         </div>
                         <div class="wrap-email">
