@@ -1,20 +1,17 @@
     <!DOCTYPE html>
     <html lang="ko"
           xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:th="http://www.thymeleaf.org"
-          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-          layout:decorate="~{fragments/layout}">
-    <head layout:fragment="head">
-        <th:block th:replace="fragments/layout :: commonHead"></th:block>
-        <title>GREAT 리뷰작성</title>
+          xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+        <title>GREAT | 리뷰작성</title>
 
         <link rel="stylesheet" href="/css/mypage/review.css" />
     </head>
     <body>
-    <div layout:fragment="wrapper" class="wrapper">
-        <header th:replace="fragments/layout ::fragNonHeader">
+    <div class="wrapper">
+        <header th:replace="~{layout/common_ui::choose_header}"></header>
 
-        </header>
         <main class="main-reivew">
         <h1 class="title">리뷰 수정</h1>
         <form class="review" action="" method="post" th:object="${form}">

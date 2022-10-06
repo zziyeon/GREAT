@@ -1,9 +1,14 @@
 package com.kh.great.web.controller.mypage;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.deal.Deal;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.mypage.Bookmark;
+import com.kh.great.domain.dao.mypage.Good;
 import com.kh.great.domain.dao.mypage.Review;
+import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.deal.DealSVC;
 import com.kh.great.domain.svc.mypage.MyPageSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
@@ -17,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +37,7 @@ public class MyPageController {
     private final DealSVC dealSVC;
     private final MyPageSVC myPageSVC;
     private final ProductSVC productSVC;
+    private final UploadFileSVC uploadFileSVC;
 
     //주문 내역
     @GetMapping("/{id}")
@@ -58,23 +66,42 @@ public class MyPageController {
     }
 
     //리뷰 등록 양식
-    @GetMapping("/review/add")
-    public String saveForm(Model model){
+    @GetMapping("/review/add/{orderNumber}")
+    public String saveForm(@PathVariable("orderNumber") Long orderNumber, Model model){
+//        Optional<Deal> foundOrderNumber = dealSVC.findByOrderNumber(orderNumber);
+//        Deal deal = foundOrderNumber.get();
+
 
         ReviewAddForm reviewAddForm = new ReviewAddForm();
 
-        reviewAddForm.setBuyerNumber(1l);
+//        BeanUtils.copyProperties(deal,reviewAddForm);
+
         log.info("reviewAddForm={}",reviewAddForm);
         model.addAttribute("form",reviewAddForm);
         return "mypage/reviewAdd";
     }
 
     //리뷰 등록 처리
-    @PostMapping("/review/add")
-    public String save(@ModelAttribute("form") ReviewAddForm reviewAddForm, RedirectAttributes redirectAttributes){
+    @PostMapping("/review/add/{orderNumber}")
+    public String save(@PathVariable("orderNumber") Long orderNumber,
+            @ModelAttribute("form") ReviewAddForm reviewAddForm,
+                       RedirectAttributes redirectAttributes,
+                       HttpServletRequest request){
+
+        Optional<Deal> foundOrderNumber = dealSVC.findByOrderNumber(orderNumber);
+        Deal deal = foundOrderNumber.get();
+
         Review review = new Review();
         BeanUtils.copyProperties(reviewAddForm, review);
-        review.setBuyerNumber(1l);
+        BeanUtils.copyProperties(deal,review);
+        log.info("reviewAddForm={}",reviewAddForm);
+        log.info("deal={}",deal);
+
+        HttpSession session = request.getSession(false);
+        Object memNumber = session.getAttribute("memNumber");
+        review.setBuyerNumber((Long)memNumber);
+        review.setSellerNumber(deal.getSellerNumber());
+
         Review save = myPageSVC.save(review);
         log.info("reviewAddForm={}",reviewAddForm);
 
@@ -89,15 +116,23 @@ public class MyPageController {
     //리뷰 목록
     @GetMapping("/review/{id}")
     public String myReview(@PathVariable("id") Long memNumber, Model model){
+        ReviewInfoForm reviewInfoForm = new ReviewInfoForm();
+        Optional<Member> member = myPageSVC.findMember(memNumber);
+        Member member1 = member.get();
+        MemberForm memberForm = new MemberForm();
+        BeanUtils.copyProperties(member1,memberForm);
+
         List<Review> reviews = myPageSVC.findByMemNumber(memNumber);
 
         List<Review> list = new ArrayList<>();
         reviews.stream().forEach(review->{
-            BeanUtils.copyProperties(review, new ReviewInfoForm());
+            BeanUtils.copyProperties(review, reviewInfoForm);
             list.add(review);
         });
         log.info("list={}",list);
+        log.info("ReviewInfoForm={}",reviewInfoForm);
         model.addAttribute("list",list);
+        model.addAttribute("form",memberForm);
 
         return "mypage/myReview";
     }
@@ -120,12 +155,15 @@ public class MyPageController {
     @PostMapping("/review/edit/{reviewNumber}")
     public String reviewEdit(@PathVariable("reviewNumber") Long reviewNumber,
                              @ModelAttribute("form") ReviewUpdateForm reviewUpdateForm,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes,
+                             HttpServletRequest request){
 //        log.info("reviewUpdateForm={}",reviewUpdateForm);
         Review review = new Review();
         BeanUtils.copyProperties(reviewUpdateForm,review);
         //로그인 세션 필요
-        reviewUpdateForm.setBuyerNumber(1l);
+        HttpSession session = request.getSession(false);
+        Object memNumber = session.getAttribute("memNumber");
+        reviewUpdateForm.setBuyerNumber((Long)memNumber);
         review.setBuyerNumber(reviewUpdateForm.getBuyerNumber());
 
 //        log.info("review={}",review);
@@ -160,11 +198,12 @@ public class MyPageController {
     public String profileForm(@PathVariable("memNumber") Long memNumber, Model model){
 
         ProfileForm profileForm = new ProfileForm();
-
+        //회원 조회
         Optional<Member> member = myPageSVC.findMember(memNumber);
         Member member1 = member.get();
 
-        List<Review> reviews = myPageSVC.findByBuyerNumber(memNumber);
+        //리뷰조회
+        List<Review> reviews = myPageSVC.findBySellerNumber(memNumber);
 
         List<Review> list = new ArrayList<>();
         reviews.stream().forEach(review -> {
@@ -172,12 +211,33 @@ public class MyPageController {
             list.add(review);
         });
 
+        //판매글 조회
+        List<Product> products = myPageSVC.findByOwnerNumber(memNumber);
+
+        List<Product> list2 = new ArrayList<>();
+        products.stream().forEach(product -> {
+            BeanUtils.copyProperties(product,profileForm);
+            list2.add(product);
+        });
+
+        //판매번호 조회
+
+
+        //첨부파일 조회
+        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), profileForm.getPNumber());
+        if(uploadFiles.size() > 0 ){
+            profileForm.setImageFiles(uploadFiles);
+        }
+
         BeanUtils.copyProperties(member1,profileForm);
 
+
         model.addAttribute("list",list);
+        model.addAttribute("list2",list2);
         model.addAttribute("form",profileForm);
         log.info("profileForm={}",profileForm);
         log.info("list={}",list);
+        log.info("list2={}",list2);
 
         return "mypage/profile";
     }
@@ -185,6 +245,11 @@ public class MyPageController {
     //즐겨찾기 양식
     @GetMapping("/bookmark/{memNumber}")
     public String bookmarkForm(@PathVariable("memNumber") Long memNumber, Model model){
+
+        Optional<Member> member = myPageSVC.findMember(memNumber);
+        Member member1 = member.get();
+        MemberForm memberForm = new MemberForm();
+        BeanUtils.copyProperties(member1,memberForm);
 
         BookmarkForm bookmarkForm = new BookmarkForm();
 
@@ -198,6 +263,7 @@ public class MyPageController {
         });
 
         model.addAttribute("list",list);
+        model.addAttribute("form",memberForm);
         log.info("list={}",list);
 
         return "mypage/bookmark";
@@ -207,14 +273,20 @@ public class MyPageController {
     //즐겨찾기 처리
     @ResponseBody
     @PostMapping("/profile/{memNumber}")
-    public ApiResponse<Bookmark> bookmark( @PathVariable("memNumber") Long memNumber,@RequestBody BookmarkForm bookmarkForm, Model model){
+    public ApiResponse<Bookmark> bookmark( @PathVariable("memNumber") Long memNumber,
+                                           @RequestBody BookmarkForm bookmarkForm,
+                                           HttpServletRequest request,
+                                           Model model){
 
         Bookmark bookmark = new Bookmark();
 
         Optional<Member> member = myPageSVC.findMember(memNumber);
         Member member1 = member.get();
 
-        bookmark.setBuyerNumber(1l);
+        HttpSession session = request.getSession(false);
+        Object foundMemNumber = session.getAttribute("memNumber");
+
+        bookmark.setBuyerNumber((Long)foundMemNumber);
         bookmark.setSellerNumber(member1.getMemNumber());
 
         myPageSVC.addBookmark(bookmark);
@@ -227,22 +299,20 @@ public class MyPageController {
     @ResponseBody
     @DeleteMapping("/profile/del/{memNumber}")
         public  ApiResponse<Bookmark> delBookmark(@PathVariable("memNumber") Long memNumber){
-        Optional<Member> member = myPageSVC.findMember(memNumber);
-        Member foundMember = member.get();
-        myPageSVC.delBookmark(foundMember.getMemNumber());
+//        Optional<Member> member = myPageSVC.findMember(memNumber);
+//        Member foundMember = member.get();
+        myPageSVC.delBookmark(memNumber);
 
         return ApiResponse.createApiResMsg("00","성공",null);
-
     }
+
     //내 즐겨찾기에서 삭제
     @ResponseBody
     @DeleteMapping("/del/{bookmarkNumber}")
         public ApiResponse<Bookmark> delBookmarkInMyPage(@PathVariable("bookmarkNumber") Long bookmarkNumber){
-        Optional<Bookmark> foundBookmark = myPageSVC.findBookmarkNumber(bookmarkNumber);
-        myPageSVC.delBookmarkInMyPage(foundBookmark.get().getBookmarkNumber());
+        myPageSVC.delBookmarkInMyPage(bookmarkNumber);
 
         return ApiResponse.createApiResMsg("00","성공",null);
-
     }
 
 //    //프로필사진 수정화면
@@ -262,7 +332,78 @@ public class MyPageController {
 //    }
 
 
+    //좋아요 양식
+    @GetMapping("/good/{memNumber}")
+    public String goodForm(@PathVariable("memNumber") Long memNumber, Model model){
 
+        Optional<Member> member = myPageSVC.findMember(memNumber);
+        Member member1 = member.get();
+        MemberForm memberForm = new MemberForm();
+        BeanUtils.copyProperties(member1,memberForm);
 
+        GoodForm goodForm = new GoodForm();
+
+        List<Good> goods = myPageSVC.findGoods(memNumber);
+
+        List<Good> list = new ArrayList<>();
+        goods.stream().forEach(good ->  {
+            BeanUtils.copyProperties(good,goodForm);
+            log.info("goodForm={}",goodForm);
+            list.add(good);
+        });
+
+        //첨부파일 조회
+        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), goodForm.getPNumber());
+        if(uploadFiles.size() > 0 ){
+            goodForm.setImageFiles(uploadFiles);
+        }
+
+        model.addAttribute("list",list);
+        model.addAttribute("form",memberForm);
+        model.addAttribute("goods",goodForm);
+        log.info("list={}",list);
+
+        return "mypage/good";
+    }
+
+    //좋아요 추가
+    @ResponseBody
+    @PostMapping("/good/{pNumber}")
+    public ApiResponse<Good> good( @PathVariable("pNumber") Long pNumber,
+                                           @RequestBody GoodForm goodForm,
+                                           HttpServletRequest request,
+                                           Model model){
+
+        Good good = new Good();
+
+        HttpSession session = request.getSession(false);
+        Object foundMemNumber = session.getAttribute("memNumber");
+
+        good.setMemNumber((Long)foundMemNumber);
+        good.setPNumber(pNumber);
+
+        myPageSVC.addGood(good);
+
+        model.addAttribute("form",goodForm);
+        return ApiResponse.createApiResMsg("00","성공",good);
+    }
+
+    //프로필에서 삭제
+    @ResponseBody
+    @DeleteMapping("/good/del/{pNumber}")
+    public  ApiResponse<Good> delGood(@PathVariable("pNumber") Long pNumber){
+
+        myPageSVC.delGood(pNumber);
+
+        return ApiResponse.createApiResMsg("00","좋아요 삭제 성공",null);
+    }
+    //내 좋아요에서 삭제
+    @ResponseBody
+    @DeleteMapping("mygood/del/{goodNumber}")
+    public ApiResponse<Good> delGoodInMyPage(@PathVariable("goodNumber") Long goodNumber){
+        myPageSVC.delGoodInMyPage(goodNumber);
+
+        return ApiResponse.createApiResMsg("00","성공",null);
+    }
 
 }

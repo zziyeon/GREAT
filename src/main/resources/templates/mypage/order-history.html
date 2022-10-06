@@ -37,7 +37,7 @@
                         </li>
                         <li class="aside-content-menu">
                             <h3>
-                                <a href="good.html">좋아요</a>
+                                <a href="good.html" th:href="@{/mypage/good/{memNumber}(memNumber=${form.memNumber})}">좋아요</a>
                             </h3>
                         </li>
                         </ul>
@@ -79,7 +79,7 @@
                             <td th:case="1" th:text="오프라인결제"></td>
                         </th:block>
                         <td>
-                        <a href="#" th:href="@{/mypage/review/add}" class="write">작성하기</a>
+                        <a href="#" th:href="@{/mypage/review/add/{orderNumber}(orderNumber=${order.orderNumber})}" class="write">작성하기</a>
                         </td>
                         <td>
                         <a href="#" class="order-status" th:onclick="|delBuy(event,${order.orderNumber})|">취소하기</a></td>

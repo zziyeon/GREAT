@@ -14,27 +14,27 @@
         <header th:replace="~{layout/common_ui::choose_header}"></header>
     <!-- //header -->
 
-        <main class="bookmark" th:each="bookmark: ${list}">
+        <main class="bookmark" th:object="${form}">
                 <aside class="aside-content" >
                 <ul>
                     <li class="aside-content-menu">
                         <h3>
-                            <a href="myReview.html" th:href="@{/mypage/review/{id}(id=${bookmark.buyerNumber})}" >내 리뷰</a>
+                            <a href="myReview.html" th:href="@{/mypage/review/{id}(id=${form.memNumber})}" >내 리뷰</a>
                         </h3>
                     </li>
                     <li class="aside-content-menu">
                         <h3>
-                            <a href="order-history.html" th:href="@{/mypage/{id}(id=${bookmark.buyerNumber})}">주문내역</a>
+                            <a href="order-history.html" th:href="@{/mypage/{id}(id=${form.memNumber})}">주문내역</a>
                         </h3>
                     </li>
                     <li class="aside-content-menu">
                         <h3>
-                            <a href="bookmark.html" th:href="@{/mypage/bookmark/{memNumber}(memNumber=${bookmark.buyerNumber})}">즐겨찾기</a>
+                            <a href="bookmark.html" th:href="@{/mypage/bookmark/{memNumber}(memNumber=${form.memNumber})}">즐겨찾기</a>
                         </h3>
                     </li>
                     <li class="aside-content-menu">
                         <h3>
-                            <a href="good.html">좋아요</a>
+                            <a href="good.html" th:href="@{/mypage/good/{memNumber}(memNumber=${form.memNumber})}">좋아요</a>
                         </h3>
                     </li>
                     </ul>
@@ -47,10 +47,10 @@
                         <h2>즐겨찾기</h2>
                     </div>
                 </div>
-                <div class="bookmark-content" >
+                <div class="bookmark-content" th:each="bookmark: ${list}">
                     <div class="bookmark-on"  th:data-bookmark-id="${bookmark.bookmarkNumber}">
                             <div class="item front">
-                                <img class="profile__image" src="/css/img/img__profile.png" alt="어피치">
+                                <img class="profile__image" src="/img/mypage/img__profile.png" alt="어피치">
                                 <div class="shopNm" th:text="${bookmark.member.memStoreName}">파스타키친</div>
 <!--                                <input type="button"  th:text="${bookmark.bookmarkNumber}"></input>-->
                             </div>
@@ -115,8 +115,9 @@
                     icons[idx].classList.toggle('fas');
                     let id = e.target.parentElement.dataset.bookmarkId;
                     let bookmarkNumber = parseInt(id);
-                    console.log('클릭');
                     bookmarkDelInMyPage(bookmarkNumber);
+                    window.location.reload();
+
                 })
             });
 
