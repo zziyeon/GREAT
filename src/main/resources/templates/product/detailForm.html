@@ -26,9 +26,11 @@
                 <div class="product">
                     <div class="product-img">
                         <th:block th:if="${form.imageFiles}">
-                            <th:block th:each="imageFile : ${form.imageFiles[0]}">
-                                <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
-                                     alt="이미지를 불러올수 없습니다">
+                            <th:block th:with="one=${form.imageFiles.size()-1}">
+                                <th:block th:each="imageFile : ${form.imageFiles[one]}">
+                                    <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                         alt="이미지를 불러올수 없습니다">
+                                </th:block>
                             </th:block>
                         </th:block>
                         <th:block th:if="!(${form.imageFiles})">
@@ -104,11 +106,6 @@
                         <span>위치</span>
                     </a>
                 </div>
-<!--                <div class="nav_tab">-->
-<!--                    <a href="">-->
-<!--                        <span>댓글</span>-->
-<!--                    </a>-->
-<!--                </div>-->
             </div>
 
             <!-- 정보 -->
