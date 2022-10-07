@@ -54,7 +54,7 @@
         <a href="/member/order-history.html" th:href="@{/mypage/{id}(id=*{buyerNumber})}" class="btn--move">주문내역</a>
         <a th:href="@{/}" class="btn--move">메인 화면</a>
         <th:block th:with="loc=*{#strings.substring(member.memStoreLocation,6,8)}">
-        <a th:href="|@{/zonning?zone=남구&category=전체}|" class="btn--move">판매글 목록</a>
+        <a th:href="|@{/zonning(zone=${loc},category='전체')}|" class="btn--move">판매글 목록</a>
         </th:block>
     </div>
         </div>

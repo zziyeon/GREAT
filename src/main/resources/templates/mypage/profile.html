@@ -80,15 +80,15 @@
                         
                             <ul class="tab-content--sell">
                                 <li class="sell" th:each="product:${list2}">
-                                    <a href="http://www.naver.com" target="_blank">
+                                    <a th:href="@{/products/{pNumber}(pNumber=${product.pNumber})}">
                                         <div class="product-img">
-                                            <th:block th:if="${form.imageFiles}">
-                                                <th:block th:each="imageFile : ${form.imageFiles[0]}">
+                                            <th:block th:if="${product.imageFiles}">
+                                                <th:block th:each="imageFile : ${product.imageFiles[0]}">
                                                     <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
                                                          alt="이미지를 불러올수 없습니다">
                                                 </th:block>
                                             </th:block>
-                                            <th:block th:if="!(${form.imageFiles})">
+                                            <th:block th:if="!(${product.imageFiles})">
                                                 <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                                             </th:block>
 
