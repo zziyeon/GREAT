@@ -1,7 +1,7 @@
 package com.kh.great.web.controller.main;
 
 import com.kh.great.domain.common.file.AttachCode;
-import com.kh.great.domain.common.file.UploadFileSVC;
+import com.kh.great.domain.svc.uploadFile.UploadFileSVC;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.member.EmailSVCImpl;
