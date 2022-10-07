@@ -8,8 +8,10 @@
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
     <script type="text/javascript" defer th:src="@{/js/product/store_location.js}"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+<!--    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>-->
     <script type="text/javascript" th:src="@{/js/mypage/good.js}"></script>
+    <script th:src="@{/js/common/common.js}"></script>
+    <script th:src="@{/js/common/ckeditor.js}"></script>
 <!--    <script asyn defer th:src="@{/js/product/ckeditor.js}"></script>-->
     <style>
         .ck-editor__top{
@@ -20,7 +22,7 @@
 <body>
 <div class="wrapper">
     <header th:replace="~{layout/common_ui::choose_header}"></header>
-    <form method="get" action="/products/a/del" th:object="${form}">
+    <form th:object="${form}">
         <main class="main container">
             <article id="product-atf" class="product">
                 <div class="product">
@@ -34,16 +36,13 @@
                         <th:block th:if="!(${form.imageFiles})">
                             <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                         </th:block>
-
                     </div>
                     <div class="product-info">
                         <div class="p_store">
-<!--                            <div class="store-profile">-->
-<!--                                <img class="store-profile_img" src="/image/케이크.PNG" alt="">-->
-<!--                            </div>-->
                             <div class="p_store-info">
                                 <a href="" th:href="@{/mypage/profile/{memNumber}(memNumber=${form.ownerNumber})}">
                                     <span name="memStoreName" th:text="${form.member.memStoreName}"></span>
+                                    <span id="memStoreLocation" th:text="${form.member.memStoreLocation}"></span>
                                     <i class="fa-solid fa-angle-right"></i>
                                 </a>
                             </div>
@@ -55,8 +54,7 @@
                         </div>
                         <div class="p_middle">
                             <span id="discount_rate" name="discountRate" th:text="${form.discountRate}"></span>%
-                            <span name="salePrice" id="salePrice" th:text="${form.salePrice}"></span>
-                            원
+                            <span name="salePrice" id="salePrice" th:text="${form.salePrice}"></span>원
                         </div>
                         <div class="p_middle_bottom">
                             <span class="nomal-price" name="normalPrice" th:text="${form.normalPrice}"></span>원
@@ -113,6 +111,7 @@
                     <hr>
                     <textarea class="board-write__article-content" name="detailInfo" id="detailInfo" cols="30" rows="10"
                               placeholder="내용을 작성하세요." readonly autofocus th:text="*{detailInfo}"></textarea>
+
                 </div>
                 <!-- 가게 위치 지도 -->
                 <hr>
@@ -144,7 +143,7 @@
                     <button type="button" class="btn_list btn">목록</button>
                         <div id="edit_btn">
                             <button type="button" class="btn_modify btn">수정</button>
-                            <button type="submit" class="btn_del btn">삭제</button>
+                            <button type="button" class="btn_del btn">삭제</button>
                         </div>
                 </div>
             </div>
@@ -154,27 +153,37 @@
     <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 <script asyn th:inline="javascript">
+    //ckeditor
+<!--    newCkeditor(document.querySelector('#detailInfo'),true);-->
+
     document.getElementById("edit_btn").style.display = (
         [[${session.memNumber}]] == [[${form.ownerNumber}]] ? "block" : "none"
     );
 
     //<!-- 목록 -->
     document.querySelector('.btn_list').addEventListener('click', e=>{
-        console.log('수정');
-        location.href = [[@{|/zonning|}]];
+        console.log(memStoreLocation.textContent);
+        console.log(typeof(memStoreLocation.textContent));
+        let full_loc = memStoreLocation.textContent;
+        let loc=full_loc.substr(3,2);
+        let gu_loc=full_loc.split(" ");
+        console.log(gu_loc[1]);
+        console.log("111"+loc);
+
+        let redirectUrl = "/zonning?zone=" + gu_loc[1] + "&category=전체"
+<!--        location.href = [[@{|/zonning?zone=${loc}&category=전체|}]];-->
+        location.href = redirectUrl;
     });
 
     //<!-- 수정 -->
     console.log([[${session.memType}]]);
     document.querySelector('.btn_modify').addEventListener('click', e=>{
-        console.log('수정');
         location.href = [[@{|/products/${form.pNumber}/edit|}]];
     });
 
     //<!-- 삭제 -->
     document.querySelector('.btn_del').addEventListener('click', e=>{
         if(!confirm('삭제하시겟습니까?')) return;
-        console.log('삭제');
         location.href = [[@{|/products/${form.pNumber}/del|}]];
     });
     //구매하기 이동

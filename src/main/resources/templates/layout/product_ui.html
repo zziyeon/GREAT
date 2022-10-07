@@ -15,6 +15,15 @@
             <a th:href="@{/product/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image">
                 <th:block th:if="${#lists.size(rec.imageFiles)}>0">
                     <th:block th:with="one=${#lists.size(rec.imageFiles)}-1">
+                        <p th:text="${one}"></p>
+<!--                        <p th:text="${rec.imageFiles.get(0).storeFilename}"></p>-->
+<!--                        <p th:text="${rec.imageFiles.get(1).storeFilename}"></p>-->
+<!--                        <p th:text="${rec.imageFiles.get(2).storeFilename}"></p>-->
+<!--                        <p th:text="${rec.imageFiles.get(3).storeFilename}"></p>-->
+<!--                        <p th:text="${rec.imageFiles.get(4).storeFilename}"></p>-->
+<!--                        <p th:text="${rec.imageFiles.get(5).storeFilename}"></p>-->
+<!--                        <p th:text="${rec.imageFiles.get(6).storeFilename}"></p>-->
+<!--                        <p th:text="${rec.imageFiles.get(7).storeFilename}"></p>-->
                         <th:block th:each="imageFile : ${rec.imageFiles[one]}">
                             <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
                                  alt="이미지를 불러올수 없습니다">

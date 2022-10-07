@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -50,6 +51,7 @@ public class Product {
 
     private Member member;
     private Deal deal;
+    private List<MultipartFile> files; //상품 이미지 첨부(여러건)
 
     private List<UploadFile> imageFiles;
 }

@@ -7,7 +7,8 @@
     <link rel="stylesheet" th:href="@{/css/product/product_write.css}">
     <script type="text/javascript" defer th:src="@{/js/product/limitDate.js}"></script>
 <!--    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>-->
-    <script th:src="@{/js/product/ckeditor.js}"></script>
+    <script th:src="@{/js/common/common.js}"></script>
+    <script th:src="@{/js/common/ckeditor.js}"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -76,6 +77,9 @@
 </div>
 
 <script>
+    //ckeditor
+    newCkeditor(document.querySelector('#detailInfo'),false);
+
     // 정상가
     normalPrice.addEventListener('keyup', e=>{
         if(isNaN(normalPrice.value)||normalPrice.value <=0){
@@ -106,70 +110,6 @@
     const form = {
         articleContents: document.getElementById('detailInfo')
     };
-
-    //ckeditor
-    ClassicEditor
-		.create( document.querySelector( '#detailInfo' ), {
-		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
-			toolbar: {
-				items: [
-					'heading',
-					'|',
-					'underline',
-					'bold',
-					'italic',
-					'link',
-					'bulletedList',
-					'numberedList',
-					'todoList',
-					'|',
-					'outdent',
-					'indent',
-					'|',
-					'imageInsert',
-					'imageUpload',
-					'blockQuote',
-					'insertTable',
-					'mediaEmbed',
-					'markdown',
-					'undo',
-					'redo',
-					'|',
-					'highlight',
-					'fontFamily',
-					'fontColor',
-					'fontBackgroundColor',
-					'fontSize',
-					'|',
-					'htmlEmbed',
-					'specialCharacters'
-				]
-			},
-			language: 'en',
-			image: {
-				toolbar: [
-					'imageTextAlternative',
-					'imageStyle:full',
-					'imageStyle:side'
-				]
-			},
-			table: {
-				contentToolbar: [
-					'tableColumn',
-					'tableRow',
-					'mergeTableCells',
-					'tableCellProperties',
-					'tableProperties'
-				]
-			},
-		})
-		.then( editor => {
-
-			window.editor = editor;
-		} )
-		.catch( error => {
-			console.error( error );
-		} );
 </script>
 </body>
 </html>
