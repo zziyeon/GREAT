@@ -65,7 +65,7 @@ public class ProductController {
             return "product/addForm";
         }
         // 정상가 > 할인가
-        if (saveForm.getNormalPrice() > saveForm.getSalePrice()) {
+        if (saveForm.getNormalPrice() < saveForm.getSalePrice()) {
             bindingResult.reject("product.pricerange", "할인가보다 정상가가 커야합니다.");
             log.info("bindingResult={}", bindingResult);
             return "product/addForm";

@@ -161,13 +161,26 @@ function each_sell_status(obj, pNumber, pstatus){
         sell_st_uf(pNumber, obj.value);
     }
     if(obj.value=='del'){
-        if(confirm("판매글을 삭제하시겠습니까? \n삭제 후 복구 불가합니다."))
-            window.location.href = "/products/" + pNumber + "/del";
-        else{
-            obj.value=pstatus;
-        }
+//        if(confirm("판매글을 삭제하시겠습니까? \n삭제 후 복구 불가합니다."))
+//            window.location.href = "/products/" + pNumber + "/del";
+//        else{
+//            obj.value=pstatus;
+//        }
+        deleteProduct(pNumber);
 
     }
+
+}
+//삭제 함수
+function deleteProduct(pNumber){
+    const url = `http://localhost:9080/api/saleList/${pNumber}/del`;
+      fetch(url, {
+        method: 'DELETE'
+          }).then(res => {
+            const inputDate = getInputData();
+            search(inputDate);
+            console.log('삭제완료');
+          }).catch(err => console.log(err));
 }
 
 // 상품 상태 변경
