@@ -104,7 +104,6 @@ public class MyPageDAOImpl implements MyPageDAO {
 
         StringBuffer sql = new StringBuffer();
 
-
         sql.append("select * ");
         sql.append("from review r , member m,  product_info p, deal d ");
         sql.append(" where d.p_number = p.p_number ");
@@ -113,8 +112,6 @@ public class MyPageDAOImpl implements MyPageDAO {
         sql.append("and r.buyer_number = d.buyer_number ");
         sql.append("and r.seller_number = ? ");
         sql.append(" order by r.review_number asc ");
-
-
 
         List<Review> reviews = null;
 
@@ -130,14 +127,12 @@ public class MyPageDAOImpl implements MyPageDAO {
                     review.setDeal(deal);
                     review.setMember(member);
 
-
                     return review;
                 }
             }, memNumber);
         } catch (DataAccessException e) {
             log.info("회원번호가 없습니다");
         }
-
         return reviews;
     }
     //판매글 조회
@@ -166,7 +161,6 @@ public class MyPageDAOImpl implements MyPageDAO {
         } catch (DataAccessException e) {
             log.info("회원번호가 없습니다.");
         }
-
         return products;
     }
 
@@ -217,7 +211,6 @@ public class MyPageDAOImpl implements MyPageDAO {
     // 리뷰 삭제
     @Override
     public int deleteByReviewId(Long reviewNumber) {
-
         String sql = "delete from review where review_number = ? ";
 
         int affectedRow= jt.update(sql.toString(),reviewNumber);
@@ -235,7 +228,6 @@ public class MyPageDAOImpl implements MyPageDAO {
         }catch(EmptyResultDataAccessException e){
             e.printStackTrace();
         }
-
         return Optional.empty();
     }
 
@@ -290,14 +282,12 @@ public class MyPageDAOImpl implements MyPageDAO {
         }catch (DataAccessException e) {
             log.info("찾을수 없습니다");
         }
-    return  bookmarks;
-
+        return  bookmarks;
     }
 
     //즐겨찾기 조회
     @Override
     public Optional<Bookmark> findBookmarkNumber(Long bookmarkNumber) {
-
         String sql = " select * from bookmark where bookmark_number = ? ";
 
         try{
@@ -306,14 +296,12 @@ public class MyPageDAOImpl implements MyPageDAO {
             }catch(EmptyResultDataAccessException e){
             e.printStackTrace();
         }
-
         return Optional.empty();
     }
 
     //즐겨찾기 삭제 - 프로필에서
     @Override
     public int delBookmark(Long memNumber) {
-
         String sql = "delete from bookmark where seller_number = ? ";
 
         int affectedRow = jt.update(sql.toString(),memNumber);
@@ -378,7 +366,6 @@ public class MyPageDAOImpl implements MyPageDAO {
     //좋아요 회원 조회
     @Override
     public List<Good> findGoods(Long memNumber) {
-
             StringBuffer sql = new StringBuffer();
             sql.append(" select * from good g, product_info p ");
             sql.append(" where g.p_number = p.p_number and g.mem_number = ? ");

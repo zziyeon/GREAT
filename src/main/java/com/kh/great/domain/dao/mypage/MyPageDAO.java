@@ -59,6 +59,4 @@ public interface MyPageDAO {
 
     //좋아요 회원 조회
     List<Good> findGoods(Long memNumber);
-
-
 }

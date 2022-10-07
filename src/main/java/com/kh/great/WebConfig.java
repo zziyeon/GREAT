@@ -41,7 +41,6 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/mypage/**");
         whiteList.add("/buy/**");
         whiteList.add("/api/**");
-        whiteList.add("/api/**");
         whiteList.add("/product/**");
         whiteList.add("/notice/list");
 

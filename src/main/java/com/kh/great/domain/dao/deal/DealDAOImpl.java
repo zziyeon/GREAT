@@ -28,7 +28,6 @@ public class DealDAOImpl implements DealDAO{
 
     private final JdbcTemplate jt;
 
-
     //구매 등록
     @Override
     public Deal add(Deal deal) {

@@ -5,16 +5,11 @@
 <head>
     <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <link rel="stylesheet" href="/css/mypage/profile.css">
-    <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/cb64776e64.js" crossorigin="anonymous"></script>
     <title>GREAT | 개인프로필</title>
 </head>
-
 <body>
     <div class="wrapper">
         <header th:replace="~{layout/common_ui::choose_header}"></header>
-        <!-- //header -->
-
         <main class="main main-profile" th:object="${form}">
             <div>어피치님의 프로필</div>
             <section class="profile">
@@ -25,7 +20,6 @@
                         <i id="starIcon" class="starIcon far fa-star"></i>
                         </th:block>
                     </div>
-
                     <button class="imageBtn">이미지변경</button>
                     <input type="file" name="" id="imgBtn">
 
@@ -49,7 +43,6 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-regular fa-star"></i>
                     </p>
-
                 </form>
             </section>
             </main>
@@ -59,8 +52,6 @@
                     <div class="tab-menu">
                         <input type="radio" name="tabs" id="tab-1" checked><label for="tab-1">리뷰 및 평점</label>
                         <input type="radio" name="tabs" id="tab-2" ><label for="tab-2">판매글</label>
-
-                        
                             <ul class="review-content">
                                 <li class="review" th:each="review:${list}">
                                     <div th:text="${review.member.memName}">라이언 | 2022.08.06</div>
@@ -84,13 +75,13 @@
                                 <li class="sell" th:each="product:${list2}">
                                     <a th:href="@{/product/{pNumber}(pNumber=${product.pNumber})}">
                                         <div class="product-img">
-                                            <th:block th:if="${product.imageFiles}">
-                                                <th:block th:each="imageFile : ${product.imageFiles[0]}">
+                                            <th:block th:if="${form.imageFiles}">
+                                                <th:block th:each="imageFile : ${form.imageFiles[0]}">
                                                     <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
                                                          alt="이미지를 불러올수 없습니다">
                                                 </th:block>
                                             </th:block>
-                                            <th:block th:if="!(${product.imageFiles})">
+                                            <th:block th:if="!(${form.imageFiles})">
                                                 <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                                             </th:block>
 
@@ -112,11 +103,10 @@
         </div>
         <script>
             $imageBtn = document.querySelector('.imageBtn');
-            $imageBtn.addEventListener('click',(e)=>{
-                location.href = '/mypage/profile/add';
-
-                console.log('클릭')
-            });
+            $image = document.querySelector('.profile__img');
+            $imageBtn.addEventListener('click',()=>{
+                imgBtn.click();
+            }
 
             //전역변수
             const form ={
