@@ -214,6 +214,7 @@ public class HomeController {
         session.setAttribute("memNumber", member.get().getMemNumber());
         session.setAttribute("memType", member.get().getMemType());
         session.setAttribute("memNickname", member.get().getMemNickname());
+        session.setAttribute("memAdmin", member.get().getMemAdmin());
 
         return "redirect:" + redirectUrl;
     }

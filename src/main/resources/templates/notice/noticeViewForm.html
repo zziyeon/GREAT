@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+  <link rel="stylesheet" href="/css/notice/noticeView.css">
+  <link rel="stylesheet" href="/css/common/common.css">
+  <script th:src="@{/css/common/js/ckeditor.js}"></script>
+  <title>GREAT 공지사항글보기</title>
+  <style>
+
+    #notice__delBtn, #submit_btn{
+       background-color: var(--main-color-yel);
+        margin: 5px 0 10px 5px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+  </style>
+<body>
+<div class="wrapper">
+  <header th:replace="~{layout/common_ui::choose_header}"></header>
+  <main class="container">
+    <form class="notice" method="post" th:object="${detailForm}">
+      <div class="notice__title ">
+        <h2>글 제목 :
+          <text th:text="*{title}">[공지사항] 개인정보 처리방침 변경안내처리방침</text>
+        </h2>
+        <div class="notice__information">
+          <div class="notice__write-information">
+
+          </div>
+        </div>
+      </div>
+      <div class="notice__content ">
+          <textarea th:text="*{content}" id="noticeContent" cols="140" rows="30"
+                    name="content" readonly>[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침 </textarea>
+
+        <div class="notice__btn-box">
+          <button type="button"><a id="modify_btn" th:href="@{/notice/edit/{id}(id=${detailForm.noticeId})}">수정</a>
+          </button>
+          <button type="button" id="submit_btn">목록</button>
+          <button type="button" id="notice__delBtn" class="delete">삭제</button>
+        </div>
+      </div>
+    </form>
+  </main>
+  <footer th:replace="~{layout/common_ui::footer}"></footer>
+</div>
+<script>
+    //수정버튼
+    const $modifyBtn = document.getElementById('modify_btn');
+      $modifyBtn.addEventListener('click', e => {
+      location.href = '/notice/edit/[[${detailForm.noticeId}]]';
+    });
+
+    //목록버튼
+    const $submitBtn = document.getElementById('submit_btn');
+      $submitBtn.addEventListener('click', e => {
+      location.href = '/notice/list';
+    });
+
+    //삭제버튼
+     const $delBtn = document.getElementById('notice__delBtn');
+      $delBtn.addEventListener('click', e => {
+        if(!confirm('삭제하시겠습니까?')) return;
+      location.href = '/notice/[[${detailForm.noticeId}]]/del';
+    });
+
+    //ckeditor
+    ClassicEditor
+		.create( document.querySelector( '#noticeContent' ), {
+		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
+			toolbar: {
+				items: [
+					'heading',
+					'|',
+					'underline',
+					'bold',
+					'italic',
+					'link',
+					'bulletedList',
+					'numberedList',
+					'todoList',
+					'|',
+					'outdent',
+					'indent',
+					'|',
+					'imageInsert',
+					'imageUpload',
+					'blockQuote',
+					'insertTable',
+					'mediaEmbed',
+					'markdown',
+					'undo',
+					'redo',
+					'|',
+					'highlight',
+					'fontFamily',
+					'fontColor',
+					'fontBackgroundColor',
+					'fontSize',
+					'|',
+					'htmlEmbed',
+					'specialCharacters'
+				]
+			},
+			language: 'en',
+			image: {
+				toolbar: [
+					'imageTextAlternative',
+					'imageStyle:full',
+					'imageStyle:side'
+				]
+			},
+			table: {
+				contentToolbar: [
+					'tableColumn',
+					'tableRow',
+					'mergeTableCells',
+					'tableCellProperties',
+					'tableProperties'
+				]
+			},
+		})
+		.then( editor => {
+
+			window.editor = editor;
+			editor.isReadOnly = true;  //읽기모드적용
+		} )
+		.catch( error => {
+			console.error( error );
+		} );
+</script>
+</body>
+</head></head></html>
