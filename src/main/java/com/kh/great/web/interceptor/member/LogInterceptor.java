@@ -24,7 +24,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
         request.setAttribute("transactionId", uuid);
 
-        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
+//        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
 
         return true;
     }
@@ -42,7 +42,7 @@ public class LogInterceptor implements HandlerInterceptor {
         String requestURI = request.getRequestURI(); //클라이언트의 요청 URI
         String uuid = String.valueOf(request.getAttribute("transactionId"));
 
-        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
+//        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
     }
 
     //뷰 렌더링 후, 클라이언트에 응답메세지 전송 후
@@ -58,7 +58,7 @@ public class LogInterceptor implements HandlerInterceptor {
         String requestURI = request.getRequestURI(); //클라이언트의 요청 URI
         String uuid = String.valueOf(request.getAttribute("transactionId"));
 
-        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
+//        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
 
         if (ex != null) {
             log.error("afterCompletion error!!", ex);

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MyPageSVC {
+//    void update(Long memNumber, Member member, List<MultipartFile> files);
     Review save(Review review);
 
     //리뷰조회 - 회원번호로 조회

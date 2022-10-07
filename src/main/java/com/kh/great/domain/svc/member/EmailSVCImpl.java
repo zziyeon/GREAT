@@ -50,7 +50,7 @@ public class EmailSVCImpl {
     public MimeMessage createEmailForm(String email, String authNo) throws MessagingException, UnsupportedEncodingException {
 
 
-        String setFrom = "altruism_tap@naver.com"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
+        String setFrom = "great3team@gmail.com"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
         String toEmail = email; //받는 사람
         String title = "GREAT 회원가입 인증코드"; //제목
 

@@ -176,4 +176,10 @@ public class ApiProductController {
         return ApiResponse.createApiResMsg("00", "성공", status);
     }
 
+    @DeleteMapping("/saleList/{pNumber}/del")
+    public ApiResponse<Object> delete(@PathVariable("pNumber") Long pNumber) {
+        int deletedRow = productSVC.deleteByProductNum(pNumber);
+
+        return ApiResponse.createApiResMsg("00", "성공", null);
+    }
 }
