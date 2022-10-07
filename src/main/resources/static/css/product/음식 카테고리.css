@@ -138,7 +138,7 @@ u {
   flex-wrap: wrap;
   flex-direction: row;
   width: 100%;
-  gap: 20px;
+  gap: 25px;
 }
 
 .main > .items > .item {

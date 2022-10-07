@@ -22,7 +22,7 @@ function arrayType(requestUrl) {
             res.data.map(product=>{
                   product.deadlineTime = product.deadlineTime.substr(10,6);
                 return ` <div class="item">
-                              <a href="/products/${product.pnumber}" class="item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"  alt=""></a>
+                              <a href="/product/${product.pnumber}" class="item__image"><img src="https://cdn.imweb.me/thumbnail/20210628/f9482d3bbe416.jpg"  alt=""></a>
                               <button class="heart_Btn"><i class="heartIcon far fa-heart fas"></i></button>
                               <a href="#" class="item__title">${product.pname}</a>
                               <div class="item__price-box">

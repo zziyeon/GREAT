@@ -30,7 +30,7 @@ fetch(url, {
               img_url = `<img src="/img/product/등록된 사진이 없습니다.png" alt="">`;
           }
           return ` <div class="item">
-                      <a href="/products/${product.pnumber}" class="item__image">
+                      <a href="/product/${product.pnumber}" class="item__image">
                           ${img_url}
                       </a>
                       <button class="heart_Btn"><i class="heartIcon far fa-heart fas"></i></button>

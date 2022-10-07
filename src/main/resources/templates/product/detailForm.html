@@ -25,12 +25,10 @@
             <article id="product-atf" class="product">
                 <div class="product">
                     <div class="product-img">
-                        <th:block th:if="${form.imageFiles}">
-                            <th:block th:with="one=${form.imageFiles.size()-1}">
-                                <th:block th:each="imageFile : ${form.imageFiles[one]}">
-                                    <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
-                                         alt="이미지를 불러올수 없습니다">
-                                </th:block>
+                        <th:block th:if="${form.imageFiles}" th:with="one=${form.imageFiles.size()-1}">
+                            <th:block th:each="imageFile : ${form.imageFiles[one]}">
+                                <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+                                     alt="이미지를 불러올수 없습니다">
                             </th:block>
                         </th:block>
                         <th:block th:if="!(${form.imageFiles})">
@@ -165,12 +163,14 @@
         console.log('수정');
         location.href = [[@{|/zonning|}]];
     });
+
     //<!-- 수정 -->
     console.log([[${session.memType}]]);
     document.querySelector('.btn_modify').addEventListener('click', e=>{
         console.log('수정');
         location.href = [[@{|/products/${form.pNumber}/edit|}]];
     });
+
     //<!-- 삭제 -->
     document.querySelector('.btn_del').addEventListener('click', e=>{
         if(!confirm('삭제하시겟습니까?')) return;
@@ -179,11 +179,46 @@
     });
     //구매하기 이동
     document.querySelector('.product-btn--buy').addEventListener('click',e=>{
+        if([[${session.isEmpty()}]]){
+            alert("로그인하셔야 본 서비스를 이용하실 수 있습니다.");
+        }
         if([[${session.memType}]]=='owner'){
             alert("죄송합니다. 고객 회원만 구매할 수 있습니다.");
         }
         if([[${session.memType}]]=='customer'){
             location.href = [[@{|/buy/add/${form.pNumber}|}]];
+        }
+    });
+
+		//데이터 가져오기
+		function getInputData(){
+		    const pName = pName.textContent;
+		    const deadline_time = deadline_time.textContent;
+		    const salePrice = salePrice.textContent;
+		    const discount_rate = discount_rate.textContent;
+
+		    return {pName,deadline_time,salePrice,discount_rate};
+		}
+
+    //버튼 클릭시
+    goodBtn.addEventListener('click',e=>{
+        e.preventDefault;
+        if([[${session.isEmpty()}]]){
+            alert("로그인하셔야 본 서비스를 이용하실 수 있습니다.");
+        }
+        if([[${session.memType}]]=='owner'){
+            alert("죄송합니다. 고객 회원만 구매할 수 있습니다.");
+        }
+        if([[${session.memType}]]=='customer'){
+            if(goodBtn.className == 'heartIcon far fa-heart'){
+                goodBtn.classList.add('fas');
+                const good = getInputData();
+                goodAdd(form.pNumber.value,good);
+
+            }else{
+                 goodBtn.classList.remove('fas');
+                 goodDel(form.pNumber.value);
+            }
         }
     });
 
@@ -250,43 +285,6 @@
 		.catch( error => {
 			console.error( error );
 		} );
-
-        //전역변수
-		const form = {
-		    pName:document.getElementById('pName'),
-		    deadline_time:document.getElementById('deadline_time'),
-		    salePrice:document.getElementById('salePrice'),
-		    discount_rate:document.getElementById('discount_rate'),
-		    pNumber : document.getElementById('pNumber')
-		}
-
-		//데이터 가져오기
-		function getInputData(){
-		    const pName = form.pName.textContent;
-		    const deadline_time = form.deadline_time.textContent;
-		    const salePrice = form.salePrice.textContent;
-		    const discount_rate = form.discount_rate.textContent;
-
-		    return {pName,deadline_time,salePrice,discount_rate};
-		}
-
-
-        //버튼 클릭시
-        goodBtn.addEventListener('click',e=>{
-            e.preventDefault;
-            if(goodBtn.className == 'heartIcon far fa-heart'){
-                goodBtn.classList.add('fas');
-                const good = getInputData();
-                goodAdd(form.pNumber.value,good);
-
-            }else{
-                 goodBtn.classList.remove('fas');
-                 goodDel(form.pNumber.value);
-            }
-        });
-
-
-
 </script>
 </body>
 </html>
