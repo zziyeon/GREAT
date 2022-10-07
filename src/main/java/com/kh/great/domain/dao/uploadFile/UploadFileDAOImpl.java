@@ -1,4 +1,4 @@
-package com.kh.great.domain.common.file;
+package com.kh.great.domain.dao.uploadFile;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.kh.great.domain.common.file;
+package com.kh.great.domain.dao.uploadFile;
 
 import java.util.List;
 import java.util.Optional;

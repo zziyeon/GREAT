@@ -1,6 +1,6 @@
 package com.kh.great.web.dto.mypage;
 
-import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
 import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.product.Product;
 import lombok.Data;

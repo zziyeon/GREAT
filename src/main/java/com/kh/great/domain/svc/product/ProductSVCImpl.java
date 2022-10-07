@@ -2,7 +2,7 @@ package com.kh.great.domain.svc.product;
 
 import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.common.file.FileUtils;
-import com.kh.great.domain.common.file.UploadFileSVC;
+import com.kh.great.domain.svc.uploadFile.UploadFileSVC;
 import com.kh.great.domain.dao.product.ProductDAO;
 import com.kh.great.domain.dao.product.Product;
 import lombok.RequiredArgsConstructor;

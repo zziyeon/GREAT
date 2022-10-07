@@ -1,5 +1,9 @@
-package com.kh.great.domain.common.file;
+package com.kh.great.domain.svc.uploadFile;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.common.file.FileUtils;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
+import com.kh.great.domain.dao.uploadFile.UploadFileDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +29,7 @@ public class UploadFileSVCImpl implements UploadFileSVC {
    * @return 파일Id
    */
   @Override
-  public Long addFile(MultipartFile multipartFile,AttachCode code, Long rid) {
+  public Long addFile(MultipartFile multipartFile, AttachCode code, Long rid) {
     //1)스토리지 저장
     UploadFile uploadFile = fileUtils.multipartFileToUploadFile(multipartFile, code, rid);
     //2)첨부파일 메타정보 저장
