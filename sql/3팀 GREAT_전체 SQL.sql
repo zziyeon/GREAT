@@ -275,13 +275,13 @@ noorder;
 
 --===========================================공지사항================================================================
 create table notice(
-    notice_id    number(8),
-    title          varchar2(150),
-    content     clob,
-    write         varchar2(30),
-    attachments  varchar2(1),
-    count        number(5) default 0,
-    udate       timestamp default systimestamp
+    notice_id       number(8),
+    title           varchar2(150),
+    content         varchar2,
+    write           varchar2(30),
+    attachments     varchar2(1),
+    count           number(5) default 0,
+    udate           timestamp default systimestamp
 );
 --기본키생성
 alter table notice add Constraint notice_notice_id_pk primary key (notice_id);
