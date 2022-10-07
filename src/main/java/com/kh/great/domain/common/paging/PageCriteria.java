@@ -89,4 +89,3 @@ public class PageCriteria {
     return endPage * rc.getREC_COUNT_PER_PAGE() < totalRec ? true : false;
   }
 }
-

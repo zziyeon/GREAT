@@ -1,0 +1,233 @@
+@charset "utf-8";
+
+/* * {outline:1px solid green;} */
+
+.width--800px{
+  width: 800px;
+}
+
+h3{
+  margin:0;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.bar {
+  /* display: flex; */
+  width: 4px;
+  height: 24px;
+  background-color: var(--main-color-yel);
+  margin-right: 5px;
+}
+
+/* main */
+.main {
+display:flex;
+height: 900px;
+padding:0px;
+}
+
+/* management-menu */
+
+.management-menu {
+  flex:1;
+  border-right: 2px solid var(--main-color-gre);
+  padding-top: 50px;
+}
+
+.management-menu li {
+  font-size:18px;
+  margin:10px 0px 0px 20px;
+  padding:5px 0px 5px 10px;
+  width: 125px;
+}
+
+.management-menu li:hover {
+  background-color: var(--main-color-gre);
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.management-menu li a {
+  display: block;
+}
+
+.management-menu li a i {
+  margin-right:7px;
+}
+
+/* member-management */
+.member-management{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  flex:5;
+  margin-top:50px;
+}
+
+.member-management .management-title  h3  {
+  display:flex;
+}
+
+
+/* board-log */
+.board-log{
+  width: 100%;
+}
+
+.board-log thead tr {
+  background-color: var(--mainBtn-color-gre);
+}
+
+.board-log thead tr th {
+
+  text-align: center;
+  font-size: 13px;
+}
+
+.board-log tbody tr td {
+  text-align: center;
+  font-size: 13px;
+  border-bottom: 1px solid var(--mainBtn-color-gre);
+  padding: 5px 0;
+}
+
+.board-log tbody tr .left {
+  text-align: left;
+}
+
+.board-log tbody tr td a {
+  display: block;
+}
+
+.board-log tbody tr td a:hover {
+  text-decoration: underline;
+}
+
+/* memeber-log */
+
+.memeber-log {
+  margin-top:25px;
+}
+
+.log-tab {
+  border-bottom : 2px solid var(--main-color-gre);
+  margin-bottom:25px;
+  padding-bottom: 3px;
+}
+
+.log-tab li {
+  margin-right: 10px;
+}
+
+.log-tab li:hover {
+  background-color: var(--main-color-gre);
+  border-radius: 8px;
+  transition: all 0.5s;
+}
+
+.board-log{
+  width: 100%;
+}
+
+.board-log thead tr {
+  background-color: var(--mainBtn-color-gre);
+}
+
+.board-log thead tr th {
+  text-align: center;
+  font-size: 13px;
+}
+
+.board-log tbody tr td {
+  text-align: center;
+  font-size: 13px;
+  border-bottom: 1px solid var(--mainBtn-color-gre);
+  padding: 5px 0;
+}
+
+.log-tab {
+  display: flex;
+}
+
+.log-delete-tap{
+  display:flex;
+  justify-content: space-between;
+  margin-top:3px;
+}
+
+.log-delete-tap .log-select-all {
+  font-size: 13px;
+  margin-left:2px;
+}
+
+.log-delete-tap .log-select-all label{
+  margin-left:10px;
+}
+
+.log-delete-tap .log-delete-btn {
+  background-color: var(--main-color-yel);
+  /* margin:10px 0;
+  border:none;
+  border-radius: 8px;
+  font-weight: bold; */
+  width: 60px;
+  height: 25px;
+  margin: 5px 0 10px 5px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+/* board__page */
+.board__page {
+  display: flex;
+  justify-content: center;
+}
+
+.board__page--select a {
+  margin: 0 3px;
+  font-size: 13px;
+}
+
+.board__page--select a:hover{
+  background-color: var(--mainBtn-color-gre);
+  border-radius: 5px;
+}
+
+/* board__search */
+.board__search {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.board__search .board__search-box {
+  display: flex;
+}
+
+.board__search .board__search-box div {
+  margin: 0px 3px;
+}
+
+.board__search-box select {
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid var(--mainBtn-color-gre);
+}
+
+.board__search-box .board__search-keyword {
+  border: 1px solid var(--mainBtn-color-gre);
+  border-radius: 8px;
+  padding: 1px;
+}
+
+.board__search-box .board__search-keyword input {
+  border: none;
+}
+
+.board__search .board__search-box .board__search-keyword i {
+  color: gray;
+}
