@@ -41,7 +41,9 @@
             </tbody>
           </table>
           <div class="btn__content">
-            <button id="post__text-btn">글쓰기</button>
+            <th:block th:if="${session.memAdmin=='y'}">
+              <button id="post__text-btn">글쓰기</button>
+            </th:block>
           </div>
           <div class="text__center">
             <ul class="pagination">
@@ -109,12 +111,6 @@
     $postBtn.addEventListener('click', e => {
       location.href = '/notice/write';
     });
-
-    const allChkClick_h = e => {
-      console.log(`click : ${e.target}`);
-
-      const $choose = document.querySelectorAll('.notice-board__table input[type=checkbox]')
-      console.log($choose);
 
   //검색
   const $searchType = document.getElementById('searchType');
