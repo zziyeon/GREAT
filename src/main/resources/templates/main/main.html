@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
     <link rel="stylesheet" th:href="@{/css/product/음식 카테고리.css}">
     <script type="text/javascript" defer th:src="@{/js/main/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/mypage/good.js}"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -54,6 +55,30 @@
     <footer th:replace="~{layout/common_ui::footer}"></footer>
     <!-- //footer -->
 </div>
+<script>
+
+    const hearts = document.querySelectorAll('.heartIcon');
+
+    hearts.forEach((item,idx)=>{
+        hearts[idx].addEventListener('click',e=>{
+
+            let info2 = hearts[idx].parentElement.parentElement.children[2].textContent;
+            let info3 = hearts[idx].parentElement.parentElement.children[3].textContent;
+            let info4 = hearts[idx].parentElement.parentElement.children[4].textContent;
+
+            const data = {pName : info2,
+                        salePrice : info3,
+                        deadline_time : info4
+            };
+
+            let id = hearts[idx].parentElement.parentElement.dataset.productNum;
+            let pNumber = parseInt(id);
+
+            goodAdd(pNumber,data);
+        })
+    });
+
+</script>
 
 </body>
 </html>

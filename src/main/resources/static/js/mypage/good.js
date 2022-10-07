@@ -2,6 +2,7 @@
 
 		//좋아요 추가
 		function goodAdd(pNumber,good){
+		console.log("pNumbwe={}", pNumber);
 		    const url = `http://localhost:9080/mypage/good/${pNumber}`;
 		    fetch(url, {
 		        method:'POST',
@@ -10,9 +11,10 @@
 		            'Accept':'application/json'
                 },
                 body: JSON.stringify(good)
+
                 }).then(res=>res.json())
                   .then(data=>console.log(data))
-                  .catch(err=console.log(err));
+                  .catch(err=>console.log(err));
         		}
 
         //좋아요 삭제
