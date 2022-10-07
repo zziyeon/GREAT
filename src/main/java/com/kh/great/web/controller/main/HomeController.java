@@ -206,7 +206,7 @@ public class HomeController {
 
         //세션에 회원정보 저장
         LoginMember loginMember = new LoginMember(member.get().getMemNumber(), member.get().getMemType(),
-                member.get().getMemId(), member.get().getMemNickname(), member.get().getMemStoreName());
+                member.get().getMemId(), member.get().getMemNickname(), member.get().getMemStoreName(), member.get().getMemAdmin());
 
         //세션 생성
         HttpSession session = request.getSession(true);

@@ -6,11 +6,14 @@ import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.mypage.Good;
 import com.kh.great.domain.dao.mypage.Review;
 import com.kh.great.domain.dao.product.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface MyPageSVC {
+    void update(Long memNumber, Member member, List<MultipartFile> files);
+
     Review save(Review review);
 
     //리뷰조회 - 회원번호로 조회

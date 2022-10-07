@@ -32,7 +32,7 @@ public class ProductSVCImpl implements ProductSVC {
     }
 
     @Override
-    public Long save(Product product, List<MultipartFile> files) {
+    public Long save(Product product, List<MultipartFile> files){
         //1) 상품 등록
         Long num = save(product);
         //2) 첨부파일- 상품 설명
