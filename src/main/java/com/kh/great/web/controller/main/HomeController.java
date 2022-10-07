@@ -198,7 +198,7 @@ public class HomeController {
         Optional<Member> member = memberSVC.login(login.getMemId(), login.getMemPassword());
         log.info("member = {}", member);
         if(member.isEmpty()){
-            bindingResult.reject(null,"회원정보가 없습니다.");
+            bindingResult.reject(null,"회원정보를 찾을 수 없습니다.");
             return "member/login";
         }
 
