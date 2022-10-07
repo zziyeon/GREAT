@@ -4,6 +4,7 @@
 <head>
     <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/member/login.css}">
+    <script type="text/javascript" defer th:src="@{/js/member/login.js}"></script>
     <title>GREAT | 로그인</title>
 </head>
 
@@ -16,7 +17,7 @@
             <div class="title">
                 <h1>로그인</h1>
             </div>
-            <form action="" method="POST" th:object="${login}">
+            <form class="login" action="" method="POST" th:object="${login}">
                 <div class="input-data">
                     <div class="id">
                         <i class="icon__id fa-solid fa-user"></i>
@@ -34,8 +35,14 @@
                     <a th:href="@{/findPw}" class="service__find-pw">비밀번호 찾기</a>
                     <a th:href="@{/join}" class="service__join">회원가입</a>
                 </div>
+                <div class="loginEmpty">
+                    <p>로그인 정보를 입력하세요.</p>
+                </div>
+                <div class="loginFailed" th:if="${#fields.hasGlobalErrors()}">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
                 <div class="wrap-login-btn">
-                    <button type="submit" class="btn login-btn">로그인</button>
+                    <button type="button" class="btn login-btn" onclick='btnClick()'>로그인</button>
                 </div>
                 <!--<div class="wrap-kakao-login-btn">-->
                 <!--    <a href="#"><img th:src="@{/css/common/kakaoLogin.png}" alt="" /></a>-->
