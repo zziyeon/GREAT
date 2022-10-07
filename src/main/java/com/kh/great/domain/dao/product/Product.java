@@ -1,7 +1,7 @@
 package com.kh.great.domain.dao.product;
 
-import com.kh.great.domain.common.file.UploadFile;
-import com.kh.great.domain.dao.deal.Deal;
+import com.kh.great.domain.Deal;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
 import com.kh.great.domain.dao.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;

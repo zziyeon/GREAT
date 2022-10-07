@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/mypage/good.js}"></script>
 </head>
 <body>
 <section th:if="${list.size>0}" class="items content" th:fragment="each_product">
@@ -48,5 +49,15 @@
         </div>
     </div>
 </section>
+<script>
+    const hearts = document.querySelectorAll('.heartIcon');
+
+    hearts.forEach((item,idx)=>{
+        hearts[idx].addEventListener('click',e=>{
+
+        })
+    });
+
+</script>
 </body>
 </html>

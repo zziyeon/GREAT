@@ -110,9 +110,8 @@
         </div>
         <script>
             $imageBtn = document.querySelector('.imageBtn');
-            $image = document.querySelector('.profile__img');
-            $imageBtn.addEventListener('click',()=>{
-                imgBtn.click();
+            $imageBtn.addEventListener('click',(e)=>{
+                location.href = '/mypage/profile/add';
 
                 console.log('클릭')
             });

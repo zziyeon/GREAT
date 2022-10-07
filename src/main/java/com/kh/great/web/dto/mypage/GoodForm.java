@@ -1,6 +1,6 @@
 package com.kh.great.web.dto.mypage;
 
-import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
