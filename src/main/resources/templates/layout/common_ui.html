@@ -54,7 +54,7 @@
                 </li>
             </th:block>
             <a href="" class="top-menu__cs">커뮤니티</a>
-            <a href="" class="top-menu__cs">공지사항</a>
+            <a th:href="@{/notice/list}" class="top-menu__cs">공지사항</a>
         </nav>
         <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
         <div th:replace="~{layout/common_ui::topBtn}"></div>
@@ -90,19 +90,6 @@
     <!-- top버튼 -->
     <div class="topbtn" th:fragment="topBtn">
         <a href="#"><i class="fa-solid fa-angles-up"></i></a>
-    </div>
-
-    <!-- 페이지 버튼 -->
-    <div class="board__page width--900px" th:fragment="pagingBtn">
-        <div class="board__page--select">
-            <a href=""><i class="fa-solid fa-chevron-left"></i>이전</a>
-            <a href="">1</a>
-            <a href="">2</a>
-            <a href="">3</a>
-            <a href="">4</a>
-            <a href="">5</a>
-            <a href="">다음<i class="fa-solid fa-chevron-right"></i></a>
-        </div>
     </div>
 
     <!-- footer -->
