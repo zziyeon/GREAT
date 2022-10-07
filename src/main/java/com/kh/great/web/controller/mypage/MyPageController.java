@@ -315,12 +315,12 @@ public class MyPageController {
         return ApiResponse.createApiResMsg("00","성공",null);
     }
 
-//    //프로필사진 수정화면
-//    @GetMapping("/profile/add")
-//    public String profileImgAddForm(Model model){
-//        model.addAttribute("form" , new ProfileAddForm());
-//        return "mypage/profileAddForm";
-//    }
+    //프로필사진 수정화면
+    @GetMapping("/profile/add")
+    public String profileImgAddForm(Model model){
+        model.addAttribute("form" , new ProfileAddForm());
+        return "mypage/profileAddForm";
+    }
 //
 //    @PostMapping("/profile/add")
 //    public String profileImgAdd(@ModelAttribute("form") ProfileAddForm profileAddForm){
