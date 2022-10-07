@@ -135,14 +135,31 @@ public class ProductController {
     }
 
     //삭제처리
-    @GetMapping("/{num}/del")
+    @GetMapping ("/{num}/del")
     public String delete(@PathVariable("num") Long num) {
+        int deletedRow = productSVC.deleteByProductNum(num);
+        if (deletedRow == 0) {
+            return "redirect:/product/" + num;
+        }
+        return "redirect:/products/{num}/manage";
+    }
+
+    @GetMapping ("/a/del")
+    public String delete2(@PathVariable("num") Long num) {
         int deletedRow = productSVC.deleteByProductNum(num);
         if (deletedRow == 0) {
             return "redirect:/product/" + num;
         }
         return "redirect:/";
     }
+//    @GetMapping ("/products/{num}/manage/del")
+//    public String delete(@PathVariable("num") Long num) {
+//        int deletedRow = productSVC.deleteByProductNum(num);
+//        if (deletedRow == 0) {
+//            return "redirect:/product/" + num;
+//        }
+//        return "redirect:/";
+//    }
 
     //상품관리
 //    @GetMapping("/{ownerNumber}/manage")

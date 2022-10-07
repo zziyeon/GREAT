@@ -1,14 +1,18 @@
 package com.kh.great.domain.svc.mypage;
 
+import com.kh.great.domain.common.file.AttachCode;
 import com.kh.great.domain.dao.member.Member;
+import com.kh.great.domain.dao.member.MemberDAO;
 import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.mypage.Good;
 import com.kh.great.domain.dao.mypage.MyPageDAO;
 import com.kh.great.domain.dao.mypage.Review;
 import com.kh.great.domain.dao.product.Product;
+import com.kh.great.domain.svc.uploadFile.UploadFileSVC;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +23,20 @@ import java.util.Optional;
 public class MyPageSVCImpl implements MyPageSVC {
 
     private final MyPageDAO myPageDAO;
+    private final UploadFileSVC uploadFileSVC;
+    private final MemberDAO memberDAO;
+
+    @Override
+    public void update(Long memNumber, Member member, List<MultipartFile> files){
+        //2) 첨부파일- 상품 설명
+        uploadFileSVC.addFile(files, AttachCode.M0101, memNumber);
+    }
+
+//    public Long update(Member member, List<MultipartFile> files) {
+//        Long num = memberDAO.findMemNumber(member.getMemEmail());
+//        uploadFileSVC.addFile(files, AttachCode.M0101, num);
+//        return num;
+//    }
 
     //리뷰 등록
     @Override

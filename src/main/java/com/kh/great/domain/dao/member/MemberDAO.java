@@ -64,6 +64,13 @@ public interface MemberDAO {
     Member findByMemId(String memId);
 
     /**
+     * 회원번호 찾기
+     * @param memEmail 이메일
+     * @return 회원번호
+     */
+    public Long findMemNumber(String memEmail);
+
+    /**
      * 수정
      * @param memNumber 회원번호
      * @param member  수정할 정보

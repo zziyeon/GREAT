@@ -20,7 +20,7 @@
 <body>
 <div class="wrapper">
     <header th:replace="~{layout/common_ui::choose_header}"></header>
-    <form th:object="${form}">
+    <form method="get" action="/products/a/del" th:object="${form}">
         <main class="main container">
             <article id="product-atf" class="product">
                 <div class="product">
@@ -144,7 +144,7 @@
                     <button type="button" class="btn_list btn">목록</button>
                         <div id="edit_btn">
                             <button type="button" class="btn_modify btn">수정</button>
-                            <button type="button" class="btn_del btn">삭제</button>
+                            <button type="submit" class="btn_del btn">삭제</button>
                         </div>
                 </div>
             </div>

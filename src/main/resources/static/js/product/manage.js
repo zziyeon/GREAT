@@ -161,13 +161,11 @@ function each_sell_status(obj, pNumber, pstatus){
         sell_st_uf(pNumber, obj.value);
     }
     if(obj.value=='del'){
-//        if(confirm("판매글을 삭제하시겠습니까? \n삭제 후 복구 불가합니다."))
-//            window.location.href = "/products/" + pNumber + "/del";
-//        else{
-//            obj.value=pstatus;
-//        }
-        deleteProduct(pNumber);
-
+        if(confirm("판매글을 삭제하시겠습니까? \n삭제 후 복구 불가합니다."))
+            deleteProduct(pNumber);
+        else{
+            obj.value=pstatus;
+        }
     }
 
 }
