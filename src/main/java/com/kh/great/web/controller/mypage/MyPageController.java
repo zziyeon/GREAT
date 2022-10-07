@@ -219,16 +219,23 @@ public class MyPageController {
         products.stream().forEach(product -> {
             BeanUtils.copyProperties(product,profileForm);
             list2.add(product);
+        for (int i = 0; i < list2.size(); i++) {
+            list2.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list2.get(i).getPNumber()));
+            }
         });
+
 
         //판매번호 조회
 
 
         //첨부파일 조회
-        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), profileForm.getPNumber());
-        if(uploadFiles.size() > 0 ){
-            profileForm.setImageFiles(uploadFiles);
-        }
+//        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), profileForm.getPNumber());
+//        if(uploadFiles.size() > 0 ){
+//            profileForm.setImageFiles(uploadFiles);
+//        }
+
 
         BeanUtils.copyProperties(member1,profileForm);
 
@@ -353,13 +360,14 @@ public class MyPageController {
             BeanUtils.copyProperties(good,goodForm);
             log.info("goodForm={}",goodForm);
             list.add(good);
+            for (int i = 0; i < list.size(); i++) {
+                list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                        AttachCode.P0102.name(),
+                        list.get(i).getPNumber()));
+            }
         });
 
-        //첨부파일 조회
-        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), goodForm.getPNumber());
-        if(uploadFiles.size() > 0 ){
-            goodForm.setImageFiles(uploadFiles);
-        }
+
 
         model.addAttribute("list",list);
         model.addAttribute("form",memberForm);
