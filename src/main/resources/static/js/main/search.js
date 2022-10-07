@@ -1,10 +1,10 @@
 // 검색 입력창
 const $searchInput =document.querySelector('.bottom-menu .search .search__search-box');
 // 검색 버튼
-const $searchBtn = document.querySelector('.bottom-menu .search i');
+const $headerSearchBtn = document.querySelector('.bottom-menu .search i');
 
 // 검색 버튼 클릭시
-$searchBtn.addEventListener('click', search_h);
+$headerSearchBtn.addEventListener('click', search_h);
 
 function search_h(){
     console.log("클릭됨");
