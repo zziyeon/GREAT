@@ -30,15 +30,17 @@
                     <input type="file" name="" id="imgBtn">
 
                 </section>
-                <form action="" >
-                    <p><label>회원 유형</label><span th:text="*{memType}">점주</span></p>
+                <form action="" id="profileForm">
+                    <th:block th:switch="*{memType}">
+                        <p><label>회원 유형</label><span th:case="owner" th:text="점주">점주</span></p>
+                    </th:block>
                     <p><label>업종</label><span>한식</span></p>
                     <p><label>가게명</label><span id="memStoreName" name="memStoreName"  th:text="*{memStoreName}">파스타키친</span></p>
                     <p><input type="hidden" id="memNumber" name="memNumber"  th:field="*{memNumber}"></input></p>
                     <p><label>위치</label><span th:text="*{memStoreLocation}">울산 동구</span></p>
                     <p><label>연락처</label><span th:text="*{memStorePhonenumber}">052-1234-5678</span></p>
-                    <p><label>e-mail</label><span th:text="*{memEmail}">homedo@naver.com</span></p>
-                    <p><label>SNS</label><a href="http://www.naver.com" target="blank">http://www.naver.com </a></p>
+                    <p><label>e-mail</label><span th:text="*{memEmail}"></span></p>
+                    <p><label>SNS</label><a th:href="@{${form.memStoreSns}}" th:text="*{memStoreSns}"></a></p>
                     <p><label>가게 소개</label><span id="memStoreIntroduce" name="memStoreIntroduce" th:text="*{memStoreIntroduce}" >파스타 맛있는 가게</span></p>
                     <p><label>평점</label>
                         <i class="fa-solid fa-star"></i>
@@ -80,7 +82,7 @@
                         
                             <ul class="tab-content--sell">
                                 <li class="sell" th:each="product:${list2}">
-                                    <a th:href="@{/products/{pNumber}(pNumber=${product.pNumber})}">
+                                    <a th:href="@{/product/{pNumber}(pNumber=${product.pNumber})}">
                                         <div class="product-img">
                                             <th:block th:if="${product.imageFiles}">
                                                 <th:block th:each="imageFile : ${product.imageFiles[0]}">
