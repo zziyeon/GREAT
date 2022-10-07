@@ -19,11 +19,11 @@
                 <table class="write_tb">
                     <tr>
                         <th ><label for="pTitle">글제목</label></th>
-                        <td colspan="3"><input class="title" type="text" th:field="*{pTitle}"  placeholder="제목을 입력하세요(30자 이내)"></td>
+                        <td colspan="3"><input class="title" type="text" th:field="*{pTitle}"  placeholder="제목을 입력하세요(100자 이내)"></td>
                     </tr>
                     <tr>
                         <th><label for="pName">상품명</label></th>
-                        <td><input type="text" th:field="*{pName}" placeholder="20자 이내"></td>
+                        <td><input type="text" th:field="*{pName}" placeholder="10자 이내"></td>
                         <th><label for="deadlineTime">마감시간</label></th>
                         <td><input type="datetime-local" id="currentTime" th:field="*{deadlineTime}"></td>
                     </tr>
@@ -76,6 +76,27 @@
 </div>
 
 <script>
+    // 정상가
+    normalPrice.addEventListener('keyup', e=>{
+        if(isNaN(normalPrice.value)||normalPrice.value <=0){
+            if(!normalPrice.classList.contains('fieldError')){
+                normalPrice.classList.add('fieldError');
+            }
+        }else{
+            normalPrice.classList.remove('fieldError');
+        }
+    });
+
+    normalPrice.addEventListener('keyup', e=>{
+    if(isNaN(normalPrice.value)||normalPrice.value <=0){
+        if(!normalPrice.classList.contains('fieldError')){
+            normalPrice.classList.add('fieldError');
+        }
+    }else{
+        normalPrice.classList.remove('fieldError');
+    }
+    });
+
     //<!-- 취소 버튼 -->
     const $cancelBtn = document.getElementById('cancelBtn');
     $cancelBtn.addEventListener('click', evt=>{

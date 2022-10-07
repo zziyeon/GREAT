@@ -1,0 +1,68 @@
+@charset "utf-8";
+
+.page-title {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.notice__write-information {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+
+.notice input {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.notice__btn-box {
+  display: flex;
+  justify-content: end;
+  /* padding: 2px; */
+}
+.notice__btn-box button {
+  background-color: var(--main-color-yel);
+  width: 60px;
+  height: 25px;
+  margin: 5px 0 10px 5px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.notice__title h2{
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.notice__file {
+  width: 10px;
+  height: 4px;
+}
+
+.bt_se {
+  display: flex;
+  justify-content: end;
+}
+
+.container {
+  padding: 10px;
+}
+
+#uncontent {
+  width: 40vw;
+  height: 20px;
+}
+
+#ucontent {
+  width: 80vw;
+  height: 500px;
+}
+
+.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-read-only{
+    width: 1000px;
+    height: 800px;
+}

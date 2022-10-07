@@ -132,7 +132,7 @@ fetch(url, {
                     <td>${product.deal.orderNumber}</td>
                     <td>${product.deal.orderdate}</td>
                     <td>${product.member.memNickname}</td>
-                    <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
+                    <td><a href="/product/${product.pnumber}/">${product.pname}</a></td>
                     <td>${product.deal.pcount}</td>
                     <td>${product.deal.price}</td>
                     <td>${product.deal.visittime}</td>

@@ -138,7 +138,7 @@ fetch(url, {
                        <option value="del">삭제</option>
                       </select>
                     </td>
-                    <td><a href="/products/${product.pnumber}/">${product.pname}</a></td>
+                    <td><a href="/product/${product.pnumber}/">${product.pname}</a></td>
                     <td>${product.salePrice}/ ${product.normalPrice}원</td>
                     <td>${product.remainCount}/${product.totalCount}개</td>
                     <td>${product.rdate}</td>
@@ -161,9 +161,8 @@ function each_sell_status(obj, pNumber, pstatus){
         sell_st_uf(pNumber, obj.value);
     }
     if(obj.value=='del'){
-        if(check){
+        if(confirm("판매글을 삭제하시겠습니까? \n삭제 후 복구 불가합니다."))
             window.location.href = "/products/" + pNumber + "/del";
-        }
         else{
             obj.value=pstatus;
         }

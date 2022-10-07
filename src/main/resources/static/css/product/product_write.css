@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+input:focus {
+    outline: block;
+ }
+
+.fieldError {
+    border: solid 2px #ee3d10; border-radius: 8px; 
+}
+
 * {
     /* outline: 1px solid plum; */
 }

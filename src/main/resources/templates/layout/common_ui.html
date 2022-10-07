@@ -46,6 +46,13 @@
                     </ul>
                 </li>
             </th:block>
+            <th:block th:if="${session.memAdmin}=='y'">
+                <li th:class="top-menu__member"><a th:href="@{/member/infoChk}" th:text="${session.memNickname} + 님">회원님</a>
+                    <ul>
+                        <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a></li>
+                    </ul>
+                </li>
+            </th:block>
             <a href="" class="top-menu__cs">커뮤니티</a>
             <a href="" class="top-menu__cs">공지사항</a>
         </nav>

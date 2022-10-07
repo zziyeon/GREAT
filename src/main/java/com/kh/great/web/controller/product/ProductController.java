@@ -5,7 +5,6 @@ import com.kh.great.domain.dao.uploadFile.UploadFile;
 import com.kh.great.domain.svc.uploadFile.UploadFileSVC;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.product.ProductSVC;
-import com.kh.great.web.dto.product.DetailForm;
 import com.kh.great.web.dto.product.SaveForm;
 import com.kh.great.web.dto.product.UpdateForm;
 import lombok.RequiredArgsConstructor;
@@ -41,12 +40,37 @@ public class ProductController {
     //등록처리
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("form") SaveForm saveForm, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        log.info("savdForm={}", saveForm);
         //기본검증
         if(bindingResult.hasErrors()){
             log.info("bindingResult={}", bindingResult);
             return "product/addForm";
         }
+        // 필드 검증
+        // 글제목 30자 초과 금지
+        if (saveForm.getPTitle().length() > 30) {
+            bindingResult.rejectValue("ptitle", "product.ptitle", new Integer[]{30}, "글제목 30자 초과");
+            log.info("bindingResult={}", bindingResult);
+            return "product/addForm";
+        }
+        // 상품명 10자 이내
+        if (saveForm.getPName().length() > 10) {
+            bindingResult.rejectValue("pName", "product.pname", new Integer[]{10}, "상품명 10자 초과");
+            log.info("bindingResult={}", bindingResult);
+            return "product/addForm";
+        }
+        // 총수량 99999초과 금지
+        if (saveForm.getTotalCount() > 99999) {
+            bindingResult.rejectValue("totalCount", "product.totalcount", new Integer[]{99999}, "판매수량 초과");
+            log.info("bindingResult={}", bindingResult);
+            return "product/addForm";
+        }
+        // 정상가 > 할인가
+        if (saveForm.getNormalPrice() > saveForm.getSalePrice()) {
+            bindingResult.reject("product.pricerange", "할인가보다 정상가가 커야합니다.");
+            log.info("bindingResult={}", bindingResult);
+            return "product/addForm";
+        }
+
         Product product = new Product();
         BeanUtils.copyProperties(saveForm, product);
         Long pNum = 0l;
@@ -63,36 +87,7 @@ public class ProductController {
         }
 
         redirectAttributes.addAttribute("num", pNum);
-        return "redirect:/products/{num}";
-    }
-
-    //상품 개별 조회
-    @GetMapping("/{num}")
-    public String findByProductNum(@PathVariable("num") Long num, Model model) {
-        //1) 상품조회
-        Product findedProduct = productSVC.findByProductNum(num);
-        DetailForm detailForm = new DetailForm();
-
-        BeanUtils.copyProperties(findedProduct, detailForm);
-
-        //2) 첨부파일 조회
-//        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
-//        if(uploadFiles.size() > 0 ){
-//            List<UploadFile> imageFiles = new ArrayList<>();
-//            for (UploadFile file : uploadFiles) {
-//                imageFiles.add(file);
-//            }
-//            detailForm.setImageFiles(imageFiles);
-//        }
-
-        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), num);
-        if(uploadFiles.size() > 0 ){
-            detailForm.setImageFiles(uploadFiles);
-        }
-        log.info("detailForm={}",detailForm);
-        model.addAttribute("form", detailForm);
-
-        return "product/detailForm";
+        return "redirect:/product/{num}";
     }
 
     //수정 화면
@@ -136,7 +131,7 @@ public class ProductController {
 //        }
 
         redirectAttributes.addAttribute("num", num);
-        return "redirect:/products/{num}";
+        return "redirect:/{num}";
     }
 
     //삭제처리
@@ -144,7 +139,7 @@ public class ProductController {
     public String delete(@PathVariable("num") Long num) {
         int deletedRow = productSVC.deleteByProductNum(num);
         if (deletedRow == 0) {
-            return "redirect:/products/" + num;
+            return "redirect:/product/" + num;
         }
         return "redirect:/";
     }
