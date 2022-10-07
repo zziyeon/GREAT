@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+  <link rel="stylesheet" href="/css/notice/noticeModify.css">
+  <link rel="stylesheet" href="/css/common/common.css">
+  <script th:src="@{/css/common/js/ckeditor.js}"></script>
+  <title>공지사항 수정화면</title>
+
+  <style>
+    .board-write__notice-main span {
+      color: red;
+    }
+      #modifyBtn, #cancelBtn{
+        background-color: var(--main-color-yel);
+        margin: 5px 0 10px 5px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 40px;
+        height: 30px;
+      }
+  </style>
+</head>
+
+<body>
+<div class="wrapper">
+  <header th:replace="~{layout/common_ui::choose_header}"></header>
+  <main class="container">
+    <form class="board-write__content" method="post" th:object="${editForm}">
+      <div class="board-write__title width--1000px">
+        <h2><i class="bar"></i>글수정</h2>
+      </div>
+      <div class="board-write__notice-main width--900px">
+        <input type="text" name="title" id="noticeTitle" placeholder="제목을 입력하세요." autofocus th:field="*{title}">
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+      </div>
+      <div class="board-write__notice-main width--900px">
+          <textarea class="board-write__notice-content" name="content" id="noticeContent" cols="30" rows="10"
+                    placeholder="내용을 작성하세요." autofocus th:field="*{content}"></textarea>
+      </div>
+      <div class="board-write__complete width--1000px"
+      th:action="@{/notice/{id}(id=${editForm.noticeId})}">
+        <button id="cancelBtn">취소</button>
+        <button id="modifyBtn">수정</button>
+      </div>
+    </form>
+  </main>
+  <footer th:replace="~{layout/common_ui::footer}"></footer>
+</div>
+</div>
+<script th:inline="javascript">
+
+    //취소 버튼 클릭
+    const $cancelBtn = document.getElementById('cancelBtn');
+     $cancelBtn.addEventListener('click', e => {
+     console.log('클릭');
+     if(!confirm('게시글 수정을 취소하시겠습니까?')) return;
+      location.href = '/notice/[[${editForm.noticeId}]]';
+    });
+
+    //수정버튼 클릭
+    const $completeBtn = document.getElementById('modifyBtn');
+     $completeBtn.addEventListener('click', e => {
+      location.href = '/notice/[[${editForm.noticeId}]]';
+    });
+
+       //유효성 체크 함수
+    function validChk() {
+      const regex = / /gi;
+      //제목 입력 필수
+      if (noticeTitle.value.replace(regex, '').length == 0) {
+        alert('제목을 입력해주세요.');
+        return;
+      }
+      //제목 50자 이하
+      if (noticeTitle.value.length > 50) {
+        alert('제목은 50자 이내여야합니다.');
+        return;
+      }
+      //내용 입력 필수
+      if (window.editor.getData().length == 0) {
+        alert('내용을 입력해주세요.');
+        return;
+      }
+
+      return true;
+    };
+
+    //ckeditor
+    ClassicEditor
+		.create( document.querySelector( '#noticeContent' ), {
+		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
+			toolbar: {
+				items: [
+					'heading',
+					'|',
+					'underline',
+					'bold',
+					'italic',
+					'link',
+					'bulletedList',
+					'numberedList',
+					'todoList',
+					'|',
+					'outdent',
+					'indent',
+					'|',
+					'imageInsert',
+					'imageUpload',
+					'blockQuote',
+					'insertTable',
+					'mediaEmbed',
+					'markdown',
+					'undo',
+					'redo',
+					'|',
+					'highlight',
+					'fontFamily',
+					'fontColor',
+					'fontBackgroundColor',
+					'fontSize',
+					'|',
+					'htmlEmbed',
+					'specialCharacters'
+				]
+			},
+			language: 'en',
+			image: {
+				toolbar: [
+					'imageTextAlternative',
+					'imageStyle:full',
+					'imageStyle:side'
+				]
+			},
+			table: {
+				contentToolbar: [
+					'tableColumn',
+					'tableRow',
+					'mergeTableCells',
+					'tableCellProperties',
+					'tableProperties'
+				]
+			},
+		})
+		.then( editor => {
+
+			window.editor = editor;
+		} )
+		.catch( error => {
+			console.error( error );
+		} );
+</script>
+</body>
+</html>

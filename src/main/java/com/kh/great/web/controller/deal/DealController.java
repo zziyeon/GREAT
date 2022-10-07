@@ -2,8 +2,8 @@ package com.kh.great.web.controller.deal;
 
 
 import com.kh.great.domain.common.file.AttachCode;
-import com.kh.great.domain.common.file.UploadFile;
-import com.kh.great.domain.common.file.UploadFileSVC;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
+import com.kh.great.domain.svc.uploadFile.UploadFileSVC;
 import com.kh.great.domain.dao.deal.Deal;
 import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.deal.DealSVC;

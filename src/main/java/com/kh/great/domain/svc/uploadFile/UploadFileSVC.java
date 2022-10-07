@@ -1,5 +1,7 @@
-package com.kh.great.domain.common.file;
+package com.kh.great.domain.svc.uploadFile;
 
+import com.kh.great.domain.common.file.AttachCode;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

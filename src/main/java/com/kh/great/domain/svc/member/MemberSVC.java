@@ -32,7 +32,7 @@ public interface MemberSVC {
     /**
      * 비밀번호 재설정
      * @param memNumber 회원번호
-     * @param member 수정할 정보
+     * @param newPassword 수정할 정보
      * @return 재설정건수
      */
     Long resetPw(Long memNumber, String newPassword);

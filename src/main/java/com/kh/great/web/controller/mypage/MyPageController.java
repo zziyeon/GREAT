@@ -1,8 +1,6 @@
 package com.kh.great.web.controller.mypage;
 
 import com.kh.great.domain.common.file.AttachCode;
-import com.kh.great.domain.common.file.UploadFile;
-import com.kh.great.domain.common.file.UploadFileSVC;
 import com.kh.great.domain.dao.deal.Deal;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.mypage.Bookmark;
@@ -12,6 +10,7 @@ import com.kh.great.domain.dao.product.Product;
 import com.kh.great.domain.svc.deal.DealSVC;
 import com.kh.great.domain.svc.mypage.MyPageSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
+import com.kh.great.domain.svc.uploadFile.UploadFileSVC;
 import com.kh.great.web.api.ApiResponse;
 import com.kh.great.web.dto.mypage.*;
 import lombok.AllArgsConstructor;
@@ -218,16 +217,23 @@ public class MyPageController {
         products.stream().forEach(product -> {
             BeanUtils.copyProperties(product,profileForm);
             list2.add(product);
+        for (int i = 0; i < list2.size(); i++) {
+            list2.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                    AttachCode.P0102.name(),
+                    list2.get(i).getPNumber()));
+            }
         });
+
 
         //판매번호 조회
 
 
         //첨부파일 조회
-        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), profileForm.getPNumber());
-        if(uploadFiles.size() > 0 ){
-            profileForm.setImageFiles(uploadFiles);
-        }
+//        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), profileForm.getPNumber());
+//        if(uploadFiles.size() > 0 ){
+//            profileForm.setImageFiles(uploadFiles);
+//        }
+
 
         BeanUtils.copyProperties(member1,profileForm);
 
@@ -315,12 +321,12 @@ public class MyPageController {
         return ApiResponse.createApiResMsg("00","성공",null);
     }
 
-//    //프로필사진 수정화면
-//    @GetMapping("/profile/add")
-//    public String profileImgAddForm(Model model){
-//        model.addAttribute("form" , new ProfileAddForm());
-//        return "mypage/profileAddForm";
-//    }
+    //프로필사진 수정화면
+    @GetMapping("/profile/add")
+    public String profileImgAddForm(Model model){
+        model.addAttribute("form" , new ProfileAddForm());
+        return "mypage/profileAddForm";
+    }
 //
 //    @PostMapping("/profile/add")
 //    public String profileImgAdd(@ModelAttribute("form") ProfileAddForm profileAddForm){
@@ -350,13 +356,14 @@ public class MyPageController {
             BeanUtils.copyProperties(good,goodForm);
             log.info("goodForm={}",goodForm);
             list.add(good);
+            for (int i = 0; i < list.size(); i++) {
+                list.get(i).setImageFiles(uploadFileSVC.getFilesByCodeWithRid(
+                        AttachCode.P0102.name(),
+                        list.get(i).getPNumber()));
+            }
         });
 
-        //첨부파일 조회
-        List<UploadFile> uploadFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.P0102.name(), goodForm.getPNumber());
-        if(uploadFiles.size() > 0 ){
-            goodForm.setImageFiles(uploadFiles);
-        }
+
 
         model.addAttribute("list",list);
         model.addAttribute("form",memberForm);

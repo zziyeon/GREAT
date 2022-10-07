@@ -51,13 +51,13 @@
 
                     <a href="" class = "item__image">
                         <div class="product-img">
-                            <th:block th:if="${goods.imageFiles}">
-                                <th:block th:each="imageFile : ${goods.imageFiles[0]}">
+                            <th:block th:if="${good.imageFiles}">
+                                <th:block th:each="imageFile : ${good.imageFiles[0]}">
                                     <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
                                          alt="이미지를 불러올수 없습니다">
                                 </th:block>
                             </th:block>
-                            <th:block th:if="!(${goods.imageFiles})">
+                            <th:block th:if="!(${good.imageFiles})">
                                 <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                             </th:block>
 

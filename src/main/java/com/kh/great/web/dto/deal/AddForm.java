@@ -1,6 +1,6 @@
 package com.kh.great.web.dto.deal;
 
-import com.kh.great.domain.common.file.UploadFile;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
 import com.kh.great.domain.dao.member.Member;
 import com.kh.great.domain.dao.product.Product;
 import lombok.AllArgsConstructor;
