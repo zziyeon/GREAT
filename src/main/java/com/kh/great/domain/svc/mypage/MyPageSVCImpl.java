@@ -21,16 +21,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MyPageSVCImpl implements MyPageSVC {
-
     private final MyPageDAO myPageDAO;
-    private final UploadFileSVC uploadFileSVC;
     private final MemberDAO memberDAO;
 
-    @Override
-    public void update(Long memNumber, Member member, List<MultipartFile> files){
-        //2) 첨부파일- 상품 설명
-        uploadFileSVC.addFile(files, AttachCode.M0101, memNumber);
-    }
+//    @Override
+//    public void update(Long memNumber, Member member, List<MultipartFile> files){
+//        //2) 첨부파일- 상품 설명
+//        uploadFileSVC.addFile(files, AttachCode.M0101, memNumber);
+//    }
 
 //    public Long update(Member member, List<MultipartFile> files) {
 //        Long num = memberDAO.findMemNumber(member.getMemEmail());
@@ -51,7 +49,6 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //리뷰조회 - 리뷰번호로 조회
-
     @Override
     public Optional<Review> findByReviewNumber(Long reviewNumber) {
         return myPageDAO.findByReviewNumber(reviewNumber);
@@ -64,8 +61,6 @@ public class MyPageSVCImpl implements MyPageSVC {
     }
 
     //판매글조회 - 프로필에서
-
-
     @Override
     public List<Product> findByOwnerNumber(Long ownerNumber) {
         return myPageDAO.findByOwnerNumber(ownerNumber);
