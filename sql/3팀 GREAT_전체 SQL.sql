@@ -277,7 +277,7 @@ noorder;
 create table notice(
     notice_id    number(8),
     title          varchar2(150),
-    content     Varchar2(1500),
+    content     clob,
     write         varchar2(30),
     attachments  varchar2(1),
     count        number(5) default 0,
