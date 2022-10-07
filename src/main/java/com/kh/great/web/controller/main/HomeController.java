@@ -206,7 +206,7 @@ public class HomeController {
 
         //세션에 회원정보 저장
         LoginMember loginMember = new LoginMember(member.get().getMemNumber(), member.get().getMemType(),
-                member.get().getMemId(), member.get().getMemNickname(), member.get().getMemStoreName());
+                member.get().getMemId(), member.get().getMemNickname(), member.get().getMemStoreName(), member.get().getMemAdmin());
 
         //세션 생성
         HttpSession session = request.getSession(true);
@@ -214,6 +214,7 @@ public class HomeController {
         session.setAttribute("memNumber", member.get().getMemNumber());
         session.setAttribute("memType", member.get().getMemType());
         session.setAttribute("memNickname", member.get().getMemNickname());
+        session.setAttribute("memAdmin", member.get().getMemAdmin());
 
         return "redirect:" + redirectUrl;
     }
