@@ -21,7 +21,6 @@
           <table class="notice-board__table">
             <thead>
             <tr>
-              <th></th>
               <th>번호</th>
               <th>제목</th>
               <th>등록일</th>
@@ -31,7 +30,6 @@
             </thead>
             <tbody>
             <tr th:each="notice :${listForm}">
-              <td><input type="checkbox" class="check"></td>
               <td class="noticeId" th:text="${notice.noticeId}">5</td>
               <td class="noticeTitle"><a
                   th:href="@{/notice/{id}(id=${notice.noticeId})}"
@@ -42,12 +40,8 @@
             </tr>
             </tbody>
           </table>
-          <div class="check__del">
-            <input type="checkbox" name="" id="allChk"><span>전체선택</span>
-          </div>
           <div class="btn__content">
             <button type="button" id="post__text-btn">글쓰기</button>
-            <button type="button" onclick="button_event();" class="btn__text">삭제</button>
           </div>
           <div class="text__center">
             <ul class="pagination">
@@ -121,19 +115,6 @@
 
       const $choose = document.querySelectorAll('.notice-board__table input[type=checkbox]')
       console.log($choose);
-
-
-      $choose.forEach($choose => $choose.checked = e.target.checked ? true : false);
-    }
-    document.getElementById('allChk').addEventListener('click', allChkClick_h);
-
-    function button_event() {
-      if (confirm("정말 삭제하시겠습니까??") == true) {    //확인
-        document.form.submit();
-      } else {   //취소
-        return;
-      }
-    }
 
   //검색
   const $searchType = document.getElementById('searchType');
