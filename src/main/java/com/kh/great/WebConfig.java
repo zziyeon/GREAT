@@ -44,8 +44,6 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/product/**");
         whiteList.add("/notice/list");
 
-
-
         registry.addInterceptor(new LoginInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
