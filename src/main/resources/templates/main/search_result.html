@@ -13,19 +13,6 @@
   <header th:replace="~{layout/common_ui::choose_header}"></header>
   <main class="main container" th:with="searchKeyword=${param.searchKeyword}">
     <section class="title content">'<p th:data-searchKeyword="${searchKeyword}" th:text="${searchKeyword}"></p> '에 대한 검색 결과 </section>
-<!--    <section class="food-type">-->
-<!--      <ul>-->
-<!--        <li id="food-type_selected"><a href="">전체</a></li>-->
-<!--        <li><a href="">한식</a></li>-->
-<!--        <li><a href="">중식</a></li>-->
-<!--        <li><a href="">일식</a></li>-->
-<!--        <li><a href="">양식</a></li>-->
-<!--        <li><a href="">아시안식</a></li>-->
-<!--        <li><a href="">분식</a></li>-->
-<!--        <li><a href="">도시락</a></li>-->
-<!--        <li><a href="">디저트</a></li>-->
-<!--      </ul>-->
-<!--    </section>-->
     <div class="view_array">
       <div class="view_array-total">총 <span th:text="|${list.size}|"></span> 건</div>
       <div class="view_array-type">
