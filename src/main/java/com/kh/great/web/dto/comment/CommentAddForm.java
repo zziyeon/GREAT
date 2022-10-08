@@ -1,6 +1,7 @@
 package com.kh.great.web.dto.comment;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
@@ -13,10 +14,10 @@ public class CommentAddForm {
   private Long commentOrder;        // 댓글 순서
   private String pCommentNickname;  // 부모 댓글 닉네임
   private Long memNumber;           //  mem_number           number(6),  -- 회원 번호
+  @Length(min = 1, max = 200)
   private String commentContents;   //  comment_contents     clob,       -- 댓글 내용
   private String reply;             // 답글 여부
 //  private LocalDateTime createDate; //  create_date          date,       -- 댓글 생성일
-//  private Long commentIndent;       //  comment_indent       number(3)  -- 대댓글 들여쓰기
 //  private Member member;
   private MultipartFile file;        //이미지 첨부 : 단건
 }
