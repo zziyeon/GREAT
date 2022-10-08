@@ -91,6 +91,7 @@ button:hover {
 
 .notice__board .notice-title h3 {
   display: flex;
+  margin-bottom: 10px;
 }
 
 
