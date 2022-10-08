@@ -51,6 +51,7 @@
   <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 <script async th:inline="javascript">
+    //세션
     document.getElementById("notice__ss").style.display = (
         [[${session.memAdmin}]] == 'y' ? "block" : "none"
     );
@@ -139,7 +140,6 @@
 		.catch( error => {
 			console.error( error );
 		} );
-
 </script>
 </body>
-</head></html>
+</html>
