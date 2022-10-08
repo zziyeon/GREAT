@@ -53,7 +53,7 @@
                     </ul>
                 </li>
             </th:block>
-            <a href="" class="top-menu__cs">커뮤니티</a>
+            <a th:href="@{/community/list}" class="top-menu__cs">커뮤니티</a>
             <a th:href="@{/notice/list}" class="top-menu__cs">공지사항</a>
         </nav>
         <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
@@ -80,9 +80,6 @@
             <div class="search">
                 <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
                 <i class="fa-solid fa-magnifying-glass"></i>
-<!--                <a href="" class="search__search-icon">-->
-<!--                    <i class="fa-solid fa-magnifying-glass"></i>-->
-<!--                </a>-->
             </div>
         </nav>
     </th:block>

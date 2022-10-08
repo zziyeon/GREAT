@@ -2,61 +2,63 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/common/common.css">
+<!--  <meta charset="UTF-8">-->
+<!--  <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
+
+<!--  <link rel="stylesheet" href="/css/common/common.css">-->
   <link rel="stylesheet" href="/css/community/articleWriter.css">
-  <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
+<!--  <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>-->
   <script th:src="@{/js/common/common.js}"></script>
   <script th:src="@{/js/common/ckeditor.js}"></script>
-<!--  <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>-->
   <title>GREAT 게시글 - 작성자</title>
 </head>
 <body>
   <div class="wrapper">
-    <header class="header container">
-      <nav class="top-menu content">
-        <a href="#" class="top-menu__join">회원가입</a>
-        <a href="#" class="top-menu__login">로그인</a>
-        <a href="#" class="top-menu__cs">고객센터</a>
-      </nav>
-      <div class="logo content"><a href="#">GR<span>EAT</span></a></div>
-      <nav class="bottom-menu content">
-        <div class="category">
-          <ul>
-            <li class="food-category">업종별 카테고리
-              <ul>
-                <li><a href="#">한식</a></li>
-                <li><a href="#">중식</a></li>
-                <li><a href="#">일식</a></li>
-                <li><a href="#">양식</a></li>
-                <li><a href="#">아시안식</a></li>
-                <li><a href="#">분식</a></li>
-                <li><a href="#">도시락</a></li>
-                <li><a href="#">카페/디저트</a></li>
-              </ul>
-            </li>
-            <li class="region-category">지역별 카테고리
-              <ul>
-                <li><a href="#">서울</a></li>
-                <li><a href="#">인천</a></li>
-                <li><a href="#">대전</a></li>
-                <li><a href="#">광주</a></li>
-                <li><a href="#">대구</a></li>
-                <li><a href="#">울산</a></li>
-                <li><a href="#">부산</a></li>
-                <li><a href="#">제주</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div class="search">
-          <input type="text" class="search__search-box" placeholder="  검색어를 입력하세요.">
-          <a href="#" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
-        </div>
-      </nav>
-    </header>
+    <header th:replace="~{layout/common_ui::choose_header}"></header>
+<!--    <header class="header container">-->
+<!--      <nav class="top-menu content">-->
+<!--        <a href="#" class="top-menu__join">회원가입</a>-->
+<!--        <a href="#" class="top-menu__login">로그인</a>-->
+<!--        <a href="#" class="top-menu__cs">고객센터</a>-->
+<!--      </nav>-->
+<!--      <div class="logo content"><a href="#">GR<span>EAT</span></a></div>-->
+<!--      <nav class="bottom-menu content">-->
+<!--        <div class="category">-->
+<!--          <ul>-->
+<!--            <li class="food-category">업종별 카테고리-->
+<!--              <ul>-->
+<!--                <li><a href="#">한식</a></li>-->
+<!--                <li><a href="#">중식</a></li>-->
+<!--                <li><a href="#">일식</a></li>-->
+<!--                <li><a href="#">양식</a></li>-->
+<!--                <li><a href="#">아시안식</a></li>-->
+<!--                <li><a href="#">분식</a></li>-->
+<!--                <li><a href="#">도시락</a></li>-->
+<!--                <li><a href="#">카페/디저트</a></li>-->
+<!--              </ul>-->
+<!--            </li>-->
+<!--            <li class="region-category">지역별 카테고리-->
+<!--              <ul>-->
+<!--                <li><a href="#">서울</a></li>-->
+<!--                <li><a href="#">인천</a></li>-->
+<!--                <li><a href="#">대전</a></li>-->
+<!--                <li><a href="#">광주</a></li>-->
+<!--                <li><a href="#">대구</a></li>-->
+<!--                <li><a href="#">울산</a></li>-->
+<!--                <li><a href="#">부산</a></li>-->
+<!--                <li><a href="#">제주</a></li>-->
+<!--              </ul>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--        <div class="search">-->
+<!--          <input type="text" class="search__search-box" placeholder="  검색어를 입력하세요.">-->
+<!--          <a href="#" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>-->
+<!--        </div>-->
+<!--      </nav>-->
+<!--    </header>-->
     <main class="main container">
       <div class="article" th:action th:object="${articleForm}">
         <div class="article__header width--900px">
@@ -77,12 +79,14 @@
         <div class="article__content width--900px">
           <textarea class="board-write__article-content" name="" id="articleContents" cols="30" rows="10"
                     placeholder="내용을 작성하세요." autofocus th:text="*{articleContents}" style="visibility:hidden"></textarea>
+          <th:block th:if="${session.memNumber == articleForm.memNumber}">
           <form th:action="@{/community/edit/{id}(id=${articleForm.articleNum})}">
             <div class="article__btn-box">
               <button id="article__modify-btn">수정</button>
               <button id="article__delete-btn" type="button">삭제</button>
             </div>
           </form>
+          </th:block>
 
         </div>
 
@@ -267,11 +271,9 @@
       </div>
 
     </main>
-    <footer class="footer container">
-      <p class="content"></p>
-    </footer>
+    <footer th:replace="~{layout/common_ui::footer}"></footer>
   </div>
-  <script>
+  <script asyn>
     //ckeditor
     newCkeditor(document.querySelector('#articleContents'),true);
 
@@ -281,7 +283,7 @@
 
     //게시글 삭제 버튼 클릭
     const $delBtn = document.getElementById('article__delete-btn');
-    $delBtn.addEventListener('click', e => {
+    $delBtn?.addEventListener('click', e => {
       console.log("삭제 버튼 클릭");
       if (!confirm('게시글을 삭제하시겠습니까?')) return;
       deleteById(id);
@@ -296,7 +298,7 @@
       }).then(res => {
         location.href = '/community/list';
       }).catch(err => console.log(err));
-    }
+    };
 
     //이전 페이지 버튼 클릭
     const $prevPageBtn = document.getElementById('prev-page-btn');
@@ -308,10 +310,16 @@
     //댓글 목록 조회
     findAll(id);
 
+    //댓글 수정, 삭제 버튼 작성자만 나오게
+    // const $changeBtnBox = document.getElementsByClassName('comment-box__info');
+    // for(let i = 0; i < $changeBtnBox.length; i++){
+    //   $changeBtnBox[i].style.display = 'none';
+    // }
+
     //댓글 수 실시간 카운팅 함수
     function commentCountFnc(){
       document.querySelector('#commentsCnt').textContent = document.getElementsByClassName('comment-box').length;
-    }
+    };
 
     //댓글 목록 조회 함수
     function findAll(id){
@@ -334,14 +342,16 @@
                       <a href="#"><img src="/img/community/profile.jpg" class="profileImage" alt=""></a>
                     </div>
                     <div class="comment-box__contents">
-                      <div class="comment-box__top">
+                      <div class="comment-box__top">                       
                         <span href="#" class="font-size--13px" id="comment-box__nickname">${comment.member.memNickname}</span>
+                        ${[[${session.memNumber}]] == comment.memNumber ? `
                         <div class="comment-box__info">
                           <a class="comment-box__modify font-size--12px" href="#" name="commentEditBtn"><i
                               class="fa-regular fa-pen-to-square"></i></a>
                           <a class="comment-box__delete font-size--12px" href="#" name="commentDeleteBtn"><i
                               class="fa-regular fa-trash-can"></i></a>
                         </div>
+                        ` : _}
                       </div>
                       <div class="comment-box__middle">
                         <img class="comment-box__image" width="250px" src="/api/attach/img/${comment.attachFile?.code}/${comment.attachFile?.storeFilename}" onerror="this.style.display='none'">
@@ -366,7 +376,7 @@
             console.log('목록 불러오기 실패');
           }
         }).catch(err=>console.log(err));
-    }
+    };
 
     //댓글 작성 폼 데이터 객체 생성
     const commentAddForm = new FormData();
@@ -392,7 +402,7 @@
     function resetCommentEidtForm(){
       commentEditForm.delete('commentNum');
       commentEditForm.delete('commentContents');
-    }
+    };
 
     //댓글 등록 버튼 클릭
     commentSaveBtn.addEventListener('click',e=>{
@@ -406,12 +416,12 @@
       commentAddForm.append('step','0');
       commentAddForm.append('commentOrder','0');
       commentAddForm.append('pCommentNickname',' ');
-      commentAddForm.append('memNumber','1'); //세션 설정 후 수정
+      commentAddForm.append('memNumber',[[${session.memNumber}]]);
       commentAddForm.append('commentContents',commentInputBox.value.replace(/(?:\r\n|\r|\n)/g, '<br>'));
       commentAddForm.append('reply','N');
       if(imageFile.files.length == 1){
         commentAddForm.append('file', imageFile.files[0]);
-      }
+      };
 
       //3)댓글 등록 처리
       addComment(commentAddForm);
@@ -439,7 +449,7 @@
           findAll(id);
         })
         .catch(err => console.log(err));
-    }
+    };
 
     //답댓글 작성 버튼 클릭
     commentList.addEventListener('click',e=>{
@@ -490,7 +500,7 @@
           commentAddForm.append('step','0');
           commentAddForm.append('commentOrder','0');
           commentAddForm.append('pCommentNickname',e.target.closest('li').previousSibling.dataset.memberNickname);
-          commentAddForm.append('memNumber','1'); //세션 설정 후 수정
+          commentAddForm.append('memNumber',[[${session.memNumber}]]);
           commentAddForm.append('commentContents',commentReplyTextarea.value.replace(/(?:\r\n|\r|\n)/g, '<br>'));
           commentAddForm.append('reply','Y');
           if(imageFile2.files.length == 1){
@@ -573,7 +583,7 @@
           });
         })
         .catch(err => console.log(err));
-    }
+    };
 
     //댓글 수정 함수
     function editComment(commentEditForm){
@@ -588,7 +598,7 @@
           findAll(id);
         })
         .catch(err => console.log(err));
-    }
+    };
 
     //댓글 삭제 버튼 클릭
     commentList.addEventListener('click',e=>{
@@ -609,7 +619,7 @@
       }).then(res => {
         findAll(id);
       }).catch(err => console.log(err));
-  }
+  };
 
     //사진첨부
     imageFile.addEventListener('change',()=>{

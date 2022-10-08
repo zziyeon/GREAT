@@ -6,7 +6,7 @@ const $headerSearchBtn = document.querySelector('.bottom-menu .search i');
 // 검색 버튼 클릭시
 $headerSearchBtn.addEventListener('click', search_h);
 
-function search_h(){
+function search_h(e){
     console.log("클릭됨");
     // 검색어 입력 유무 체크
     if($searchInput.value.trim().length ===0){
@@ -18,5 +18,12 @@ function search_h(){
     const url = `/searchresult?searchKeyword=${$searchInput.value}`;
     location.href=url;
 }
+
+$searchInput.addEventListener('keydown', e=>{
+    if(e.key === 'Enter') {
+        const url = `/searchresult?searchKeyword=${$searchInput.value}`;
+        location.href=url;
+    }
+})
 
 

@@ -99,8 +99,3 @@ button:hover {
 .write-btn #tempSave, #cancelBtn {
     background-color: #e0e0e0;
 }
-
-footer {
-    height: 150px;
-    background-color: grey;
-}

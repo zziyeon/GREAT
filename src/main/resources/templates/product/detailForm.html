@@ -8,16 +8,11 @@
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=035193584894ec4e375eb2ee909abe2f&libraries=services,clusterer,drawing"></script>
     <script type="text/javascript" defer th:src="@{/js/product/store_location.js}"></script>
-<!--    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>-->
     <script type="text/javascript" th:src="@{/js/mypage/good.js}"></script>
     <script th:src="@{/js/common/common.js}"></script>
     <script th:src="@{/js/common/ckeditor.js}"></script>
+<!--    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>-->
 <!--    <script asyn defer th:src="@{/js/product/ckeditor.js}"></script>-->
-    <style>
-        .ck-editor__top{
-            display:none;
-        }
-    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -110,8 +105,7 @@
                     <h4>상품정보</h4>
                     <hr>
                     <textarea class="board-write__article-content" name="detailInfo" id="detailInfo" cols="30" rows="10"
-                              placeholder="내용을 작성하세요." readonly autofocus th:text="*{detailInfo}"></textarea>
-
+                              readonly autofocus th:text="*{detailInfo}" style="visibility:hidden"></textarea>
                 </div>
                 <!-- 가게 위치 지도 -->
                 <hr>
@@ -154,7 +148,7 @@
 </div>
 <script async th:inline="javascript">
     //ckeditor
-<!--    newCkeditor(document.querySelector('#detailInfo'),true);-->
+    newCkeditor(document.querySelector('#detailInfo'),true);
 
     document.getElementById("edit_btn").style.display = (
         [[${session.memNumber}]] == [[${form.ownerNumber}]] ? "block" : "none"
@@ -162,16 +156,11 @@
 
     //<!-- 목록 -->
     document.querySelector('.btn_list').addEventListener('click', e=>{
-        console.log(memStoreLocation.textContent);
-        console.log(typeof(memStoreLocation.textContent));
         let full_loc = memStoreLocation.textContent;
         let loc=full_loc.substr(3,2);
         let gu_loc=full_loc.split(" ");
-        console.log(gu_loc[1]);
-        console.log("111"+loc);
 
         let redirectUrl = "/zonning?zone=" + gu_loc[1] + "&category=전체"
-<!--        location.href = [[@{|/zonning?zone=${loc}&category=전체|}]];-->
         location.href = redirectUrl;
     });
 
@@ -230,70 +219,6 @@
             }
         }
     });
-
-    //ckeditor
-    ClassicEditor
-		.create( document.querySelector( '#detailInfo' ), {
-		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
-			toolbar: {
-				items: [
-					'heading',
-					'|',
-					'underline',
-					'bold',
-					'italic',
-					'link',
-					'bulletedList',
-					'numberedList',
-					'todoList',
-					'|',
-					'outdent',
-					'indent',
-					'|',
-					'imageInsert',
-					'imageUpload',
-					'blockQuote',
-					'insertTable',
-					'mediaEmbed',
-					'markdown',
-					'undo',
-					'redo',
-					'|',
-					'highlight',
-					'fontFamily',
-					'fontColor',
-					'fontBackgroundColor',
-					'fontSize',
-					'|',
-					'htmlEmbed',
-					'specialCharacters'
-				]
-			},
-			language: 'en',
-			image: {
-				toolbar: [
-					'imageTextAlternative',
-					'imageStyle:full',
-					'imageStyle:side'
-				]
-			},
-			table: {
-				contentToolbar: [
-					'tableColumn',
-					'tableRow',
-					'mergeTableCells',
-					'tableCellProperties',
-					'tableProperties'
-				]
-			},
-		})
-		.then( editor => {
-			window.editor = editor;
-			editor.isReadOnly = true;  //읽기모드적용
-		} )
-		.catch( error => {
-			console.error( error );
-		} );
 </script>
 </body>
 </html>
