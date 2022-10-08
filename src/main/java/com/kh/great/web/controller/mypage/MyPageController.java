@@ -7,6 +7,7 @@ import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.mypage.Good;
 import com.kh.great.domain.dao.mypage.Review;
 import com.kh.great.domain.dao.product.Product;
+import com.kh.great.domain.dao.uploadFile.UploadFile;
 import com.kh.great.domain.svc.deal.DealSVC;
 import com.kh.great.domain.svc.mypage.MyPageSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -323,7 +325,9 @@ public class MyPageController {
 
     //프로필사진 수정화면
     @GetMapping("/profile/add")
-    public String profileImgAddForm(Model model){
+    public String profileImgAddForm(@Valid @ModelAttribute("form") SaveForm saveForm, Model model){
+
+
         model.addAttribute("form" , new ProfileAddForm());
         return "mypage/profileAddForm";
     }

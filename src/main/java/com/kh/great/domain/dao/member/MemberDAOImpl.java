@@ -198,6 +198,23 @@ public class MemberDAOImpl implements MemberDAO {
         return findedMember;
     }
 
+//    /**
+//     * 회원번호 찾기
+//     * @param memEmail 이메일
+//     * @return 회원번호
+//     */
+//    public Long findMemNumber(String memEmail) {
+//        StringBuffer sql = new StringBuffer();
+//
+//        sql.append("select mem_number ");
+//        sql.append("  from member ");
+//        sql.append(" where mem_email = ? ");
+//
+//        Long findedMemNumber = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Long.class), memEmail);
+//
+//        return findedMemNumber;
+//    }
+
     /**
      * 수정
      *

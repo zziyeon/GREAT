@@ -141,7 +141,7 @@ public class ApiMemberController {
     //인증코드 발송
     @PostMapping("/mailConfirm")
     public String mailConfirm(@RequestBody EmailDto emailDto) throws MessagingException, UnsupportedEncodingException {
-
+        log.info("왜??");
         return emailSVCimpl.sendEmail(emailDto.getEmail());
     }
 
