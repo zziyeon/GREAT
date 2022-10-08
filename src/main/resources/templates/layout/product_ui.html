@@ -25,7 +25,7 @@
                   <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                 </th:block>
             </a>
-            <button class="heart_Btn"><i class="heartIcon far fa-heart fas"></i></button>
+            <button class="heart_Btn"><i class="heartIcon far fa-heart"></i></button>
             <a href="#" class="item__title">[[${rec.pName}]]</a>
             <div class="item__price-box">
                 <div class="item__discount-rate">[[${rec.discountRate}]]%</div>
@@ -50,13 +50,6 @@
     </div>
 </section>
 <script>
-    const hearts = document.querySelectorAll('.heartIcon');
-
-    hearts.forEach((item,idx)=>{
-        hearts[idx].addEventListener('click',e=>{
-
-        })
-    });
 
 </script>
 </body>
