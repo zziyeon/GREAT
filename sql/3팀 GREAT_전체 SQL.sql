@@ -153,8 +153,7 @@ buyer_number number (6),-- 작성자 번호
 seller_number number(6),-- 판매자 번호
 content varchar2(150),--본문 내용
 write_date date default sysdate, --작성일
-grade number(2), -- 평점
-profile_number number (10) --프로필 번호
+grade number(2) -- 평점
 );     
 
 --리뷰번호 시퀀스 생성
@@ -187,8 +186,7 @@ alter table good add constraint good_p_number_fk
     
 create table bookmark ( --즐겨찾기 테이블
 bookmark_number number(10),  --즐겨찾기 번호
-mem_number number (10),-- 회원 번호
-profile_number number(10)-- 프로필 번호
+mem_number number (10)-- 회원 번호
 );   
 
 --즐겨찾기번호 시퀀스 생성
