@@ -293,8 +293,6 @@ public class ProductDAOImpl implements ProductDAO {
         return result;
     }
 
-
-
     //------------------------------
     // 상품 최신순 목록
     @Override
@@ -389,7 +387,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select * ");
         sql.append("from product_info ");
         sql.append("where p_name like '%"+searchKeyword+"%' or p_title like '%"+searchKeyword+"%' ");
-        sql.append("and P.deadline_time>sysdate and P.REMAIN_COUNT >0 and p_status=0 ");
+        sql.append("and deadline_time>sysdate and REMAIN_COUNT >0 and p_status=0 ");
         sql.append(" order by R_DATE desc ");
 
         List<Product> result= jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
