@@ -107,7 +107,7 @@ public class ProductController {
             }
             updateForm.setImageFiles(imageFiles);
         }
-
+        System.out.println("num = " + num);
         model.addAttribute("form", updateForm);
 
         return "product/updateForm";
@@ -119,19 +119,24 @@ public class ProductController {
         Product product = new Product();
         BeanUtils.copyProperties(updateForm, product);
 
+        System.out.println("updateForm.toString() = " + updateForm.toString());
+        System.out.println("updateForm.getFiles().get(0) = " + updateForm.getFiles().get(0));
+
         //상품 메타정보 수정
         if (updateForm.getFiles().get(0).isEmpty()) {
             productSVC.update(num, product);
         } else if (!updateForm.getFiles().get(0).isEmpty()) {
             productSVC.update(num, product, updateForm.getFiles());
         }
+
 //        int updatedRow = productSVC.update(num, product);
 //        if (updatedRow == 0) {
 //            return  "redirect:/products/{num}";
 //        }
-
-        redirectAttributes.addAttribute("num", num);
-        return "redirect:/{num}";
+        System.out.println("in num = " + num);
+//        redirectAttributes.addAttribute("num", num);
+//        return "redirect:/product/{num}";
+        return "redirect:/product/" + num;
     }
 
     //삭제처리
