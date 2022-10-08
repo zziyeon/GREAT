@@ -1,5 +1,4 @@
-
-function newCkeditor(target,isReadOnly) {
+function newCkeditor(target, isReadOnly) {
  return ClassicEditor.create( target, {
          plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
             toolbar: {
