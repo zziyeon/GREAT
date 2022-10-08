@@ -15,15 +15,6 @@
             <a th:href="@{/product/{pNumber}(pNumber=${(rec.pNumber)})}" class="item__image">
                 <th:block th:if="${#lists.size(rec.imageFiles)}>0">
                     <th:block th:with="one=${#lists.size(rec.imageFiles)}-1">
-                        <p th:text="${one}"></p>
-<!--                        <p th:text="${rec.imageFiles.get(0).storeFilename}"></p>-->
-<!--                        <p th:text="${rec.imageFiles.get(1).storeFilename}"></p>-->
-<!--                        <p th:text="${rec.imageFiles.get(2).storeFilename}"></p>-->
-<!--                        <p th:text="${rec.imageFiles.get(3).storeFilename}"></p>-->
-<!--                        <p th:text="${rec.imageFiles.get(4).storeFilename}"></p>-->
-<!--                        <p th:text="${rec.imageFiles.get(5).storeFilename}"></p>-->
-<!--                        <p th:text="${rec.imageFiles.get(6).storeFilename}"></p>-->
-<!--                        <p th:text="${rec.imageFiles.get(7).storeFilename}"></p>-->
                         <th:block th:each="imageFile : ${rec.imageFiles[one]}">
                             <img class="good_Img" th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
                                  alt="이미지를 불러올수 없습니다">
@@ -34,7 +25,7 @@
                   <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                 </th:block>
             </a>
-            <button class="heart_Btn"><i class="heartIcon far fa-heart fas"></i></button>
+            <button class="heart_Btn"><i class="heartIcon far fa-heart"></i></button>
             <a href="#" class="item__title">[[${rec.pName}]]</a>
             <div class="item__price-box">
                 <div class="item__discount-rate">[[${rec.discountRate}]]%</div>
@@ -59,13 +50,6 @@
     </div>
 </section>
 <script>
-    const hearts = document.querySelectorAll('.heartIcon');
-
-    hearts.forEach((item,idx)=>{
-        hearts[idx].addEventListener('click',e=>{
-
-        })
-    });
 
 </script>
 </body>

@@ -55,14 +55,8 @@ function newCkeditor(target, isReadOnly) {
         })
         .then( editor => {
             window.editor = editor;
-            console.log(editor);
-            console.log("typeof(isReadOnly) -> " + typeof(isReadOnly));
-            console.log("typeof(editor.isReadOnly) -> " + typeof(editor.isReadOnly));
-            console.log("isReadOnly -> " + isReadOnly);
-            console.log("editor.isReadOnly -> " + editor.isReadOnly);
             editor.isReadOnly = isReadOnly;  //읽기모드적용
-            console.log("editor.style.visibility -> " + editor.style.visibility);
-            editor.style.visibility = 'block';
+            //editor.style.visibility = 'block';
         } )
         .catch( error => {
             console.error( error );

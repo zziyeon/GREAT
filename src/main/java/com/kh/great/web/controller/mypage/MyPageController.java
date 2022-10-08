@@ -7,7 +7,6 @@ import com.kh.great.domain.dao.mypage.Bookmark;
 import com.kh.great.domain.dao.mypage.Good;
 import com.kh.great.domain.dao.mypage.Review;
 import com.kh.great.domain.dao.product.Product;
-import com.kh.great.domain.dao.uploadFile.UploadFile;
 import com.kh.great.domain.svc.deal.DealSVC;
 import com.kh.great.domain.svc.mypage.MyPageSVC;
 import com.kh.great.domain.svc.product.ProductSVC;
