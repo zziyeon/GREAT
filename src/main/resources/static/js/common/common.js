@@ -57,7 +57,7 @@ function newCkeditor(target,isReadOnly) {
         .then( editor => {
             window.editor = editor;
             editor.isReadOnly = isReadOnly;  //읽기모드적용
-            editor.style.visibility = 'block';
+            //editor.style.visibility = 'block';
         } )
         .catch( error => {
             console.error( error );

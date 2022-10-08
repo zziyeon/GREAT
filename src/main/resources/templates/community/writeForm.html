@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/css/common/common.css">
   <link rel="stylesheet" href="/css/community/writeForm.css">
   <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
+  <script th:src="@{/js/common/common.js}"></script>
   <script th:src="@{/js/common/ckeditor.js}"></script>
   <title>GREAT 게시글 작성</title>
 </head>
@@ -94,6 +95,9 @@
 </div>
 
 <script>
+    //ckeditor
+    newCkeditor(document.querySelector('#articleContents'),false);
+
     //등록 버튼 클릭
     addBtn.addEventListener('click', e => {
       console.log("등록 버튼 클릭");
@@ -102,7 +106,7 @@
       //2)입력 데이터 가져오기
       const attachmentValue = document.getElementsByTagName('img').length > 0 ? 'Y' : 'N';
       const article = {
-        memNumber : 1,
+        memNumber : 1, //세션 정보 필요
         articleCategory : articleCategory.options[articleCategory.selectedIndex].value,
         articleTitle : articleTitle.value,
         articleContents : window.editor.getData(),
@@ -157,69 +161,6 @@
       return true;
     }
 
-    //ckeditor
-    ClassicEditor
-		.create( document.querySelector( '#articleContents' ), {
-		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
-			toolbar: {
-				items: [
-					'heading',
-					'|',
-					'underline',
-					'bold',
-					'italic',
-					'link',
-					'bulletedList',
-					'numberedList',
-					'todoList',
-					'|',
-					'outdent',
-					'indent',
-					'|',
-					'imageInsert',
-					'imageUpload',
-					'blockQuote',
-					'insertTable',
-					'mediaEmbed',
-					'markdown',
-					'undo',
-					'redo',
-					'|',
-					'highlight',
-					'fontFamily',
-					'fontColor',
-					'fontBackgroundColor',
-					'fontSize',
-					'|',
-					'htmlEmbed',
-					'specialCharacters'
-				]
-			},
-			language: 'en',
-			image: {
-				toolbar: [
-					'imageTextAlternative',
-					'imageStyle:full',
-					'imageStyle:side'
-				]
-			},
-			table: {
-				contentToolbar: [
-					'tableColumn',
-					'tableRow',
-					'mergeTableCells',
-					'tableCellProperties',
-					'tableProperties'
-				]
-			},
-		})
-		.then( editor => {
-
-			window.editor = editor;
-		} )
-		.catch( error => {
-			console.error( error );
-		} );
 </script>
 </body>
 
