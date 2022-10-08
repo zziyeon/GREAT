@@ -8,7 +8,7 @@
   <script th:src="@{/js/common/ckeditor.js}"></script>
   <title>GREAT 공지사항작성</title>
   <style>
-    .notice__errors{
+    .notice__errors, .notice__error{
       color: red;
     }
 
@@ -39,6 +39,9 @@
       <div class="notice-board__main width--1000px">
           <textarea  class="notice-board__content" name="content" id="noticeContent" cols="30" rows="100" placeholder="내용을 작성하세요. 500글자"
                     autofocus maxlength="300"></textarea>
+        <div class="notice__error">
+          <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+        </div>
         <div class="notice__write-information">
         </div>
       </div>

@@ -19,12 +19,19 @@
       <div id="notice-board__list">
         <div class="container">
           <table class="notice-board__table">
+            <colgroup>
+              <col width="5%" />
+              <col width="60%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="5%" />
+            </colgroup>
             <thead>
             <tr>
               <th>번호</th>
               <th>제목</th>
-              <th>등록일</th>
               <th>작성자</th>
+              <th>등록일</th>
               <th>조회수</th>
             </tr>
             </thead>
@@ -40,10 +47,10 @@
             </tr>
             </tbody>
           </table>
-          <div class="btn__content">
-            <th:block th:if="${session.memAdmin=='y'}">
+          <div class="btn__content" >
+            <div id="notice__ss">
               <button id="post__text-btn">글쓰기</button>
-            </th:block>
+            </div>
           </div>
           <div class="text__center">
             <ul class="pagination">
@@ -74,12 +81,14 @@
                 <li>
                   <a class="community-page-item" href=""
                      th:href="@{/notice/list/{reqPage}/{searchType}/{keyword}(reqPage=${fc.endPage+1},searchType=${fc.searchType},keyword=${fc.keyword})}">
-                    다음</a>
+                    <i class="fas fa-angle-right"></i>
+                  </a>
                 </li>
                 <li>
                   <a class="community-page-item" href=""
                      th:href="@{/notice/list/{reqPage}/{searchType}/{keyword}(reqPage=${fc.finalEndPage},searchType=${fc.searchType},keyword=${fc.keyword})}">
-                    마지막</a>
+                    <i class="fas fa-angle-double-right"></i>
+                  </a>
                 </li>
               </th:block>
             </ul>
@@ -106,7 +115,12 @@
   </main>
   <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
-<script>
+<script async th:inline="javascript">
+
+      document.getElementById("notice__ss").style.display = (
+        [[${session.memAdmin}]] == 'y' ? "block" : "none"
+    );
+
     const $postBtn = document.getElementById('post__text-btn');
     $postBtn.addEventListener('click', e => {
       location.href = '/notice/write';
