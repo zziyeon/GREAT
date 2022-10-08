@@ -64,7 +64,7 @@ public class CommentDAOImpl implements CommentDAO {
     StringBuffer sql = new StringBuffer();
 
     sql.append("select article_num, comment_group, comment_num, p_comment_num, step, comment_order, ");
-    sql.append("p_comment_nickname, m.mem_nickname, comment_contents, create_date, reply ");
+    sql.append("p_comment_nickname, m.mem_nickname, c.mem_number, comment_contents, create_date, reply ");
     sql.append("from comments c, member m ");
     sql.append("where c.mem_number = m.mem_number and c.article_num = ? ");
     sql.append("order by comment_group asc, comment_order asc ");

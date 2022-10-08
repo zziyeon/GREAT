@@ -188,7 +188,7 @@ public class ArticleController {
     if (!foundArticle.isEmpty()) {
       BeanUtils.copyProperties(foundArticle.get(), articleForm);
     }
-
+    log.info("아티클폼 : {}",articleForm);
     model.addAttribute("articleForm", articleForm);
 
     //세션 완성 후 조건문 추가

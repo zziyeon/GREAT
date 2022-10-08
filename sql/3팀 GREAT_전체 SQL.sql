@@ -153,8 +153,7 @@ buyer_number number (6),-- 작성자 번호
 seller_number number(6),-- 판매자 번호
 content varchar2(150),--본문 내용
 write_date date default sysdate, --작성일
-grade number(2), -- 평점
-profile_number number (10) --프로필 번호
+grade number(2) -- 평점
 );     
 
 --리뷰번호 시퀀스 생성
@@ -187,18 +186,20 @@ alter table good add constraint good_p_number_fk
     
 create table bookmark ( --즐겨찾기 테이블
 bookmark_number number(10),  --즐겨찾기 번호
-mem_number number (10),-- 회원 번호
-profile_number number(10)-- 프로필 번호
+buyer_number number (10),-- 회원 번호
+seller_number number(10)-- 프로필 번호
 );   
 
 --즐겨찾기번호 시퀀스 생성
 create sequence  bookmark_bookmark_number_seq;
 
 --기본키설정
-alter table bookmark add constraint bookmark_bookmark_number_pk primary key (bookmark_number);--좋아요 번호 pk
+alter table bookmark add constraint bookmark_bookmark_number_pk primary key (bookmark_number);--즐겨찾기 번호 pk
 --외래키설정
-alter table bookmark add constraint bookmark_mem_number_fk
-    foreign key (mem_number) references member (mem_number) on delete cascade;-- 회원번호 회원테이블 fk 참조    
+alter table bookmark add constraint bookmark_buyer_number_fk
+    foreign key (buyer_number) references member (mem_number) on delete cascade;-- 회원번호 회원테이블 fk 참조 
+alter table bookmark add constraint bookmark_seller_number_fk
+    foreign key (seller_number) references member (mem_number) on delete cascade;-- 회원번호 회원테이블 fk 참조        
 --===========================================게시판================================================================
 --커뮤니티 테이블 생성
 create table article (

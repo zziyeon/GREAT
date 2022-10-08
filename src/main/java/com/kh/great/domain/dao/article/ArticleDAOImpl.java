@@ -200,7 +200,7 @@ public class ArticleDAOImpl implements ArticleDAO {
   @Override
   public Optional<Article> read(Long articleNum) {
     StringBuffer sql = new StringBuffer();
-    sql.append("select article_num, article_category, article_title, article_contents, attachment, mem_nickname, create_date, views, comments ");
+    sql.append("select article_num, article_category, article_title, article_contents, attachment, a.mem_number, mem_nickname, create_date, views, comments ");
     sql.append("from article a, member m ");
     sql.append("where a.mem_number = m.mem_number and a.article_num = ? ");
 
