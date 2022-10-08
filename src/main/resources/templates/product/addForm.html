@@ -80,26 +80,27 @@
     //ckeditor
     newCkeditor(document.querySelector('#detailInfo'),false);
 
+
+
+    // 총수량
+    totalCount.addEventListener('keyup', e=>{err(totalCount)});
+
     // 정상가
-    normalPrice.addEventListener('keyup', e=>{
-        if(isNaN(normalPrice.value)||normalPrice.value <=0){
-            if(!normalPrice.classList.contains('fieldError')){
-                normalPrice.classList.add('fieldError');
+    normalPrice.addEventListener('keyup', e=>{err(normalPrice)});
+
+    // 할인가
+    salePrice.addEventListener('keyup', e=>{err(salePrice)});
+
+    //에러 검증 함수
+    function err(entry){
+        if(isNaN(entry.value)||entry.value <=0){
+            if(!entry.classList.contains('fieldError')){
+                entry.classList.add('fieldError');
             }
         }else{
-            normalPrice.classList.remove('fieldError');
+            entry.classList.remove('fieldError');
         }
-    });
-
-    normalPrice.addEventListener('keyup', e=>{
-    if(isNaN(normalPrice.value)||normalPrice.value <=0){
-        if(!normalPrice.classList.contains('fieldError')){
-            normalPrice.classList.add('fieldError');
-        }
-    }else{
-        normalPrice.classList.remove('fieldError');
     }
-    });
 
     //<!-- 취소 버튼 -->
     const $cancelBtn = document.getElementById('cancelBtn');
