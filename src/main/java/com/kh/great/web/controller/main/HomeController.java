@@ -64,10 +64,9 @@ public class HomeController {
     public String join(
             @Valid @ModelAttribute("join") Join join,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request
     ) {
-        log.info("mempw {}", join.getMemPassword());
-        log.info("mempwc {}", join.getMemPasswordCheck());
         //기본 검증
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
@@ -76,8 +75,27 @@ public class HomeController {
 
         //필드 검증(field error)
         //아이디 길이 8~15자
-        if (join.getMemId().length() < 8 || join.getMemId().length() > 15) {
+        //if (join.getMemId().length() < 8 || join.getMemId().length() > 15) {
+        //    bindingResult.rejectValue("memId", null, "아이디 길이는 8~15자입니다.");
+        //    return "member/join";
+        //}
+
+        //필드 검증(field error)
+        //아이디 길이 8~15자
+        if (request.getParameter("memId").length() < 8 || request.getParameter("memId").length() > 15) {
             bindingResult.rejectValue("memId", null, "아이디 길이는 8~15자입니다.");
+            return "member/join";
+        }
+
+        //닉네임 길이 2~6자
+        if (request.getParameter("memNickname").length() < 2 || request.getParameter("memNickname").length() > 6) {
+            bindingResult.rejectValue("memNickname", null, "닉네임 길이는 2~6자입니다.");
+            return "member/join";
+        }
+
+        //사업자번호 길이 10자
+        if (request.getParameter("memBusinessnumber").length() != 10) {
+            bindingResult.rejectValue("memBusinessnumber", null, "사업자번호는 10자입니다.");
             return "member/join";
         }
 

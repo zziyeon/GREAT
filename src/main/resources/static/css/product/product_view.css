@@ -158,6 +158,12 @@ dl > dt {
 .ck-editor__main {
     width: 600px;
 }
+.ck-editor__top{
+    display:none;
+}
+.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-read-only{
+    border:none;
+}
 
 /* 지도 */
 .goods_wrap>.store_location {
