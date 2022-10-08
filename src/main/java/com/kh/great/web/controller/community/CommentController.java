@@ -30,7 +30,7 @@ public class CommentController {
   private final CommentSVC commentSVC;
   private final UploadFileSVC uploadFileSVC;
 
-  //댓글 목록 조회
+
   @GetMapping("/list/{articleNum}")
   public ApiResponse<List<Comment>> commentList(@PathVariable("articleNum") Long articleNum) {
 

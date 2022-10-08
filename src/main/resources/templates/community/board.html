@@ -7,7 +7,7 @@
 <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 <!--  <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>-->
   <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
-  <link rel="stylesheet" href="/css/common/common.css">
+<!--  <link rel="stylesheet" href="/css/common/common.css">-->
   <link rel="stylesheet" href="/css/community/board.css">
   <title>GREAT 커뮤니티</title>
 </head>
@@ -225,12 +225,13 @@
     </main>
     <footer th:replace="~{layout/common_ui::footer}"></footer>
   </div>
-  <script>
+  <script asyn th:inline="javascript">
     const $postBtn = document.getElementById('board__post-btn');
     $postBtn.addEventListener('click', e => {
       //만약 세션 정보(회원 번호)가 없다면 로그인 요청 팝업 노출
-      if([[session.isEmpty]]){
-        alert('로그인 필요');
+      if([[${session.isEmpty()}]]){
+        //alert('로그인 필요');
+        location.href = '/login';
         return;
       }
       //세션 정보가 있다면 글쓰기 화면으로 이동

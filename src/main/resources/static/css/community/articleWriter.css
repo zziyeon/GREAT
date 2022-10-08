@@ -78,7 +78,7 @@ button:hover {
 .pNickname {
   color : var(--main-color-yel);
   font-size: 13px;
-  margin:5px 0;
+  margin:5px 5px 5px 0;
 }
 
 /* main */

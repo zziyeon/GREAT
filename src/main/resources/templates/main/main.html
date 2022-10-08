@@ -55,7 +55,7 @@
     <footer th:replace="~{layout/common_ui::footer}"></footer>
     <!-- //footer -->
 </div>
-<script>
+<script async th:inline="javascript">
     const hearts = document.querySelectorAll('.heartIcon');
 
     hearts.forEach((item,idx)=>{
@@ -69,11 +69,25 @@
                         salePrice : info3,
                         deadline_time : info4
             };
+                let id = hearts[idx].parentElement.parentElement.dataset.productNum;
+                let pNumber = parseInt(id);
 
-            let id = hearts[idx].parentElement.parentElement.dataset.productNum;
-            let pNumber = parseInt(id);
+            if([[${session.isEmpty()}]]){
+                alert("로그인하셔야 좋아요를 할 수 있습니다.");
+            }
+            if([[${session.memType}]]== 'owner'){
+                alert("죄송합니다. 고객 회원만 좋아요를 할 수 있습니다.");
+            }
+            if([[${session.memType}]]== 'customer'){
+                if(hearts[idx].className == 'heartIcon far fa-heart'){
+                    hearts[idx].classList.add('fas');
+                    goodAdd(pNumber,data);
 
-            goodAdd(pNumber,data);
+                }else{
+                    hearts[idx].classList.remove('fas');
+                    goodDel(pNumber);
+                }
+            }
         })
     });
 </script>
