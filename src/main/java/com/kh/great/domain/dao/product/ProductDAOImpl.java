@@ -134,7 +134,7 @@ public class ProductDAOImpl implements ProductDAO {
 
         sql.append("select * ");
         sql.append("from product_info ");
-        sql.append("where to_char(deadline_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and deadline_time>sysdate and REMAIN_COUNT >0 ");
+        sql.append("where to_char(deadline_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and deadline_time>sysdate and REMAIN_COUNT >0 and p_status=0 ");
         sql.append("order by deadline_time asc " );
 
         List<Product> result = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
@@ -305,7 +305,7 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0 and p_status=0 ");
         sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
         if (!category.equals("전체")) {
             sql.append("and p.category like '%"+category+"%' ");
@@ -327,7 +327,7 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0 and p_status=0  ");
         sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
         if (!category.equals("전체")) {
             sql.append("and p.category like '%"+category+"%' ");
@@ -348,7 +348,7 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0 and p_status=0 ");
         sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
         if (!category.equals("전체")) {
             sql.append("and p.category like '%"+category+"%' ");
@@ -369,7 +369,7 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
         sql.append("select * ");
         sql.append("from product_info P, member M ");
-        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0  ");
+        sql.append("where p.owner_number= m.mem_number and P.deadline_time>sysdate and P.REMAIN_COUNT >0 and p_status=0 ");
         sql.append("AND m.mem_store_location LIKE '%"+ zone+"%' ");
         if (!category.equals("전체")) {
             sql.append("and p.category like '%"+category+"%' ");
@@ -389,6 +389,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("select * ");
         sql.append("from product_info ");
         sql.append("where p_name like '%"+searchKeyword+"%' or p_title like '%"+searchKeyword+"%' ");
+        sql.append("and P.deadline_time>sysdate and P.REMAIN_COUNT >0 and p_status=0 ");
         sql.append(" order by R_DATE desc ");
 
         List<Product> result= jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));
