@@ -53,7 +53,7 @@
                     </ul>
                 </li>
             </th:block>
-            <a href="" class="top-menu__cs">커뮤니티</a>
+            <a th:href="@{/community/list}" class="top-menu__cs">커뮤니티</a>
             <a th:href="@{/notice/list}" class="top-menu__cs">공지사항</a>
         </nav>
         <th:block th:replace="~{layout/common_ui::common_header}"></th:block>
