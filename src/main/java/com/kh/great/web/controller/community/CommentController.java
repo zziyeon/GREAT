@@ -12,9 +12,13 @@ import com.kh.great.web.dto.comment.CommentEditForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -45,28 +49,32 @@ public class CommentController {
 
   //댓글 등록
   @PostMapping("/write/{articleNum}")
-  public ApiResponse<Comment> saveComment(@PathVariable Long articleNum,
-                                          CommentAddForm commentAddForm) {
+  public ApiResponse<Object> saveComment(@PathVariable Long articleNum,
+                                          @Valid CommentAddForm commentAddForm,
+                                          BindingResult bindingResult) {
 
     log.info("commentAddForm : {}",commentAddForm);
+
+    //검증 : 댓글 글자수 제한
+    if (bindingResult.hasErrors()) {
+      log.info("bindingResult : {}", bindingResult);
+      return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
+    }
+
     Comment comment = new Comment();
     BeanUtils.copyProperties(commentAddForm, comment);
-    comment.setArticleNum(articleNum); //꼭 필요할까?
+    comment.setArticleNum(articleNum);
 
     //댓글 등록
     Comment savedComment = new Comment();
 
-    //주의 : view에서 multiple인 경우 파일 첨부가 없더라도 빈문자열("")이 반환되어
-    // List<MultipartFile>에 빈 객체 1개가 포함됨
     if (commentAddForm.getFile() == null) {
       savedComment = commentSVC.save(comment);
-      log.info("댓글컨트롤러1");
     } else if (commentAddForm.getFile() != null) {
       savedComment = commentSVC.save(comment, commentAddForm.getFile());
-      log.info("댓글컨트롤러2");
     }
-    log.info("댓글컨트롤러3");
     log.info("savedComment : {}",savedComment);
+
     return ApiResponse.createApiResMsg("00", "성공", savedComment);
   }
 
@@ -88,14 +96,21 @@ public class CommentController {
 
   //댓글 수정 처리
   @PatchMapping("/edit/{commentNum}")
-  public ApiResponse<Comment> editComment(@PathVariable Long commentNum,
-                                          CommentEditForm commentEditForm) {
+  public ApiResponse<Object> editComment(@PathVariable Long commentNum,
+                                          @Valid CommentEditForm commentEditForm,
+                                          BindingResult bindingResult) {
+
+    //검증
+    if (bindingResult.hasErrors()) {
+      log.info("bindingResult : {}", bindingResult);
+      return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
+    }
 
     Comment comment = new Comment();
     BeanUtils.copyProperties(commentEditForm, comment);
 
     //댓글 수정
-//    Comment updatedComment = commentSVC.update(commentNum, comment);
+    //Comment updatedComment = commentSVC.update(commentNum, comment);
     Comment updatedComment = new Comment();
 
 
@@ -117,4 +132,14 @@ public class CommentController {
     return ApiResponse.createApiResMsg("00", "성공", null);
   }
 
+  //검증 오류 메시지
+  private Map<String, String> getErrMsg(BindingResult bindingResult) {
+    Map<String, String> errmsg = new HashMap<>();
+
+    bindingResult.getAllErrors().stream().forEach(objectError -> {
+      errmsg.put(objectError.getCodes()[0], objectError.getDefaultMessage());
+    });
+
+    return errmsg;
+  }
 }
