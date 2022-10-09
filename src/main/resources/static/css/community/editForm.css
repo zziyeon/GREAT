@@ -30,9 +30,20 @@ select:focus{
   margin-right: 10px;
 }
 
-//.ck-editor__editable {
-//  min-height: 500px;
-//}
+.ck-editor{
+    min-height: 500px;
+}
+.ck-editor > .ck-editor__main {
+    min-height: 500px;
+}
+
+.ck-editor > .ck-editor__main > .ck-blurred {
+    min-height: 500px;
+}
+
+.ck-editor > .ck-editor__main > .ck-focused {
+    min-height: 500px;
+}
 
 /* board-write */
 
