@@ -125,11 +125,14 @@ public class CommentController {
 
   //댓글 삭제
   @DeleteMapping("/delete/{commentNum}")
-  public ApiResponse<Comment> deleteComment(@PathVariable Long commentNum) {
+  public ApiResponse<Object> deleteComment(@PathVariable Long commentNum) {
+
+    int cntOfChildrenComments = commentSVC.countOfChildrenComments(commentNum);
+
 
     commentSVC.delete(commentNum);
 
-    return ApiResponse.createApiResMsg("00", "성공", null);
+    return ApiResponse.createApiResMsg("00", "성공", cntOfChildrenComments);
   }
 
   //검증 오류 메시지

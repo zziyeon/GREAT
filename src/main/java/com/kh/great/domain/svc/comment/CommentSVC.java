@@ -68,6 +68,13 @@ public interface CommentSVC {
    */
   void delete(Long commentNum);
 
+  /**
+   * 자식 댓글 수 조회
+   * @param commentNum 삭제할 댓글 번호
+   * @return 자식 댓글 수
+   */
+  int countOfChildrenComments(Long commentNum);
+
 
 //  /**
 //   * 게시물 댓글 건수 조회

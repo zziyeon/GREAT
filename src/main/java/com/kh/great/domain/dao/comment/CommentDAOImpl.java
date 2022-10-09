@@ -265,4 +265,18 @@ public class CommentDAOImpl implements CommentDAO {
     Integer cntPerArticle = jt.queryForObject(sql, Integer.class, articleNum);
     return cntPerArticle;
   }
+
+  /**
+   * 자식 댓글 수 조회
+   *
+   * @param commentNum 삭제할 댓글 번호
+   * @return 자식 댓글 수
+   */
+  @Override
+  public int countOfChildrenComments(Long commentNum) {
+    String sql = "select count(*) from comments where p_comment_num = ? ";
+    //List<Comment> foundChildrenComments = jt.query(sql, new BeanPropertyRowMapper<>(Comment.class), commentNum);
+    Integer cntOfChildrenComments = jt.queryForObject(sql, Integer.class, commentNum);
+    return cntOfChildrenComments;
+  }
 }

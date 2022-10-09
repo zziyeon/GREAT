@@ -191,12 +191,7 @@ public class ArticleController {
     log.info("아티클폼 : {}",articleForm);
     model.addAttribute("articleForm", articleForm);
 
-    //세션 완성 후 조건문 추가
-    //articleForm.getMemNumber()이 세션에 저장된 회원 번호와 일치하다면 return "/community/articleWriter"
-    //아니면  return "/community/articleViewer"
-    //또는 뷰에서 타임리프 조건문
-
-    return "/community/articleWriter";
+    return "/community/article";
   }
 
   //게시글 삭제

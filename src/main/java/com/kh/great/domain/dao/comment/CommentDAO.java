@@ -59,4 +59,11 @@ public interface CommentDAO {
    */
   int totalCountOfArticle(Long articleNum);
 
+  /**
+   * 자식 댓글 수 조회
+   * @param commentNum 삭제할 댓글 번호
+   * @return 자식 댓글 수
+   */
+  int countOfChildrenComments(Long commentNum);
+
 }
