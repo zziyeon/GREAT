@@ -279,4 +279,24 @@ public class CommentDAOImpl implements CommentDAO {
     Integer cntOfChildrenComments = jt.queryForObject(sql, Integer.class, commentNum);
     return cntOfChildrenComments;
   }
+
+  /**
+   * 자식 댓글이 있는 댓글 삭제 처리
+   *
+   * @param commentNum 삭제할 댓글 번호
+   * @return
+   */
+  @Override
+  public int updateToDeletedComment(Long commentNum) {
+
+    StringBuffer sql = new StringBuffer();
+
+    sql.append("update comments ");
+    sql.append("set comment_contents = '!DELETEDCOMMENT!', create_date = sysdate ");
+    sql.append("where comment_num = ? ");
+
+    int affectedRow = jt.update(sql.toString(), commentNum);
+
+    return affectedRow;
+  }
 }

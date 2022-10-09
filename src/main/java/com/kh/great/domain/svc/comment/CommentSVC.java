@@ -75,6 +75,13 @@ public interface CommentSVC {
    */
   int countOfChildrenComments(Long commentNum);
 
+  /**
+   * 자식 댓글이 있는 댓글 삭제 처리
+   * @param commentNum 삭제할 댓글 번호
+   * @return
+   */
+  int updateToDeletedComment(Long commentNum);
+
 
 //  /**
 //   * 게시물 댓글 건수 조회

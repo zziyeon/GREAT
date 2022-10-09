@@ -129,9 +129,12 @@ public class CommentController {
 
     int cntOfChildrenComments = commentSVC.countOfChildrenComments(commentNum);
 
+    if (cntOfChildrenComments == 0) {
+      commentSVC.delete(commentNum);
+      return ApiResponse.createApiResMsg("00", "성공", null);
+    }
 
-    commentSVC.delete(commentNum);
-
+    commentSVC.updateToDeletedComment(commentNum);
     return ApiResponse.createApiResMsg("00", "성공", cntOfChildrenComments);
   }
 

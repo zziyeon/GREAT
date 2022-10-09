@@ -142,15 +142,18 @@
           if(res.header.rtcd == '00'){
             const result =
               res.data.map(comment=>{
-                return `
-                  <li id="${comment.commentNum}" data-comment-group="${comment.commentGroup}" data-member-nickname="${comment.member.memNickname}" class="writer" >
+                return `${comment.commentContents != '!DELETEDCOMMENT!' ?
+                 `<li id="${comment.commentNum}" data-comment-group="${comment.commentGroup}" data-member-nickname="${comment.member.memNickname}">
                   <div class="comment-box ${comment.reply}">
                     <div class="comment-box__profile" >
                       <a href="#"><img src="/img/community/profile.jpg" class="profileImage" alt=""></a>
                     </div>
                     <div class="comment-box__contents">
-                      <div class="comment-box__top">                       
-                        <span href="#" class="font-size--13px" id="comment-box__nickname">${comment.member.memNickname}</span>
+                      <div class="comment-box__top">
+                        <div class="nicknameBox">                       
+                          <span href="#" class="font-size--13px" id="comment-box__nickname">${comment.member.memNickname}</span>
+                          ${comment.memNumber == [[${articleForm.memNumber}]] ? `<span class="writer">작성자</span>` : ``}
+                        </div>
                         ${root.dataset.sMemNumber == [[${articleForm.memNumber}]] ? 
                         `<div class="comment-box__info">
                           <a class="comment-box__modify font-size--12px" href="#" name="commentEditBtn"><i
@@ -174,7 +177,11 @@
                       </div>
                     </div>
                   </div>
-                </li>
+                </li>`:
+                 `<li>
+                  <div class="deletedComment">삭제된 댓글입니다.</div>
+                  </li>`}
+                  
                 `;
               });
               //console.log(result.join(''));
