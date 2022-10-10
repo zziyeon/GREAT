@@ -64,14 +64,19 @@ public class MyPageDAOImpl implements MyPageDAO {
         StringBuffer sql = new StringBuffer();
 
 
-        sql.append("  select * ");
-        sql.append("    from review r, deal d, product_info p, member m");
-        sql.append("   where d.p_number = p.p_number ");
-        sql.append("     and r.buyer_number = d.buyer_number ");
-        sql.append("     and m.mem_number = p.owner_number ");
-        sql.append("     and d.seller_number = r.seller_number ");
-        sql.append("     and r.buyer_number = ? ");
-        sql.append("order by r.review_number desc ");
+//        sql.append("  select * ");
+//        sql.append("    from review r, deal d, product_info p, member m");
+//        sql.append("   where d.p_number = p.p_number ");
+//        sql.append("     and r.buyer_number = d.buyer_number ");
+//        sql.append("     and m.mem_number = p.owner_number ");
+//        sql.append("     and d.seller_number = r.seller_number ");
+//        sql.append("     and r.buyer_number = ? ");
+//        sql.append("order by r.review_number desc ");
+
+        sql.append("select * from review r, member m ");
+        sql.append("where r.seller_number = m.mem_number ");
+        sql.append("and r.buyer_number = ?  ");
+        sql.append("order by r.write_date desc ");
 
         List<Review> reviews = null;
 
@@ -104,14 +109,19 @@ public class MyPageDAOImpl implements MyPageDAO {
 
         StringBuffer sql = new StringBuffer();
 
-        sql.append("select * ");
-        sql.append("from review r , member m,  product_info p, deal d ");
-        sql.append(" where d.p_number = p.p_number ");
-        sql.append("and d.seller_number = r.seller_number ");
-        sql.append("and m.mem_number = r.buyer_number ");
-        sql.append("and r.buyer_number = d.buyer_number ");
+//        sql.append("select * ");
+//        sql.append("from review r , member m,  product_info p, deal d ");
+//        sql.append(" where d.p_number = p.p_number ");
+//        sql.append("and d.seller_number = r.seller_number ");
+//        sql.append("and m.mem_number = r.buyer_number ");
+//        sql.append("and r.buyer_number = d.buyer_number ");
+//        sql.append("and r.seller_number = ? ");
+//        sql.append(" order by r.review_number asc ");
+
+        sql.append("select * from review r, member m ");
+        sql.append("where r.buyer_number = m.mem_number ");
         sql.append("and r.seller_number = ? ");
-        sql.append(" order by r.review_number asc ");
+        sql.append("order by r.write_date desc ");
 
         List<Review> reviews = null;
 

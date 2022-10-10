@@ -66,7 +66,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="order : ${list}">
+                    <tr th:each="order : ${list}" th:data-member-id="${order.product.ownerNumber}">
+
                         <td th:text="${order.orderNumber}">c15715</td>
                         <td th:text="${#dates.format(order.orderdate, 'yyyy-MM-dd HH:mm')}">2022.07.07</td>
                         <td th:text="${order.member.memStoreName}">가게1</td>
@@ -84,6 +85,7 @@
                         <td>
                         <a href="#" class="order-status" th:onclick="|delBuy(event,${order.orderNumber})|">취소하기</a></td>
                         </td>
+
                     </tr>
                     </tbody>
                 </table>
@@ -108,6 +110,15 @@
                       })
                       .catch(err=>console.log(err));
                   }
+
+                  const $tbody = document.querySelector("table tbody");
+                  $tbody.addEventListener('click', e=>{
+                      console.log('클릭');
+                    if(e.target.tagName == 'TD'){
+                        const memberId = e.target.parentElement.dataset.memberId;
+                        location.href=`/mypage/profile/${memberId}`;
+                    }
+                  });
 
 
 

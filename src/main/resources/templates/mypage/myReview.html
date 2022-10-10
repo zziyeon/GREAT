@@ -52,7 +52,6 @@
                 <li class="review"th:each="review:${list}" >
                     <div >
                         <div><span>가게명 : </span><span th:text="${review.member.memStoreName}"></span></div>
-                        <div><span>상품명 : </span><span th:text="${review.deal.product.pName}"></span></div>
                         <span>리뷰 내용 : </span><span th:text="${review.content}"></span>
                         <th:block th:switch="${review.grade}">
                             <div>
