@@ -74,6 +74,21 @@ button:hover {
   width: 300px;
 }
 
+.filebox #imageFile3 {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.filebox #fileName3 {
+  border:none;
+  color: grey;
+  width: 300px;
+}
+
 .comment-box__middle-left {
   display: flex;
 }
@@ -331,6 +346,18 @@ button:hover {
   background-color: var(--mainBtn-color-gre);
   color:black;
 }
+
+.comment__write .reply-box .reply-box__bottom #fileDeleteBtn{
+  width: 80px;
+  height: 25px;
+  margin:5px 0 10px 5px;
+  border:none;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: var(--mainBtn-color-gre);
+  color:black;
+}
+
 
 .deletedComment {
   font-size: 13px;

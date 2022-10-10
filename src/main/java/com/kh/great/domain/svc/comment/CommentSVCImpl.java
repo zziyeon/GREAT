@@ -68,9 +68,8 @@ public class CommentSVCImpl implements CommentSVC {
     commentDAO.save(comment);
 
     int totalCountOfArticle = commentDAO.totalCountOfArticle(comment.getArticleNum());
-    log.info("댓글작성1");
     articleDAO.updateCommentsCnt(Long.valueOf(totalCountOfArticle),comment.getArticleNum());
-    log.info("댓글작성2");
+
     return commentDAO.find(generatedCommentNum).get();
   }
 
@@ -104,24 +103,6 @@ public class CommentSVCImpl implements CommentSVC {
     return commentDAO.find(generatedCommentNum).get();
   }
 
-//  /**
-//   * 대댓글 작성 (필요할까?)
-//   *
-//   * @param replyComment 댓글 정보
-//   * @return 작성된 댓글 수
-//   */
-//  @Override
-//  public Comment saveReply(Long pCommentNum, Comment replyComment) {
-//    Long generatedCommentNum = commentDAO.generatedCommentNum();
-//    replyComment.setCommentNum(generatedCommentNum);
-//    commentDAO.saveReply(pCommentNum,replyComment);
-//
-//    int totalCountOfArticle = commentDAO.totalCountOfArticle(replyComment.getArticleNum());
-//    articleDAO.updateCommentsCnt(Long.valueOf(totalCountOfArticle),replyComment.getArticleNum());
-//
-//    return commentDAO.find(generatedCommentNum).get();
-//  }
-
   /**
    * 댓글 수정
    *
@@ -132,9 +113,6 @@ public class CommentSVCImpl implements CommentSVC {
   @Override
   public Comment update(Long commentNum, Comment comment) {
     commentDAO.update(commentNum,comment);
-
-    int totalCountOfArticle = commentDAO.totalCountOfArticle(comment.getArticleNum());
-    articleDAO.updateCommentsCnt(Long.valueOf(totalCountOfArticle),commentDAO.find(commentNum).get().getArticleNum());
 
     return commentDAO.find(commentNum).get();
   }
@@ -152,12 +130,15 @@ public class CommentSVCImpl implements CommentSVC {
     //1)댓글 수정
     commentDAO.update(commentNum,comment);
 
-    int totalCountOfArticle = commentDAO.totalCountOfArticle(comment.getArticleNum());
-    articleDAO.updateCommentsCnt(Long.valueOf(totalCountOfArticle),commentDAO.find(commentNum).get().getArticleNum());
-
     //2)첨부파일
-    uploadFileSVC.addFile(file, AttachCode.B0101,commentNum);
+    //2-1)기존 첨부파일 메타정보 조회
+    List<UploadFile> attachFiles = uploadFileSVC.getFilesByCodeWithRid(AttachCode.B0101.name(), commentNum);
+    //2-2)스토리지에서 기존 첨부파일 삭제
+    attachFiles.stream().forEach(attachFile-> fileUtils.deleteAttachFile(AttachCode.valueOf(attachFile.getCode()),attachFile.getStoreFilename()));
+    //3-2)기본 첨부파일 메타 정보 삭제
+    uploadFileSVC.deleteFileByCodeWithRid(AttachCode.B0101.name(),commentNum);
 
+    uploadFileSVC.addFile(file, AttachCode.B0101,commentNum);
     return commentDAO.find(commentNum).get();
   }
 

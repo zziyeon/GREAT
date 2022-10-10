@@ -106,6 +106,8 @@ public class CommentController {
       return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
     }
 
+    log.info("수정사진확인 : {}",commentEditForm);
+
     Comment comment = new Comment();
     BeanUtils.copyProperties(commentEditForm, comment);
 

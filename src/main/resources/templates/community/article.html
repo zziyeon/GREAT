@@ -220,6 +220,7 @@
     function resetCommentEidtForm(){
       commentEditForm.delete('commentNum');
       commentEditForm.delete('commentContents');
+      commentAddForm.delete('file');
     }
 
     //댓글 등록 버튼 클릭
@@ -377,13 +378,14 @@
               </div>
               <div class="reply-box__bottom">
                 <div class="filebox">
-                  <label for="imageFile"><i class="fa-regular fa-image"></i></label>
-                  <input type="text" id="fileName" value=""  readonly>
-                  <input type="file" accept="image/*" id="imageFile">
+                  <label for="imageFile3"><i class="fa-regular fa-image"></i></label>
+                  <input type="text" id="fileName3" ${data.data.attachFile?.uploadFilename == null? `value=""`: `value="${data.data.attachFile.uploadFilename}" `} readonly>
+                  <input type="file" accept="image/*" id="imageFile3" data-uploadfile-id="${data.data.attachFile?.uploadfileId}">
                 </div>
                 <div>
-                <button class="font-size--12px" id="editCancelBtn" href="#">취소</button>
-                <button class = "font-size--12px" id="editSaveBtn" href="#">등록</button>
+                  <button class="font-size--12px" id="fileDeleteBtn" href="#">사진 삭제</button>
+                  <button class="font-size--12px" id="editCancelBtn" href="#">취소</button>
+                  <button class = "font-size--12px" id="editSaveBtn" href="#">등록</button>
                 </div>
               </div>
             </div>
@@ -391,6 +393,12 @@
           document.getElementById(commentNum).insertAdjacentHTML('afterend',editBox);
           document.getElementById(commentNum).classList.add('editting');
           document.getElementById(commentNum).style.display = 'none';
+          const fid = document.getElementById('imageFile3').dataset.uploadfileId;
+
+        //사진 첨부 시 파일명만 표시
+        imageFile3.addEventListener('change',()=>{
+          fileName3.value = imageFile3.files[0].name;
+        });
 
           //댓글 수정 취소 버튼 클릭
           editCancelBtn?.addEventListener('click',e=>{
@@ -400,13 +408,28 @@
             //document.getElementById('commentEditBox').remove();
             document.getElementsByClassName('comment__write edit')[0].remove();
           });
+          
+          //파일 삭제 버튼 클릭
+          fileDeleteBtn?.addEventListener('click',e=>{
+            console.log('파일 삭제 버튼 클릭');
+            fileName3.value='';
+            imageFile3.type ='';
+            imageFile3.type='file';
+          });
 
           //댓글 수정 완료 버튼 클릭
           editSaveBtn?.addEventListener('click',e=>{
+            //0)사진 삭제
+            if(fid != null && imageFile3.files.length == 0){
+              deleteAttachFile(fid);
+            };
             //1)유효성 체크
             //2)입력 데이터 가져오기 (댓글 번호, 댓글 내용)
             commentEditForm.append('commentNum',commentNum);
             commentEditForm.append('commentContents',commentEditTextarea.value.replace(/(?:\r\n|\r|\n)/g, '<br>'));
+            if(imageFile3.files.length == 1){
+              commentEditForm.append('file', imageFile3.files[0]);
+          }
             //3)댓글 수정
             editComment(commentEditForm);
             //4)폼 데이터 리셋
@@ -462,6 +485,16 @@
     imageFile.addEventListener('change',()=>{
       fileName.value = imageFile.files[0].name;
     });
+
+    //사진 삭제 함수
+    function deleteAttachFile(fid){
+      const url = `/api/attach/${fid}`;
+      fetch(url, {
+        method: 'DELETE'
+      }).then(res => {
+        console.log('사진삭제 완료');
+      }).catch(err => console.log(err));
+    }
 
 
   </script>
