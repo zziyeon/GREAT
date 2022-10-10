@@ -20,6 +20,7 @@
       <div class="board-write__article-head width--900px">
         <div class="board-write__article-bullet">
           <select name="" id="articleCategory">
+            <option value="선택">선택</option>
             <option value="남구">남구</option>
             <option value="중구">중구</option>
             <option value="동구">동구</option>
@@ -99,15 +100,22 @@
       if (articleTitle.value.replace(regex, '').length == 0) {
         alert('제목을 입력해주세요.');
         return;
+        articleTitle.focus();
       }
       //제목 50자 이하
       if (articleTitle.value.length > 50) {
         alert('제목은 50자 이내여야합니다.');
         return;
+        articleTitle.focus();
       }
       //내용 입력 필수
       if (window.editor.getData().length == 0) {
         alert('내용을 입력해주세요.');
+        return;
+      }
+      //카테고리 선택 필수
+      if(articleCategory.options[articleCategory.selectedIndex].value == '선택'){
+        alert('게시글 카테고리를 선택해주세요.');
         return;
       }
       return true;

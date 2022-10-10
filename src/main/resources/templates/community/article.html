@@ -167,13 +167,16 @@
                       <div class="comment-box__middle">
                         <img class="comment-box__image" width="250px" src="/api/attach/img/${comment.attachFile?.code}/${comment.attachFile?.storeFilename}" onerror="this.style.display='none'">
                         <div class="comment-box__middle-left">
-                          <span class="pNickname">${comment.pcommentNickname}</span>
+                          ${comment.pcommentNickname != null ? 
+                          `<span class="pNickname">${comment.pcommentNickname}</span>` : ``}
                           <p class="comment-box__text font-size--13px ">${comment.commentContents.replaceAll("<br>", "\r\n")}</p>
                         </div>
                       </div>
                       <div class="comment-box__bottom">
                         <span class="comment-box__date font-size--12px">${comment.createDate.replaceAll('-','.').replace('T','. ').substr(0,17)}</span>
-                        <a class="comment-box__reply font-size--12px" href="#" name="commentReplyBtn"><i class="fa-solid fa-reply"></i></a>
+                        ${root.dataset.sMemNumber != null ?
+                           `<a class="comment-box__reply font-size--12px" href="#" name="commentReplyBtn"><i class="fa-solid fa-reply"></i></a>`:``}
+
                       </div>
                     </div>
                   </div>
@@ -230,7 +233,7 @@
       commentAddForm.append('pCommentNum','');
       commentAddForm.append('step','0');
       commentAddForm.append('commentOrder','0');
-      commentAddForm.append('pCommentNickname',' ');
+      commentAddForm.append('pCommentNickname','');
       commentAddForm.append('memNumber',[[${session.memNumber}]]);
       commentAddForm.append('commentContents',commentInputBox.value.replace(/(?:\r\n|\r|\n)/g, '<br>'));
       commentAddForm.append('reply','N');
@@ -268,11 +271,13 @@
 
     //답댓글 작성 버튼 클릭
     commentList.addEventListener('click',e=>{
-      e.preventDefault();
       if(e.target.parentElement.name == 'commentReplyBtn'){
+        e.preventDefault();
         console.log('답댓글 작성 버튼 클릭!');
-        if(document.getElementsByClassName('comment__write').length == 2) return;
-        const replyBox = `<li class="comment__write" id="commentReplyBox">
+        if(document.getElementsByClassName('comment__write reply').length == 1) {
+          document.getElementsByClassName('comment__write reply')[0].remove();
+        }
+        const replyBox = `<li class="comment__write reply" id="commentReplyBox">
                 <div class="reply-box reply-write">
                   <div class="reply-box__top">
                     <span class="reply-box__nickname font-size--13px">닉네임</span>
@@ -295,6 +300,11 @@
                 </div>
               </li>`;
         e.target.closest('li').insertAdjacentHTML('afterend',replyBox);
+
+        //사진 첨부 시 파일명만 표시
+        imageFile2.addEventListener('change',()=>{
+          fileName2.value = imageFile2.files[0].name;
+        });
 
         //답댓글 작성 취소 버튼 클릭
         replyCancelBtn?.addEventListener('click',e=>{
@@ -333,10 +343,14 @@
 
     //댓글 수정 버튼 클릭
     commentList.addEventListener('click',e=>{
-      e.preventDefault();
       if(e.target.parentElement.name == 'commentEditBtn'){
+        e.preventDefault();
         console.log('댓글 수정 버튼 클릭!');
-        if(document.getElementsByClassName('comment__write').length == 2) return;
+        if(document.getElementsByClassName('comment__write edit').length == 1) {
+          document.getElementsByClassName('comment__write edit')[0].remove();
+          document.getElementsByClassName('editting')[0].style.display = 'block';
+          document.getElementsByClassName('editting')[0].classList.remove('editting');
+        }
         const commentNum = e.target.closest('li').id;
         console.log(commentNum);
         commentEditWindow(commentNum);
@@ -352,7 +366,7 @@
         .then(data => {
           console.log(document.getElementById(commentNum));
           console.log(data);
-          const editBox = `<li id="commentEditBox"><div class="comment__write">
+          const editBox = `<li class="comment__write edit">
             <div class="reply-box">
               <div class="reply-box__top">
                 <span class="reply-box__nickname font-size--13px">${data.data.member.memNickname}</span>
@@ -373,15 +387,18 @@
                 </div>
               </div>
             </div>
-          </div></li>`;
-
+          </li>`;
           document.getElementById(commentNum).insertAdjacentHTML('afterend',editBox);
-          document.getElementById(commentNum).remove();
+          document.getElementById(commentNum).classList.add('editting');
+          document.getElementById(commentNum).style.display = 'none';
 
           //댓글 수정 취소 버튼 클릭
           editCancelBtn?.addEventListener('click',e=>{
             console.log('댓글 수정 취소 버튼 클릭');
-            findAll(id);
+            document.getElementById(commentNum).classList.remove('editting');
+            document.getElementById(commentNum).style.display ='block';
+            //document.getElementById('commentEditBox').remove();
+            document.getElementsByClassName('comment__write edit')[0].remove();
           });
 
           //댓글 수정 완료 버튼 클릭
@@ -416,8 +433,8 @@
 
     //댓글 삭제 버튼 클릭
     commentList.addEventListener('click',e=>{
-      e.preventDefault();
       if(e.target.parentElement.name == 'commentDeleteBtn'){
+        e.preventDefault();
         console.log('삭제 버튼 클릭!');
         if(!confirm('댓글을 삭제하시겠습니까?')) return;
         const commentNumToDelete = e.target.closest('li').id;
@@ -441,16 +458,11 @@
       .catch(err => console.log(err));
   }
 
-    //사진첨부
+    //사진첨부 시 파일명만 표시
     imageFile.addEventListener('change',()=>{
       fileName.value = imageFile.files[0].name;
     });
 
-/*
-    imageFile2.addEventListener('change',()=>{
-      fileName.value = imageFile2.files[0].name;
-    });
-*/
 
   </script>
 </body>

@@ -130,7 +130,15 @@ public class CommentController {
     int cntOfChildrenComments = commentSVC.countOfChildrenComments(commentNum);
 
     if (cntOfChildrenComments == 0) {
+      Long pCommentNum = commentSVC.find(commentNum).get().getPCommentNum();
+
       commentSVC.delete(commentNum);
+
+      if (commentSVC.countOfChildrenComments(pCommentNum) == 0
+          && commentSVC.find(pCommentNum).get().getCommentContents().equals("!DELETEDCOMMENT!")) {
+        commentSVC.delete(pCommentNum);
+      }
+
       return ApiResponse.createApiResMsg("00", "성공", null);
     }
 
