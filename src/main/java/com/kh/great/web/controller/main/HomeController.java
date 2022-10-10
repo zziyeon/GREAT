@@ -162,10 +162,16 @@ public class HomeController {
         //기본 검증
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "/findPw";
+            return "member/findPw";
         }
 
         Member findedMember = memberSVC.findByMemIdAndMemEmail(findPw.getMemId(), findPw.getMemEmail());
+        //찾은 회원이 없으면
+        if (findedMember == null) {
+            bindingResult.rejectValue("memId", null, "아이디와 이메일이 일치하는 회원이 없습니다.");
+            return "member/findPw";
+        }
+
         log.info("findedMember = {}", findedMember);
         log.info("findedMember.getMemNumber = {}", findedMember.getMemNumber());
 
