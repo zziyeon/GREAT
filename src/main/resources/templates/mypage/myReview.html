@@ -51,7 +51,7 @@
             <ul class="review-content">
                 <li class="review"th:each="review:${list}" >
                     <div >
-                        <div><span>가게명 : </span><span th:text="${review.member.memStoreName}"></span></div>
+                        <a th:href="@{/mypage/profile/{memNumber}(memNumber=${review.member.memNumber})}"><div><span>가게명 : </span><span th:text="${review.member.memStoreName}"></span></div></a>
                         <span>리뷰 내용 : </span><span th:text="${review.content}"></span>
                         <th:block th:switch="${review.grade}">
                             <div>
