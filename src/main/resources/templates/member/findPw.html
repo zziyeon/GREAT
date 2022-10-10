@@ -20,7 +20,7 @@
                 <div class="find-pw-title">
                     <h2>비밀번호 찾기</h2>
                 </div>
-                <form action="" method="POST" th:object="${findPw}">
+                <form class="find-pw" action="" method="POST" th:object="${findPw}">
                     <div class="input-data content">
                         <div class="wrap-id">
                             <div class="id">
@@ -35,19 +35,27 @@
                                 <i class="bar__email"></i>
                                 <input type="email" th:field="*{memEmail}" placeholder="이메일 주소를 입력하세요.">
                             </div>
-                            <button type="button" class="btn send-code-btn">인증번호 발송</button>
+                            <button type="button" class="btn send-code-btn">인증코드 발송</button>
                         </div>
                         <div class="wrap-certify">
                             <div class="certify">
                                 <i class="icon__certify fa-solid fa-check"></i>
                                 <i class="bar__certify"></i>
-                                <input type="text" id="memCode" name="memCode" placeholder="인증번호를 입력하세요.">
+                                <input type="text" id="memCode" name="memCode" placeholder="인증코드를 입력하세요.">
                             </div>
-                            <button type="button" class="btn confirm-code-btn">인증번호 확인</button>
+                            <button type="button" class="btn confirm-code-btn">인증코드 확인</button>
                         </div>
                     </div>
+                    <div class="findPwEmpty">
+                        <p id="findPwErrmsg">비밀번호를 찾으려는 회원의 정보를 입력하세요.</p>
+                    </div>
+                    <p th:errors="*{memId}"></p>
+                    <p th:errors="*{memEmail}"></p>
+                    <div class="findPwFailed" th:if="${#fields.hasGlobalErrors()}">
+                        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                    </div>
                     <div class="wrap-confirm-btn content">
-                        <button type="submit" class="btn confirm-btn">확인</button>
+                        <button type="button" class="btn confirm-btn" onclick='btnClick()'>확인</button>
                     </div>
                 </form>
             </div>
