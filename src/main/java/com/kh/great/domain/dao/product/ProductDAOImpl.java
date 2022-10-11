@@ -248,10 +248,10 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
         System.out.println("ownerNumber = " + ownerNumber + ", pickUp_status = " + pickUp_status + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
         sql.append("select * ");
-                sql.append("from(select * ");
-                                sql.append("from member m, deal d ");
-                        sql.append("where m.mem_number=d.buyer_number) t1, product_info p ");
-        sql.append("where t1.order_number=p.p_number ");
+        sql.append("from(select * ");
+        sql.append("from member m, deal d ");
+        sql.append("where m.mem_number=d.buyer_number) t1, product_info p ");
+        sql.append("where t1.p_number=p.p_number and t1.seller_number="+ownerNumber+" ");
         sql.append("and t1.orderdate between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
 
         if(pickUp_status==0||pickUp_status==1) {
