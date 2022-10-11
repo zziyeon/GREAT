@@ -120,7 +120,7 @@ fetch(url, {
             console.log(product);
           i++;
           product.deal.orderdate = product.deal.orderdate.substr(0,10);
-          product.deal.visittime = product.deal.visittime.substr(0,10);
+          product.deal.visittime = product.deal.visittime.substr(10,6);
 //          product.rdate=product.rdate.substr(0,10);
           if(product.imageFiles != null && product.imageFiles.length > 0) {
             img_url = `<img class="good_Img" src="/api/attach/img/${product.imageFiles[0].code}/${product.imageFiles[0].storeFilename}" alt="이미지를 불러올수 없습니다">`;

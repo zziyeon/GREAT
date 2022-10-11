@@ -248,14 +248,16 @@ public class ProductDAOImpl implements ProductDAO {
         StringBuffer sql = new StringBuffer();
         System.out.println("ownerNumber = " + ownerNumber + ", pickUp_status = " + pickUp_status + ", history_start_date = " + history_start_date + ", history_end_date = " + history_end_date);
         sql.append("select * ");
-        sql.append("from product_info P, member M, Deal D ");
-        sql.append("where p.owner_number = m.mem_number and d.p_Number=p.p_Number and m.mem_type='owner' and p.owner_number="+ownerNumber+" ");
-        sql.append("and d.orderdate between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
+        sql.append("from(select * ");
+        sql.append("from member m, deal d ");
+        sql.append("where m.mem_number=d.buyer_number) t1, product_info p ");
+        sql.append("where t1.p_number=p.p_number and t1.seller_number="+ownerNumber+" ");
+        sql.append("and t1.orderdate between '" + history_start_date + "' and to_date('" + history_end_date+"','YYYY-MM-DD')+1 ");
 
         if(pickUp_status==0||pickUp_status==1) {
-            sql.append("and d.pickup_status=" + pickUp_status + " ");
+            sql.append("and t1.pickup_status=" + pickUp_status + " ");
         }
-        sql.append("order by d.orderdate desc " );
+        sql.append("order by t1.orderdate desc " );
 
         System.out.println("sql = " + sql);
         List<Product> result =null;

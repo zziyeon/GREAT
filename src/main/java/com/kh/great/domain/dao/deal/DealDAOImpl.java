@@ -73,7 +73,7 @@ public class DealDAOImpl implements DealDAO{
        sql.append("      where m.mem_number = p.owner_number) t1, deal d ");
        sql.append(" where d.p_number = t1.p_number ");
        sql.append("   and d.buyer_number = ? ");
-
+       sql.append(" order by d.orderdate desc ");
 
        List<Deal> deals = null;
        try {
