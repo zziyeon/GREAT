@@ -18,10 +18,16 @@
 //  setTimeout(showSlides, 4000);
 //}
 let slideIndex = 1;
+let intervalTime = 3000;
 showSlides(slideIndex);
+let currentIntervalId = setInterval(showSlides, intervalTime);
 
 function plusSlides(n) {
-    showSlides(slideIndex += n);
+    if(n == -1) showSlides(slideIndex += (n));
+    showSlides(slideIndex += (n - 1));
+//    slideIndex += n;
+//    clearInterval(currentIntervalId);
+//    currentIntervalId = setInterval(showSlides, intervalTime);
 }
 
 function currentSlide(n) {
@@ -44,7 +50,7 @@ function showSlides(n) {
     dots[slideIndex - 1].className += " active";
     slideIndex++;
     if(slideIndex > slides.length) slideIndex = 1;
-    setTimeout(showSlides, 3000);
+//    setTimeout(showSlides, 3000);
 }
 
 //document.querySelector('.heart_Btn').addEventListener('click', heart);
