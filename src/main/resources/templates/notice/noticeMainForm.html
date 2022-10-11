@@ -36,7 +36,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="notice :${listForm}">
+            <tr class="space" th:each="notice :${listForm}">
               <td class="noticeId" th:text="${notice.noticeId}">5</td>
               <td class="noticeTitle"><a
                   th:href="@{/notice/{id}(id=${notice.noticeId})}"
