@@ -47,20 +47,21 @@
                         <h2>즐겨찾기</h2>
                     </div>
                 </div>
-                <div class="bookmark-content" th:each="bookmark: ${list}">
-                    <div class="bookmark-on"  th:data-bookmark-id="${bookmark.bookmarkNumber}">
+                <div class="bookmark-content" >
+                    <div class="bookmark-on" th:each="bookmark: ${list}" th:data-bookmark-id="${bookmark.bookmarkNumber}">
+                        <a th:href="@{/mypage/profile/{memNumber}(memNumber=${bookmark.sellerNumber})}">
                             <div class="item front">
                                 <img class="profile__image" src="/img/mypage/img__profile.png" alt="어피치">
                                 <div class="shopNm" th:text="${bookmark.member.memStoreName}">파스타키친</div>
-<!--                                <input type="button"  th:text="${bookmark.bookmarkNumber}"></input>-->
                             </div>
                             <div class="item back">
                                 <div th:text="${bookmark.member.memStoreIntroduce}">정말 맛있는 파스타 맛집!</div>
                             </div>
+                        </a>
                             <i class="starIcon far fa-star fas"></i>
                     </div>
+                </div>
 
-                </div>        
 
             </article>
             </main>
