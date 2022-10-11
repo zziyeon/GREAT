@@ -60,6 +60,7 @@ button:hover {
   font-weight: bold;
   text-align: center;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 
@@ -158,3 +159,17 @@ button:hover {
   cursor: pointer;
 }
 
+.ck-editor{
+    min-height: 300px;
+}
+.ck-editor > .ck-editor__main {
+    min-height: 300px;
+}
+
+.ck-editor > .ck-editor__main > .ck-blurred {
+    min-height: 300px;
+}
+
+.ck-editor > .ck-editor__main > .ck-focused {
+    min-height: 300px;
+}
