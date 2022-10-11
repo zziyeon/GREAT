@@ -36,7 +36,7 @@
 
 .buy-complete--container .buy-complete--content .buy--text p span{
     display: inline-block;
-    width: 300px;
+    width: 250px;
     margin: 13px 0 13px 60px;
     text-align: left;
 }
@@ -53,8 +53,3 @@
     padding: 10px 20px;
     border-radius: 8px;
 }
-
-
-
-
-
