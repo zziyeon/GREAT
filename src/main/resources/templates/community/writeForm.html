@@ -2,13 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<!--  <meta charset="UTF-8">-->
-<!--  <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--  <link rel="stylesheet" href="/css/common/common.css">-->
   <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
   <link rel="stylesheet" href="/css/community/writeForm.css">
-<!--  <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>-->
   <script th:src="@{/js/common/common.js}"></script>
   <script th:src="@{/js/common/ckeditor.js}"></script>
   <title>GREAT 게시글 작성</title>
@@ -17,48 +12,6 @@
 <body>
 <div class="wrapper">
   <header th:replace="~{layout/common_ui::choose_header}"></header>
-<!--  <header class="header container">-->
-<!--    <nav class="top-menu content">-->
-<!--      <a href="" class="top-menu__join">회원가입</a>-->
-<!--      <a href="" class="top-menu__login">로그인</a>-->
-<!--      <a href="" class="top-menu__cs">고객센터</a>-->
-<!--    </nav>-->
-<!--    <div class="logo content"><a href="">GR<span>EAT</span></a></div>-->
-<!--    <nav class="bottom-menu content">-->
-<!--      <div class="category">-->
-<!--        <ul>-->
-<!--          <li class="food-category">업종별 카테고리-->
-<!--            <ul>-->
-<!--              <li><a href="">한식</a></li>-->
-<!--              <li><a href="">중식</a></li>-->
-<!--              <li><a href="">일식</a></li>-->
-<!--              <li><a href="">양식</a></li>-->
-<!--              <li><a href="">아시안식</a></li>-->
-<!--              <li><a href="">분식</a></li>-->
-<!--              <li><a href="">도시락</a></li>-->
-<!--              <li><a href="">카페/디저트</a></li>-->
-<!--            </ul>-->
-<!--          </li>-->
-<!--          <li class="region-category">지역별 카테고리-->
-<!--            <ul>-->
-<!--              <li><a href="">서울</a></li>-->
-<!--              <li><a href="">인천</a></li>-->
-<!--              <li><a href="">대전</a></li>-->
-<!--              <li><a href="">광주</a></li>-->
-<!--              <li><a href="">대구</a></li>-->
-<!--              <li><a href="">울산</a></li>-->
-<!--              <li><a href="">부산</a></li>-->
-<!--              <li><a href="">제주</a></li>-->
-<!--            </ul>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--      <div class="search">-->
-<!--        <input type="text" class="search__search-box" placeholder="  검색어를 입력하세요.">-->
-<!--        <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>-->
-<!--      </div>-->
-<!--    </nav>-->
-<!--  </header>-->
   <main class="main container">
     <div class="board-write content">
       <div class="board-write__title width--900px">
@@ -67,7 +20,7 @@
       <div class="board-write__article-head width--900px">
         <div class="board-write__article-bullet">
           <select name="" id="articleCategory">
-<!--            <option value="전체">전체</option>-->
+            <option value="선택">선택</option>
             <option value="남구">남구</option>
             <option value="중구">중구</option>
             <option value="동구">동구</option>
@@ -147,15 +100,22 @@
       if (articleTitle.value.replace(regex, '').length == 0) {
         alert('제목을 입력해주세요.');
         return;
+        articleTitle.focus();
       }
       //제목 50자 이하
       if (articleTitle.value.length > 50) {
         alert('제목은 50자 이내여야합니다.');
         return;
+        articleTitle.focus();
       }
       //내용 입력 필수
       if (window.editor.getData().length == 0) {
         alert('내용을 입력해주세요.');
+        return;
+      }
+      //카테고리 선택 필수
+      if(articleCategory.options[articleCategory.selectedIndex].value == '선택'){
+        alert('게시글 카테고리를 선택해주세요.');
         return;
       }
       return true;

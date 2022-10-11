@@ -40,6 +40,10 @@ button:hover {
   padding-left: 5px;
 }
 
+.filebox label:hover {
+  cursor: pointer;
+}
+
 .filebox #imageFile {
   position: absolute;
   width: 0;
@@ -70,6 +74,21 @@ button:hover {
   width: 300px;
 }
 
+.filebox #imageFile3 {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.filebox #fileName3 {
+  border:none;
+  color: grey;
+  width: 300px;
+}
+
 .comment-box__middle-left {
   display: flex;
 }
@@ -78,8 +97,13 @@ button:hover {
 .pNickname {
   color : var(--main-color-yel);
   font-size: 13px;
-  margin:5px 5px 5px 0;
+  margin:10px 5px 5px 0;
 }
+
+/* .comment__list ul li {
+  background-color: rgb(246, 246, 246);
+  border-radius: 5px;
+} */
 
 /* main */
 .main {
@@ -223,13 +247,8 @@ button:hover {
 }
 
 
-/* .comment__list .comment-box .comment-box__contents .comment-box__middle .replyNickname {
-  font-weight: bold;
-  display: inline-block;
-} */
-
 .comment__list .comment-box .comment-box__contents .comment-box__middle .comment-box__text {
-  margin:5px 0;
+  margin:10px 0 5px 0;
   display: inline-block;
 }
 
@@ -328,9 +347,35 @@ button:hover {
   color:black;
 }
 
+.comment__write .reply-box .reply-box__bottom #fileDeleteBtn{
+  width: 80px;
+  height: 25px;
+  margin:5px 0 10px 5px;
+  border:none;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: var(--mainBtn-color-gre);
+  color:black;
+}
 
 
-.comment__write .reply-box .reply-box__bottom
+.deletedComment {
+  font-size: 13px;
+  color:var(--main-text-gre);
+  border-bottom :1px solid var(--main-color-gre);
+  padding:0 0 10px 20px;
+  margin-bottom:10px;
+}
+
+.writer {
+  font-size: 11px;
+  /* color: white; */
+  /* background-color: var(--main-color-yel); */
+  color:var(--main-color-yel);
+  border: 1px solid var(--main-color-yel);
+  padding:2px;
+  border-radius: 8px;
+}
 
 /* article__bottom */
 

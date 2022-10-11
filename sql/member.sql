@@ -105,9 +105,9 @@ alter table member modify mem_admin varchar2(3) default 'n';
 insert into member (mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email)
 values ('customer', 'customer123', '@pwcust123', '김고객', '별명1', 'test1@test.com');
 insert into member (mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email)
-values ('customer', 'customer456', '@pwcust456', '이고객', '별명2', 'test2@test.com');
+values ('customer', 'customer456', 'pwcust456', '이고객', '별명2', 'test2@test.com');
 insert into member (mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email)
-values ('customer', 'customer789', '@pwcust789', '박고객', '별명3', 'test3@test.com');
+values ('customer', 'customer789', 'pwcust789', '박고객', '별명3', 'test3@test.com');
 --점주회원 회원가입 쿼리
 insert into member (mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email,
 mem_businessnumber, mem_store_name, mem_store_phonenumber, mem_store_location, mem_store_introduce, mem_store_sns)

@@ -106,6 +106,8 @@ public class CommentController {
       return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
     }
 
+    log.info("수정사진확인 : {}",commentEditForm);
+
     Comment comment = new Comment();
     BeanUtils.copyProperties(commentEditForm, comment);
 
@@ -125,11 +127,25 @@ public class CommentController {
 
   //댓글 삭제
   @DeleteMapping("/delete/{commentNum}")
-  public ApiResponse<Comment> deleteComment(@PathVariable Long commentNum) {
+  public ApiResponse<Object> deleteComment(@PathVariable Long commentNum) {
 
-    commentSVC.delete(commentNum);
+    int cntOfChildrenComments = commentSVC.countOfChildrenComments(commentNum);
 
-    return ApiResponse.createApiResMsg("00", "성공", null);
+    if (cntOfChildrenComments == 0) {
+      Long pCommentNum = commentSVC.find(commentNum).get().getPCommentNum();
+
+      commentSVC.delete(commentNum);
+
+      if (commentSVC.countOfChildrenComments(pCommentNum) == 0
+          && commentSVC.find(pCommentNum).get().getCommentContents().equals("!DELETEDCOMMENT!")) {
+        commentSVC.delete(pCommentNum);
+      }
+
+      return ApiResponse.createApiResMsg("00", "성공", null);
+    }
+
+    commentSVC.updateToDeletedComment(commentNum);
+    return ApiResponse.createApiResMsg("00", "성공", cntOfChildrenComments);
   }
 
   //검증 오류 메시지
