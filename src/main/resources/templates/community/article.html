@@ -59,7 +59,7 @@
               <div class="comment__write">
                 <div class="reply-box">
                   <div class="reply-box__top">
-                    <span class="reply-box__nickname font-size--13px" th:text="*{member.memNickname}">닉네임</span>
+                    <span class="reply-box__nickname font-size--13px" th:text="${session.memNickname}">닉네임</span>
                   </div>
                   <div class="reply-box__middle">
                     <textarea class="reply-box__text" name="" id="commentInputBox" cols="30" rows="10" placeholder="댓글을 입력하세요."
