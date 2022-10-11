@@ -16,26 +16,33 @@
             <div class="title content">
                 <h2>비밀번호 재설정</h2>
             </div>
-<!--            <form method="POST" action="" th:object="${resetPw}">-->
-                <div class="id">
-                    <i class="fa-solid fa-user"></i>
-                    <i class="bar"></i>
-                    <input type="text" th:field="*{memId}" readonly />
-                </div>
-                <div class="pw">
-                    <i class="fa-solid fa-key"></i>
-                    <i class="bar"></i>
-                    <input type="password" th:field="*{memPassword}" placeholder="비밀번호를 입력하세요." />
-                </div>
-                <div class="pwc">
-                    <i class="fa-solid fa-key"></i>
-                    <i class="bar"></i>
-                    <input type="password" th:field="*{memPasswordCheck}" placeholder="비밀번호를 재입력하세요." />
-                </div>
-                <div class="wrap-confirm-btn content">
-                    <button class="btn confirm-btn">재설정 완료</button>
-                </div>
-<!--            </form>-->
+            <div class="id">
+                <i class="fa-solid fa-user"></i>
+                <i class="bar"></i>
+                <input type="text" th:field="*{memId}" readonly />
+            </div>
+            <div class="pw">
+                <i class="fa-solid fa-key"></i>
+                <i class="bar"></i>
+                <input type="password" th:field="*{memPassword}" placeholder="비밀번호를 입력하세요." />
+            </div>
+            <div class="pwc">
+                <i class="fa-solid fa-key"></i>
+                <i class="bar"></i>
+                <input type="password" th:field="*{memPasswordCheck}" placeholder="비밀번호를 재입력하세요." />
+            </div>
+            <div class="resetPwEmpty">
+                <p id="resetPwErrmsg">재설정할 비밀번호를 입력하세요.</p>
+            </div>
+            <p th:errors="*{memId}"></p>
+            <p th:errors="*{memPassword}"></p>
+            <p th:errors="*{memPasswordCheck}"></p>
+            <div class="resetPwFailed" th:if="${#fields.hasGlobalErrors()}">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+            <div class="wrap-confirm-btn content">
+                <button class="btn confirm-btn">재설정 완료</button>
+            </div>
         </main>
         <!-- //main -->
 
