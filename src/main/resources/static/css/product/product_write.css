@@ -8,9 +8,6 @@ input:focus {
     border: solid 2px #ee3d10; border-radius: 8px; 
 }
 
-* {
-    /* outline: 1px solid plum; */
-}
 .main {
     display: flex;
     flex-direction: column;
@@ -40,19 +37,22 @@ th {
     font-weight: bold;
     vertical-align: middle;   
 }
+
 label {
     display: inline-block;
     width: 100px;
 }
+
 td {
     padding: 6px;
-    
 }
+
 input, select {
     display: inline-block;
-    width: 190px;
+    width: 260px;
     height: 32px;
 }
+
 .title {
     width: 100%;
 }
@@ -67,10 +67,27 @@ input, select {
 .photo li {
     
 }
-
+/*
 textarea {
     width:100%;
     resize: none;
+}
+*/
+
+/* ck editor 최소 높이 */
+.ck-editor{
+    min-height: 300px;
+}
+.ck-editor > .ck-editor__main {
+    min-height: 300px;
+}
+
+.ck-editor > .ck-editor__main > .ck-blurred {
+    min-height: 300px;
+}
+
+.ck-editor > .ck-editor__main > .ck-focused {
+    min-height: 300px;
 }
 
 /* 버튼(취소, 임시저장, 저장) */
