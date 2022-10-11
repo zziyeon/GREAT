@@ -66,3 +66,10 @@
     width: 1000px;
     height: 800px;
 }
+
+.ck-editor__top{
+    display:none;
+}
+.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-read-only{
+    border:none;
+}

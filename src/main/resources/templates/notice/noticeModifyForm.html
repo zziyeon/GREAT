@@ -68,7 +68,7 @@
      $completeBtn.addEventListener('click', e => {
       const frm = document.getElementById('editForm')
       const noticeId = frm.noticeId.value;
-      const.url = '/notice/[[${editForm.noticeId}]]';
+      const url = '/notice/[[${editForm.noticeId}]]';
 
       frm.action = url;
       frm.submit();
