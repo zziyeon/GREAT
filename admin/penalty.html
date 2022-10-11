@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../common.css" />
+    <link rel="stylesheet" href="penalty.css" />
+    <script
+      src="https://kit.fontawesome.com/038578f405.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>제재창</title>
+  </head>
+  <body>
+    <div class="penalty-wrapper">
+      <div class="penalty-header">
+        <h2 class="penalty__title">제재하기</h2>
+      </div>
+      <div class="penalty-main">
+        <!-- <div class="penalty__info">신고정보</div> -->
+        <div class="penalty__reason">
+          <select class="penalty__reason-select" name="" id="">
+            <option value="">제재 사유를 선택해주세요</option>
+            <option value="">제재 사유1</option>
+            <option value="">제재 사유2</option>
+            <option value="">제재 사유3</option>
+            <option value="">제재 사유4</option>
+            <option value="">제재 사유5</option>
+          </select>
+        </div>
+        <div class="penalty__description-box">
+          <textarea
+            class="penalty__description"
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="제재 사유를 200자 이내로 작성해주세요."
+          ></textarea>
+        </div>
+        <div class="penalty__period">
+          <label for="">제재 기간</label>
+          <input type="date" name="" id="">
+        </div>
+      </div>
+      <div class="penalty-footer">
+        <button class="penalty__complete-btn">제재하기</button>
+        <button class="penalty__cancel-btn">취소하기</button>
+      </div>
+    </div>
+  </body>
+</html>

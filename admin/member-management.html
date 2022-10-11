@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../common/common.css">
+  <link rel="stylesheet" href="./css/member-management.css">
+  <script src="https://kit.fontawesome.com/038578f405.js" crossorigin="anonymous"></script>
+  <title>서비스 관리 - 회원</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <header class="header container">
+      <nav class="top-menu content">
+        <a href="" class="top-menu__join">회원가입</a>
+        <a href="" class="top-menu__login">로그인</a>
+        <a href="" class="top-menu__cs">고객센터</a>
+      </nav>
+      <div class="logo content"><a href="">GR<span>EAT</span></a></div>
+      <nav class="bottom-menu content">
+        <div class="category">
+          <ul>
+            <li class="food-category">업종별 카테고리
+              <ul>
+                <li><a href="">한식</a></li>
+                <li><a href="">중식</a></li>
+                <li><a href="">일식</a></li>
+                <li><a href="">양식</a></li>
+                <li><a href="">아시안식</a></li>
+                <li><a href="">분식</a></li>
+                <li><a href="">도시락</a></li>
+                <li><a href="">카페/디저트</a></li>
+              </ul>
+            </li>
+            <li class="region-category">지역별 카테고리
+              <ul>
+                <li><a href="">서울</a></li>
+                <li><a href="">인천</a></li>
+                <li><a href="">대전</a></li>
+                <li><a href="">광주</a></li>
+                <li><a href="">대구</a></li>
+                <li><a href="">울산</a></li>
+                <li><a href="">부산</a></li>
+                <li><a href="">제주</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="search">
+          <input type="text" class="search__search-box" placeholder="  검색어를 입력하세요.">
+          <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+        </div>
+      </nav>
+    </header>
+    <main class="main container">
+      <aside class="management-menu">
+        <h3>서비스 관리</h3>
+        <ul>
+          <li class="member-menu"><a href=""><i class="fa-solid fa-user-gear"></i>회원 관리</a></li>
+          <li class="board-menu"><a href=""><i class="fa-solid fa-list"></i>작성글 관리</a></li>
+          <!-- <li class="comment-menu"><a href=""><i class="fa-solid fa-comments"></i>댓글 관리</a></li>
+          <li class="review-menu"><a href=""><i class="fa-solid fa-star"></i>리뷰 관리</a></li> -->
+        </ul>
+      </aside>
+      <section class="member-management">
+        <div class="management-title width--800px">
+          <h3>회원 관리</h3>
+        </div>
+        <div class="member-search width--800px">
+          <div class="member__search-keyword">
+            <input type="text" placeholder="닉네임으로 회원 검색"><a href="" class="search__search-icon"><i
+                class="fa-solid fa-magnifying-glass"></i></a>
+          </div>
+          <table class="member__info-table">
+            <thead>
+              <tr>
+                <th>회원번호</th>
+                <th>회원유형</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>E-mail</th>
+                <th>가입일</th>
+                <th>회원상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>097</td>
+                <td>고객</td>
+                <td>gildong123</td>
+                <td>홍길동</td>
+                <td> gildong123@naver.com</td>
+                <td>2022.08.01</td>
+                <td><a href="">활동</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="memeber-log width--800px">
+          <ul class="log-tab">
+            <li class="board-tab"><a href="">게시글</a></li>
+            <li class="comment-tab"><a href="">댓글</a></li>
+            <li class="review-tab"><a href="">리뷰</a></li>
+          </ul>
+          <table class="board-log">
+            <thead>
+              <tr>
+                <th></th>
+                <th>게시물ID</th>
+                <th>게시판</th>
+                <th>제목</th>
+                <th>작성일</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, cum?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td>11</td>
+                <td>커뮤니티</td>
+                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, provident?</td>
+                <td>2022.07.31</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="log-delete-tap">
+            <div class="log-select-all">
+              <input type="checkbox" name="" id=""><label for="">전체선택</label>
+            </div>
+            <button class="log-delete-btn">삭제</button>
+          </div>
+
+          <div class="board__page width--900px">
+            <div class="board__page--select">
+              <a href="">1</a>
+              <a href="">2</a>
+              <a href="">3</a>
+              <a href="">4</a>
+              <a href="">5</a>
+              <a href="">다음</a>
+            </div>
+          </div>
+
+          <div class="board__search width--900px">
+            <div class="board__search-box">
+              <div class="board__search-date">
+                <select name="" id="">
+                  <option value="">전체기간</option>
+                  <option value="">1일</option>
+                  <option value="">1주</option>
+                  <option value="">1개월</option>
+                  <option value="">6개월</option>
+                  <option value="">1년</option>
+                </select>
+              </div>
+              <div class="board__search-setting">
+                <select name="" id="">
+                  <option value="">제목+내용</option>
+                  <option value="">제목</option>
+                  <option value="">작성자</option>
+                </select>
+              </div>
+              <div class="board__search-keyword">
+                <input type="text"><a href="" class="search__search-icon"><i
+                    class="fa-solid fa-magnifying-glass"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+    <footer class="footer container">
+      <p class="content"></p>
+    </footer>
+  </div>
+</body>
+
+</html>
