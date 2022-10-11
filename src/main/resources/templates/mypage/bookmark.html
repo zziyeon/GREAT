@@ -47,58 +47,22 @@
                         <h2>즐겨찾기</h2>
                     </div>
                 </div>
-                <div class="bookmark-content" th:each="bookmark: ${list}">
-                    <div class="bookmark-on"  th:data-bookmark-id="${bookmark.bookmarkNumber}">
+                <div class="bookmark-content" >
+                    <div class="bookmark-on" th:each="bookmark: ${list}" th:data-bookmark-id="${bookmark.bookmarkNumber}">
+                        <a th:href="@{/mypage/profile/{memNumber}(memNumber=${bookmark.sellerNumber})}">
                             <div class="item front">
                                 <img class="profile__image" src="/img/mypage/img__profile.png" alt="어피치">
                                 <div class="shopNm" th:text="${bookmark.member.memStoreName}">파스타키친</div>
-<!--                                <input type="button"  th:text="${bookmark.bookmarkNumber}"></input>-->
                             </div>
                             <div class="item back">
                                 <div th:text="${bookmark.member.memStoreIntroduce}">정말 맛있는 파스타 맛집!</div>
                             </div>
+                        </a>
                             <i class="starIcon far fa-star fas"></i>
                     </div>
+                </div>
 
-                </div>        
-                <ul class="btn-page">
-                <li>
-                    <a href="#">이전</a>
-                </li>
-                <li>
-                    <a href="#">1</a>
-                </li>
-                <li>
-                    <a href="#">2</a>
-                </li>
-                <li>
-                    <a href="#">3</a>
-                </li>
-                <li>
-                    <a href="#">4</a>
-                </li>
-                <li>
-                    <a href="#">5</a>
-                </li>
-                <li>
-                    <a href="#">6</a>
-                </li>
-                <li>
-                    <a href="#">7</a>
-                </li>
-                <li>
-                    <a href="#">8</a>
-                </li>
-                <li>
-                    <a href="#">9</a>
-                </li>
-                <li>
-                    <a href="#">10</a>
-                </li>
-                <li>
-                    <a href="#">다음</a>
-                </li>
-                </ul>
+
             </article>
             </main>
 

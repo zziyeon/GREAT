@@ -66,7 +66,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="order : ${list}">
+                    <tr th:each="order : ${list}" th:data-member-id="${order.product.ownerNumber}">
+
                         <td th:text="${order.orderNumber}">c15715</td>
                         <td th:text="${#dates.format(order.orderdate, 'yyyy-MM-dd HH:mm')}">2022.07.07</td>
                         <td th:text="${order.member.memStoreName}">가게1</td>
@@ -84,55 +85,16 @@
                         <td>
                         <a href="#" class="order-status" th:onclick="|delBuy(event,${order.orderNumber})|">취소하기</a></td>
                         </td>
+
                     </tr>
                     </tbody>
                 </table>
-                <ul class="btn-page">
-                    <li>
-                    <a href="#">이전</a>
-                    </li>
-                    <li>
-                    <a href="#">1</a>
-                    </li>
-                    <li>
-                    <a href="#">2</a>
-                    </li>
-                    <li>
-                    <a href="#">3</a>
-                    </li>
-                    <li>
-                    <a href="#">4</a>
-                    </li>
-                    <li>
-                    <a href="#">5</a>
-                    </li>
-                    <li>
-                    <a href="#">6</a>
-                    </li>
-                    <li>
-                    <a href="#">7</a>
-                    </li>
-                    <li>
-                    <a href="#">8</a>
-                    </li>
-                    <li>
-                    <a href="#">9</a>
-                    </li>
-                    <li>
-                    <a href="#">10</a>
-                    </li>
-                    <li>
-                    <a href="#">다음</a>
-                    </li>
-                </ul>
                 </article>
             </main>
                 <footer th:replace="~{layout/common_ui::footer}"></footer>
             </div>
 
             <script>
-
-
             function delBuy(event,orderNumber){
                 event.preventDefault();
                 if(!confirm("취소하시겠습니까")) return;
@@ -148,6 +110,15 @@
                       })
                       .catch(err=>console.log(err));
                   }
+
+                  const $tbody = document.querySelector("table tbody");
+                  $tbody.addEventListener('click', e=>{
+                      console.log('클릭');
+                    if(e.target.tagName == 'TD'){
+                        const memberId = e.target.parentElement.dataset.memberId;
+                        location.href=`/mypage/profile/${memberId}`;
+                    }
+                  });
 
 
 

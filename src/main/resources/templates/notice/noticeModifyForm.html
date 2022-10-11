@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="/css/common/common.css">
   <script th:src="@{/js/common/ckeditor.js}"></script>
   <title>공지사항 수정화면</title>
-
   <style>
     .board-write__notice-main span {
       color: red;
@@ -24,14 +23,13 @@
       }
   </style>
 </head>
-
 <body>
 <div class="wrapper">
   <header th:replace="~{layout/common_ui::choose_header}"></header>
   <main class="container">
     <form class="board-write__content" method="post" th:object="${editForm}">
       <div class="board-write__title width--1000px">
-        <h2><i class="bar"></i>글수정</h2>
+        <h2><i class="bar"></i>공지사항 수정</h2>
       </div>
       <div class="board-write__notice-main width--900px">
         <input type="text" name="title" id="noticeTitle" placeholder="제목을 입력하세요." autofocus th:field="*{title}">
@@ -64,30 +62,13 @@
     //수정버튼 클릭
     const $completeBtn = document.getElementById('modifyBtn');
      $completeBtn.addEventListener('click', e => {
-      location.href = '/notice/[[${editForm.noticeId}]]';
+      const frm = document.getElementById('editForm')
+      const noticeId = frm.noticeId.value;
+      const.url = '/notice/[[${editForm.noticeId}]]';
+
+      frm.action = url;
+      frm.submit();
     });
-
-       //유효성 체크 함수
-    function validChk() {
-      const regex = / /gi;
-      //제목 입력 필수
-      if (noticeTitle.value.replace(regex, '').length == 0) {
-        alert('제목을 입력해주세요.');
-        return;
-      }
-      //제목 50자 이하
-      if (noticeTitle.value.length > 50) {
-        alert('제목은 50자 이내여야합니다.');
-        return;
-      }
-      //내용 입력 필수
-      if (window.editor.getData().length == 0) {
-        alert('내용을 입력해주세요.');
-        return;
-      }
-
-      return true;
-    };
 
     //ckeditor
     ClassicEditor

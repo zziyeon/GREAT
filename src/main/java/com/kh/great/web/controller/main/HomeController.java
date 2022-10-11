@@ -93,12 +93,6 @@ public class HomeController {
             return "member/join";
         }
 
-        //사업자번호 길이 10자
-        if (request.getParameter("memBusinessnumber").length() != 10) {
-            bindingResult.rejectValue("memBusinessnumber", null, "사업자번호는 10자입니다.");
-            return "member/join";
-        }
-
         //오브젝트 검증(object error)
         //비밀번호-비밀번호 확인 일치
         if (!(join.getMemPassword().equals(join.getMemPasswordCheck()))) {
@@ -168,10 +162,16 @@ public class HomeController {
         //기본 검증
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "/findPw";
+            return "member/findPw";
         }
 
         Member findedMember = memberSVC.findByMemIdAndMemEmail(findPw.getMemId(), findPw.getMemEmail());
+        //찾은 회원이 없으면
+        if (findedMember == null) {
+            bindingResult.rejectValue("memId", null, "아이디와 이메일이 일치하는 회원이 없습니다.");
+            return "member/findPw";
+        }
+
         log.info("findedMember = {}", findedMember);
         log.info("findedMember.getMemNumber = {}", findedMember.getMemNumber());
 

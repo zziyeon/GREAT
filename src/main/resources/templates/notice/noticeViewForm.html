@@ -23,7 +23,7 @@
   <main class="container">
     <form class="notice" method="post" th:object="${detailForm}">
       <div class="notice__title ">
-        <h2>글 제목 :
+        <h2>제목 :
           <text th:text="*{title}">[공지사항] 개인정보 처리방침 변경안내처리방침</text>
         </h2>
         <div class="notice__information">
@@ -51,6 +51,7 @@
   <footer th:replace="~{layout/common_ui::footer}"></footer>
 </div>
 <script async th:inline="javascript">
+    //세션
     document.getElementById("notice__ss").style.display = (
         [[${session.memAdmin}]] == 'y' ? "block" : "none"
     );
@@ -139,7 +140,6 @@
 		.catch( error => {
 			console.error( error );
 		} );
-
 </script>
 </body>
-</head></html>
+</html>

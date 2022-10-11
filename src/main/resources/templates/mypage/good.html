@@ -49,7 +49,7 @@
                 <section class="items content" th:object="${goods}">
                 <div class="item" th:each="good:${list}" th:data-good-id="${good.goodNumber}">
 
-                    <a href="" class = "item__image">
+                    <a th:href="@{/product/{pNumber}(pNumber=${good.product.pNumber})}" class = "item__image">
                         <div class="product-img">
                             <th:block th:if="${good.imageFiles}">
                                 <th:block th:each="imageFile : ${good.imageFiles[0]}">
@@ -61,8 +61,10 @@
                                 <img src="/img/product/등록된 사진이 없습니다.png" alt="">
                             </th:block>
 
+
                         </div>
-                    <a href="#" class = "item__title" th:text="${good.product.pName}">딸기 케이크</a>
+                    </a>
+                    <div class = "item__title" th:text="${good.product.pName}">딸기 케이크</div>
                     <div class="item__price-box">
                         <div class = "item__discount-rate" th:text="${good.product.discountRate}+'%'">33%</div>
                         <div class = "item__price" th:text="${good.product.salePrice}+'원'">15,000원</div>
@@ -74,45 +76,9 @@
                     <i class="heartIcon far fa-heart fas"></i>
                 </div>
 
+
                 </section>
-                <ul class="btn-page">
-                    <li>
-                    <a href="#">이전</a>
-                    </li>
-                    <li>
-                    <a href="#">1</a>
-                    </li>
-                    <li>
-                    <a href="#">2</a>
-                    </li>
-                    <li>
-                    <a href="#">3</a>
-                    </li>
-                    <li>
-                    <a href="#">4</a>
-                    </li>
-                    <li>
-                    <a href="#">5</a>
-                    </li>
-                    <li>
-                    <a href="#">6</a>
-                    </li>
-                    <li>
-                    <a href="#">7</a>
-                    </li>
-                    <li>
-                    <a href="#">8</a>
-                    </li>
-                    <li>
-                    <a href="#">9</a>
-                    </li>
-                    <li>
-                    <a href="#">10</a>
-                    </li>
-                    <li>
-                    <a href="#">다음</a>
-                    </li>
-                </ul>
+
     </article>
 </main>
         <footer th:replace="~{layout/common_ui::footer}"></footer>

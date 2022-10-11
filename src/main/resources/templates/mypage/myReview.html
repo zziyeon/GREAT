@@ -51,8 +51,7 @@
             <ul class="review-content">
                 <li class="review"th:each="review:${list}" >
                     <div >
-                        <div><span>가게명 : </span><span th:text="${review.member.memStoreName}"></span></div>
-                        <div><span>상품명 : </span><span th:text="${review.deal.product.pName}"></span></div>
+                        <a th:href="@{/mypage/profile/{memNumber}(memNumber=${review.member.memNumber})}"><div><span>가게명 : </span><span th:text="${review.member.memStoreName}"></span></div></a>
                         <span>리뷰 내용 : </span><span th:text="${review.content}"></span>
                         <th:block th:switch="${review.grade}">
                             <div>
@@ -78,44 +77,7 @@
                     </div>
                 </li>
             </ul>
-            <ul class="btn-page">
-                <li>
-                    <a href="#">이전</a>
-                </li>
-                <li>
-                    <a href="#">1</a>
-                </li>
-                <li>
-                    <a href="#">2</a>
-                </li>
-                <li>
-                    <a href="#">3</a>
-                </li>
-                <li>
-                    <a href="#">4</a>
-                </li>
-                <li>
-                    <a href="#">5</a>
-                </li>
-                <li>
-                    <a href="#">6</a>
-                </li>
-                <li>
-                    <a href="#">7</a>
-                </li>
-                <li>
-                    <a href="#">8</a>
-                </li>
-                <li>
-                    <a href="#">9</a>
-                </li>
-                <li>
-                    <a href="#">10</a>
-                </li>
-                <li>
-                    <a href="#">다음</a>
-                </li>
-            </ul>
+
         </form>
     </main >
     <footer th:replace="~{layout/common_ui::footer}"></footer>

@@ -13,6 +13,11 @@
     <script th:src="@{/js/common/ckeditor.js}"></script>
 <!--    <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>-->
 <!--    <script asyn defer th:src="@{/js/product/ckeditor.js}"></script>-->
+    <style>
+        #memStoreLocation {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -188,12 +193,21 @@
         }
     });
 
+    //전역변수
+    const form = {
+        pName:document.getElementById('pName'),
+        deadline_time:document.getElementById('deadline_time'),
+        salePrice:document.getElementById('salePrice'),
+        discount_rate:document.getElementById('discount_rate'),
+        pNumber:document.getElementById('pNumber')
+    }
+
 		//데이터 가져오기
 		function getInputData(){
-		    const pName = pName.textContent;
-		    const deadline_time = deadline_time.textContent;
-		    const salePrice = salePrice.textContent;
-		    const discount_rate = discount_rate.textContent;
+		    const pName = form.pName.textContent;
+		    const deadline_time = form.deadline_time.textContent;
+		    const salePrice = form.salePrice.textContent;
+		    const discount_rate = form.discount_rate.textContent;
 
 		    return {pName,deadline_time,salePrice,discount_rate};
 		}
