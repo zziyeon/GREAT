@@ -59,7 +59,7 @@
               <div class="comment__write">
                 <div class="reply-box">
                   <div class="reply-box__top">
-                    <span class="reply-box__nickname font-size--13px" th:text="*{member.memNickname}">닉네임</span>
+                    <span class="reply-box__nickname font-size--13px">닉네임</span>
                   </div>
                   <div class="reply-box__middle">
                     <textarea class="reply-box__text" name="" id="commentInputBox" cols="30" rows="10" placeholder="댓글을 입력하세요."
@@ -154,7 +154,7 @@
                           <span href="#" class="font-size--13px" id="comment-box__nickname">${comment.member.memNickname}</span>
                           ${comment.memNumber == [[${articleForm.memNumber}]] ? `<span class="writer">작성자</span>` : ``}
                         </div>
-                        ${root.dataset.sMemNumber == comment.memNumber ? 
+                        ${root.dataset.sMemNumber == [[${articleForm.memNumber}]] ? 
                         `<div class="comment-box__info">
                           <a class="comment-box__modify font-size--12px" href="#" name="commentEditBtn"><i
                               class="fa-regular fa-pen-to-square"></i></a>
@@ -385,6 +385,7 @@
                   <input type="file" accept="image/*" id="imageFile3" data-uploadfile-id="${data.data.attachFile?.uploadfileId}">
                 </div>
                 <div>
+                  <button class="font-size--12px" id="fileDeleteBtn">사진 삭제</button>
                   <button class="font-size--12px" id="editCancelBtn">취소</button>
                   <button class = "font-size--12px" id="editSaveBtn">등록</button>
                 </div>
@@ -409,7 +410,17 @@
             document.getElementById(commentNum).style.display ='block';
             //document.getElementById('commentEditBox').remove();
             document.getElementsByClassName('comment__write edit')[0].remove();
-          });    
+          });
+          
+          //파일 삭제 버튼 클릭
+          fileDeleteBtn?.addEventListener('click',e=>{
+            e.preventDefault();
+            console.log('파일 삭제 버튼 클릭');
+            deleteAttachFile(fid);
+            fileName3.value='';
+            imageFile3.type ='';
+            imageFile3.type='file';
+          });
 
           //댓글 수정 완료 버튼 클릭
           editSaveBtn?.addEventListener('click',e=>{
