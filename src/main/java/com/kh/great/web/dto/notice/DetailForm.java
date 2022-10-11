@@ -11,7 +11,6 @@ public class DetailForm {
   private Long noticeId;             //공시사항번호
   @Length(min = 1,max = 50)
   private String title;             //제목
-  @Length(min = 1, max = 500)
   private String content;           //내용
   private String attachments;
   private String write;       //작성자

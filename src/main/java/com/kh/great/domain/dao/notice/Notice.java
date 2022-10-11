@@ -21,7 +21,6 @@ public class Notice{
   private Long noticeId;           // --공지사항게시글 번호
   @Length(min=1, max=20)
   private String title;            //--게시글 제목
-  @Length(min=1, max=500)
   private String content;          //--게시글 내용
   private String attachments;        //첨부파일 유무
   private String write;           //--작성자(관리자)
