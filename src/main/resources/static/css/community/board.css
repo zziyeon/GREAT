@@ -168,12 +168,22 @@ td a {
   justify-content: center;
 }
 
-.board__page--select a {
+/* .board__page--select a {
   margin: 0 3px;
   font-size: 13px;
 }
 
 .board__page--select a:hover{
+  background-color: var(--mainBtn-color-gre);
+  border-radius: 5px;
+} */
+
+.community-page-item {
+  margin: 0 3px;
+  font-size: 13px;
+}
+
+.community-page-item:hover {
   background-color: var(--mainBtn-color-gre);
   border-radius: 5px;
 }
