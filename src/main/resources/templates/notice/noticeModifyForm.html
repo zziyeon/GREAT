@@ -4,9 +4,9 @@
 <head>
   <th:block th:replace="~{layout/common_ui::common_Head}"></th:block>
   <link rel="stylesheet" href="/css/notice/noticeModify.css">
-  <link rel="stylesheet" href="/css/common/common.css">
   <script th:src="@{/js/common/ckeditor.js}"></script>
-  <title>공지사항 수정화면</title>
+  <script th:src="@{/js/common/common.js}"></script>
+  <title>GREAT | 공지사항 수정</title>
   <style>
     .board-write__notice-main span {
       color: red;
@@ -40,7 +40,7 @@
                     placeholder="내용을 작성하세요." autofocus th:field="*{content}"></textarea>
       </div>
       <div class="board-write__complete width--1000px"
-      th:action="@{/notice/{id}(id=${editForm.noticeId})}">
+           th:action="@{/notice/{id}(id=${editForm.noticeId})}">
         <button id="cancelBtn">취소</button>
         <button id="modifyBtn">수정</button>
       </div>
@@ -50,6 +50,9 @@
 </div>
 </div>
 <script th:inline="javascript">
+
+    //ckeditor
+    newCkeditor(document.querySelector('#noticeContent'),false);
 
     //취소 버튼 클릭
     const $cancelBtn = document.getElementById('cancelBtn');
@@ -64,75 +67,12 @@
      $completeBtn.addEventListener('click', e => {
       const frm = document.getElementById('editForm')
       const noticeId = frm.noticeId.value;
-      const.url = '/notice/[[${editForm.noticeId}]]';
+      const url = '/notice/[[${editForm.noticeId}]]';
 
       frm.action = url;
       frm.submit();
     });
 
-    //ckeditor
-    ClassicEditor
-		.create( document.querySelector( '#noticeContent' ), {
-		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
-			toolbar: {
-				items: [
-					'heading',
-					'|',
-					'underline',
-					'bold',
-					'italic',
-					'link',
-					'bulletedList',
-					'numberedList',
-					'todoList',
-					'|',
-					'outdent',
-					'indent',
-					'|',
-					'imageInsert',
-					'imageUpload',
-					'blockQuote',
-					'insertTable',
-					'mediaEmbed',
-					'markdown',
-					'undo',
-					'redo',
-					'|',
-					'highlight',
-					'fontFamily',
-					'fontColor',
-					'fontBackgroundColor',
-					'fontSize',
-					'|',
-					'htmlEmbed',
-					'specialCharacters'
-				]
-			},
-			language: 'en',
-			image: {
-				toolbar: [
-					'imageTextAlternative',
-					'imageStyle:full',
-					'imageStyle:side'
-				]
-			},
-			table: {
-				contentToolbar: [
-					'tableColumn',
-					'tableRow',
-					'mergeTableCells',
-					'tableCellProperties',
-					'tableProperties'
-				]
-			},
-		})
-		.then( editor => {
-
-			window.editor = editor;
-		} )
-		.catch( error => {
-			console.error( error );
-		} );
 </script>
 </body>
 </html>
