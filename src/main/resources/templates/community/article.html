@@ -154,7 +154,7 @@
                           <span href="#" class="font-size--13px" id="comment-box__nickname">${comment.member.memNickname}</span>
                           ${comment.memNumber == [[${articleForm.memNumber}]] ? `<span class="writer">작성자</span>` : ``}
                         </div>
-                        ${root.dataset.sMemNumber == [[${articleForm.memNumber}]] ? 
+                        ${root.dataset.sMemNumber == comment.memNumber ?
                         `<div class="comment-box__info">
                           <a class="comment-box__modify font-size--12px" href="#" name="commentEditBtn"><i
                               class="fa-regular fa-pen-to-square"></i></a>
