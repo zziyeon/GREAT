@@ -10,7 +10,11 @@ import java.util.Map;
 
 public interface ProductSVC {
 
-    //상품등록
+    /**
+     * 상품 등록
+     * @param product 상품 정보
+     * @return 등록한 상품 수
+     */
     Long save(Product product);
 
     Long save (Product product, List<MultipartFile> files);

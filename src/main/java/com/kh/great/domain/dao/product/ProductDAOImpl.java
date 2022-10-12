@@ -382,7 +382,11 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     //-------------------------------------------------------------------------------------
-    // 상품 검색
+    /**
+     * 상품 검색
+     * @param searchKeyword 검색 키워드
+     * @return 검색 결과 상품 목록
+     */
     @Override
     public List<Product> search(@RequestParam ("searchKeyword") String searchKeyword) {
         StringBuffer sql = new StringBuffer();
