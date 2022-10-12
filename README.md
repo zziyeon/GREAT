@@ -35,7 +35,11 @@ https://user-images.githubusercontent.com/105837504/195232239-bb2899ee-46ab-4913
 ---
 구매: 상품 정보를 보고 상품을 구매할 수 있다.
   
-  
+ 
+
+https://user-images.githubusercontent.com/105837504/195232821-5cf0f324-d8a8-4989-9f45-6ccb4ea52007.mp4
+
+
   
 <h4> [관리자 기능] </h4>     
 
