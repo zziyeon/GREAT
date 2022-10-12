@@ -38,7 +38,7 @@
       </div>
       <div class="notice-board__main width--1000px">
           <textarea  class="notice-board__content" name="content" id="noticeContent" cols="30" rows="100" placeholder="내용을 작성하세요. 500글자"
-                     autofocus maxlength="500"></textarea>
+                     autofocus></textarea>
       </div>
       <div class="notice-board__complete width--1000px" th:action="@{/notice}">
         <button type="button" id="notice__cancel-btn">취소</button>
@@ -56,7 +56,6 @@
     const $summitBtn = document.getElementById('notice__complete-btn');
     $summitBtn.addEventListener('click', e => {
       document.getElementById('writeForm').submit();
-
     });
 
     const $cancelBtn = document.getElementById('notice__cancel-btn');
