@@ -36,14 +36,6 @@ public interface CommentSVC {
    */
   Comment save(Comment comment, MultipartFile file);
 
-//  /**
-//   * 대댓글 작성 (필요할까?)
-//   * @param replyComment 댓글 정보
-//   * @return 댓글 정보
-//   */
-//  Comment saveReply(Long pCommentNum, Comment replyComment);
-
-
   /**
    * 댓글 수정
    * @param commentNum 댓글 번호
@@ -82,11 +74,4 @@ public interface CommentSVC {
    */
   int updateToDeletedComment(Long commentNum);
 
-
-//  /**
-//   * 게시물 댓글 건수 조회
-//   * @param articleNum 게시글 번호
-//   * @return 댓글 건수
-//   */
-//  int totalCountOfArticle(Long articleNum);
 }

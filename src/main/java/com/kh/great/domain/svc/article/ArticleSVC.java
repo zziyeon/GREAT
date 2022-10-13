@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ArticleSVC {
+
   /**
    * 게시글 목록 조회1 : 전체
    *
@@ -54,7 +55,6 @@ public interface ArticleSVC {
    * @return 게시글
    */
   Optional<Article> read(Long articleNum);
-
 
   /**
    * 게시글 작성

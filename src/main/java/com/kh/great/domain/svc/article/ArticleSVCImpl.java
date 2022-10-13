@@ -111,7 +111,6 @@ public class ArticleSVCImpl implements ArticleSVC {
     return articleDAO.read(generatedArticleNum).get();
   }
 
-
   @Override
   public Article save(Article article, List<MultipartFile> files) {
     Long generatedArticleNum = articleDAO.generatedArticleNum();

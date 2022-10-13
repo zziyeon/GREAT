@@ -36,7 +36,7 @@ public class ArticleController {
   @Qualifier("fc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
   private FindCriteria fc;
 
-  //자유게시판 화면 : 전체
+  //커뮤니티 게시글 목록 조회
   @GetMapping({"/list",
       "/list/{reqPage}",
       "/list/{reqPage}//", //?

@@ -82,6 +82,7 @@ public class CommentSVCImpl implements CommentSVC {
    */
   @Override
   public Comment save(Comment comment, MultipartFile file) {
+
     //1)댓글 등록
     Long generatedCommentNum = commentDAO.generatedCommentNum();
     comment.setCommentNum(generatedCommentNum);
@@ -98,7 +99,6 @@ public class CommentSVCImpl implements CommentSVC {
 
     //2)첨부파일
     uploadFileSVC.addFile(file, AttachCode.B0101,generatedCommentNum);
-
 
     return commentDAO.find(generatedCommentNum).get();
   }
@@ -190,15 +190,4 @@ public class CommentSVCImpl implements CommentSVC {
     return commentDAO.updateToDeletedComment(commentNum);
   }
 
-
-//  /**
-//   * 게시물 댓글 건수 조회
-//   *
-//   * @param articleNum 게시글 번호
-//   * @return 댓글 건수
-//   */
-//  @Override
-//  public int totalCountOfArticle(Long articleNum) {
-//    return commentDAO.totalCountOfArticle(articleNum);
-//  }
 }

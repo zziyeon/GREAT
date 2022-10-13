@@ -190,7 +190,6 @@ public class ArticleDAOImpl implements ArticleDAO {
     return list;
   }
 
-
   /**
    * 게시글 조회
    *
@@ -203,7 +202,6 @@ public class ArticleDAOImpl implements ArticleDAO {
     sql.append("select article_num, article_category, article_title, article_contents, attachment, a.mem_number, mem_nickname, create_date, views, comments ");
     sql.append("from article a, member m ");
     sql.append("where a.mem_number = m.mem_number and a.article_num = ? ");
-
 
     try {
       Article article = jt.queryForObject(sql.toString(), new RowMapper<Article>() {
@@ -323,9 +321,7 @@ public class ArticleDAOImpl implements ArticleDAO {
   public int totalCount() {
 
     String sql = "select count(*) from article ";
-
     Integer cnt = jt.queryForObject(sql, Integer.class);
-
     return cnt;
   }
 
@@ -339,9 +335,7 @@ public class ArticleDAOImpl implements ArticleDAO {
   public int totalCount(String category) {
 
     String sql = "select count(*) from article where article_category = ? ";
-
     Integer cnt = jt.queryForObject(sql, Integer.class, category);
-
     return cnt;
   }
 
