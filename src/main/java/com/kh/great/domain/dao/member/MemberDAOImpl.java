@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -31,7 +30,7 @@ public class MemberDAOImpl implements MemberDAO {
      * 회원가입
      *
      * @param member 가입정보
-     * @return 회원아이디
+     * @return 회원번호
      */
     @Override
     public Long join(Member member) {
@@ -77,11 +76,11 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     /**
-     * 비밀번호 찾기
+     * 비밀번호 찾기 (조회 by 아이디, 이메일)
      *
-     * @param memId
-     * @param memEmail
-     * @return
+     * @param memId 아이디
+     * @param memEmail 이메일
+     * @return 회원정보
      */
     @Override
     public Member findByMemIdAndMemEmail(String memId, String memEmail) {
@@ -109,7 +108,7 @@ public class MemberDAOImpl implements MemberDAO {
      * 비밀번호 재설정
      *
      * @param memNumber 회원번호
-     * @param newPassword    수정할 정보
+     * @param newPassword 수정할 비밀번호
      * @return 재설정건수
      */
     @Override
@@ -129,7 +128,7 @@ public class MemberDAOImpl implements MemberDAO {
      *
      * @param memId 아이디
      * @param memPassword 비밀번호
-     * @return 회원
+     * @return 회원정보
      */
     @Override
     public Optional<Member> login(String memId, String memPassword) {
@@ -199,23 +198,6 @@ public class MemberDAOImpl implements MemberDAO {
         return findedMember;
     }
 
-//    /**
-//     * 회원번호 찾기
-//     * @param memEmail 이메일
-//     * @return 회원번호
-//     */
-//    public Long findMemNumber(String memEmail) {
-//        StringBuffer sql = new StringBuffer();
-//
-//        sql.append("select mem_number ");
-//        sql.append("  from member ");
-//        sql.append(" where mem_email = ? ");
-//
-//        Long findedMemNumber = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Long.class), memEmail);
-//
-//        return findedMemNumber;
-//    }
-
     /**
      * 수정
      *
@@ -264,21 +246,6 @@ public class MemberDAOImpl implements MemberDAO {
 
         result = jt.update(sql.toString(), memNumber);
         return Long.valueOf(result);
-    }
-
-    /**
-     * 목록
-     *
-     * @return 회원전체
-     */
-    @Override
-    public List<Member> all() {
-
-        StringBuffer sql = new StringBuffer();
-        sql.append("select member_id, email, pw, nickname, cdate, udate ");
-        sql.append("  from member ");
-
-        return jt.query(sql.toString(), new BeanPropertyRowMapper<>(Member.class));
     }
 
     /**
