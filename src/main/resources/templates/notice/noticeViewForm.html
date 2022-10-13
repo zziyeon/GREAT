@@ -27,14 +27,12 @@
         </h2>
         <div class="notice__information">
           <div class="notice__write-information">
-
           </div>
         </div>
       </div>
       <div class="notice__content ">
-          <textarea th:text="*{content}" id="noticeContent" cols="140" rows="30"
+          <textarea th:text="*{content}" id="noticeContent" cols="140" rows="100"
                     name="content" readonly>[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침[공지사항] 개인정보 처리방침 변경안내처리방침 </textarea>
-
         <div class="notice__btn-box">
           <div id="notice__ss">
             <button type="button" id="modify_btn" th:href="@{/notice/edit/{id}(id=${detailForm.noticeId})}" >수정</button>
@@ -42,8 +40,6 @@
           </div>
           <button type="button" id="submit_btn">목록</button>
         </div>
-
-
       </div>
     </form>
   </main>

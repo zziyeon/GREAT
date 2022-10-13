@@ -17,18 +17,29 @@
 회원: 회원 정보를 등록하여 사이트를 이용할 수 있다.
 1. Insert
 
+
+
+https://user-images.githubusercontent.com/105837504/195232239-bb2899ee-46ab-4913-9670-188ecb26bdfe.mp4
+
+
+
 <h4> [상품 판매 기능] </h4>     
 
 ---
 판매: 판매할 상품 정보를 작성하여 판매 할 수 있다.
 1. Insert
 
+
 <h4> [상품 구매 기능] </h4>     
 
 ---
 구매: 상품 정보를 보고 상품을 구매할 수 있다.
   
-  
+ 
+
+https://user-images.githubusercontent.com/105837504/195232821-5cf0f324-d8a8-4989-9f45-6ccb4ea52007.mp4
+
+
   
 <h4> [관리자 기능] </h4>     
 
