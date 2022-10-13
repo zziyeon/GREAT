@@ -60,6 +60,27 @@ public interface CommentDAO {
   int totalCountOfArticle(Long articleNum);
 
   /**
+   * 그룹 내 댓글 순서 최댓값 산출
+   * @param comment 댓글 정보
+   * @return 그룹내 댓글 순서 최댓값
+   */
+  Long maxCommentOrder(Comment comment);
+
+  /**
+   * 같은 부모 댓글을 가진 동일 step내 순서 최댓값 산출
+   * @param comment 댓글 정보
+   * @return 같은 부모 댓글을 가진 동일 step내 순서 최댓값
+   */
+  Long maxCommentOrderInSameParent (Comment comment);
+
+  /**
+   * 댓글 순서 변경
+   * @param comment 댓글 정보
+   * @param commentOrder 댓글 순서
+   */
+  void changeCommentOrder(Comment comment, Long commentOrder);
+
+  /**
    * 자식 댓글 수 조회
    * @param commentNum 삭제할 댓글 번호
    * @return 자식 댓글 수

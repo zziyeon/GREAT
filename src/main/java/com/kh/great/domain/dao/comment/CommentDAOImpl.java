@@ -109,7 +109,6 @@ public class CommentDAOImpl implements CommentDAO {
       }
     }
 
-
     StringBuffer sql = new StringBuffer();
 
     sql.append("insert into comments ");
@@ -118,7 +117,6 @@ public class CommentDAOImpl implements CommentDAO {
     sql.append("values (?,?,?,?,?,?,?,?,?,sysdate, ?) ");
 
     log.info("쿼리 삽입하기 전 코멘트 내용 : {}", comment);
-
 
     int affectedRow = jt.update(sql.toString(),
         comment.getArticleNum(),
@@ -135,23 +133,9 @@ public class CommentDAOImpl implements CommentDAO {
     return affectedRow;
   }
 
-  //부모 댓글과 동일한 그룹의 답댓글들의 step 변경
-//  private int updateStep(Comment comment){
-//    StringBuffer sql = new StringBuffer();
-//
-//    sql.append("update comments ");
-//    sql.append("set step = step + 1 ");
-//    sql.append("where comment_group = ? ");
-//    sql.append("and step > ? ");
-//    sql.append("and article_num = ? ");
-//
-//    int affectedRows = jt.update(sql.toString(), comment.getCommentGroup(), comment.getStep(),comment.getArticleNum());
-//
-//    return affectedRows;
-//  }
-
   //그룹 내 댓글 순서 최댓값 산출
-  private Long maxCommentOrder(Comment comment) {
+  @Override
+  public Long maxCommentOrder(Comment comment) {
     String sql = "select max(comment_order) from comments where article_num = ? and comment_group = ? ";
 
     Long maxCommentOrder = jt.queryForObject(sql, Long.class,comment.getArticleNum(),comment.getCommentGroup());
@@ -160,7 +144,8 @@ public class CommentDAOImpl implements CommentDAO {
   }
 
   //같은 부모 댓글을 가진 동일 step내 순서 최댓값 산출
-  private Long maxCommentOrderInSameParent (Comment comment) {
+  @Override
+  public Long maxCommentOrderInSameParent (Comment comment) {
     StringBuffer sql = new StringBuffer();
     sql.append("select max(comment_order) from comments ");
     sql.append("where article_num = ? and comment_group = ? and p_comment_num = ? and step = ? ");
@@ -173,13 +158,12 @@ public class CommentDAOImpl implements CommentDAO {
     if (maxCommentOrderInSameParent == null) {
       maxCommentOrderInSameParent = find(comment.getPCommentNum()).get().getCommentOrder();
     }
-
     return maxCommentOrderInSameParent;
-
   }
 
   //댓글 순서 변경
-  private void changeCommentOrder(Comment comment, Long commentOrder){
+  @Override
+  public void changeCommentOrder(Comment comment, Long commentOrder){
     StringBuffer sql = new StringBuffer();
 
     sql.append("update comments ");
@@ -189,7 +173,6 @@ public class CommentDAOImpl implements CommentDAO {
 
     jt.update(sql.toString(),comment.getArticleNum(), comment.getCommentGroup(), commentOrder);
   }
-
 
   /**
    * 댓글 수정

@@ -30,7 +30,7 @@ public class CommentController {
   private final CommentSVC commentSVC;
   private final UploadFileSVC uploadFileSVC;
 
-
+  //댓글 목록 조회
   @GetMapping("/list/{articleNum}")
   public ApiResponse<List<Comment>> commentList(@PathVariable("articleNum") Long articleNum) {
 
@@ -111,11 +111,8 @@ public class CommentController {
     Comment comment = new Comment();
     BeanUtils.copyProperties(commentEditForm, comment);
 
-    //댓글 수정
-    //Comment updatedComment = commentSVC.update(commentNum, comment);
     Comment updatedComment = new Comment();
-
-
+    
     if (commentEditForm.getFile() == null) {
       updatedComment = commentSVC.update(commentNum, comment);
     } else if (commentEditForm.getFile() != null) {
@@ -131,9 +128,10 @@ public class CommentController {
 
     int cntOfChildrenComments = commentSVC.countOfChildrenComments(commentNum);
 
+    //답댓글이 남아 있지 않은 경우
     if (cntOfChildrenComments == 0) {
       Long pCommentNum = commentSVC.find(commentNum).get().getPCommentNum();
-
+      
       commentSVC.delete(commentNum);
 
       if (commentSVC.countOfChildrenComments(pCommentNum) == 0
@@ -144,6 +142,7 @@ public class CommentController {
       return ApiResponse.createApiResMsg("00", "성공", null);
     }
 
+    //답댓글이 남아있는 경우
     commentSVC.updateToDeletedComment(commentNum);
     return ApiResponse.createApiResMsg("00", "성공", cntOfChildrenComments);
   }
