@@ -59,7 +59,7 @@ public interface ProductDAO {
      * 상품 관리 목록
      * @param ownerNumber 점주 회원 번호
      * @param sell_status 상품 상태
-    * @param history_start_date 날짜 조회 시작일
+     * @param history_start_date 날짜 조회 시작일
      * @param history_end_date 날짜 조회 종료일
      * @return 상품 목록
      */
