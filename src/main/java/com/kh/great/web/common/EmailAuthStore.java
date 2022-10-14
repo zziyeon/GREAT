@@ -21,7 +21,8 @@ public class EmailAuthStore {
         store.remove(email);
     }
 
-    public boolean isExist(String email, String authNo){
+    //이메일 존재 여부
+    public boolean isExist(String email, String authNo) {
 
         boolean isExist = false;
         //이메일이 없을경우 false
